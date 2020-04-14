@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "bootstrap";
+@import "functions";
+@import "variables";
+@import "mixins";
+
+body{
+    font-family: Roboto;
+}
+.form-control{
+    box-shadow: none !important;
+}
