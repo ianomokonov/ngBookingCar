@@ -6,19 +6,28 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FiltersFormComponent } from './search/filters-form/filters-form.component';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchCarsComponent } from './search/search-cars/search-cars.component';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
-    FiltersFormComponent
+    FiltersFormComponent,
+    SearchCarsComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    FormBuilder
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

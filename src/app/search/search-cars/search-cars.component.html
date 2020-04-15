@@ -1,0 +1,38 @@
+<div class="cars-back">
+  <div class="container">
+    <h2 class="bk-header mt-5">Обратите внимание</h2>
+    <div class="cars">
+      <div class="row car" *ngFor="let car of cars">
+        <div class="col-8 car-info-img row">
+          <div class="car-img col-4">
+            <img [src]="car.img" />
+          </div>
+          <div class="car-info col-8">
+            <h2 class="car-title">{{ car.name }}</h2>
+            <div class="car-details">
+              <span class="car-places"
+                ><i class="fas fa-user"></i><b>{{ car.places }}</b> мест</span
+              >
+              <span class="driver-license"
+                ><i class="fas fa-id-badge"></i>Категория <b>{{ car.license }}</b></span
+              >
+              <span class="car-kpp"><i class="fas fa-cogs"></i>{{ car.kpp }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="car-actions col-4 text-right">
+          <div class="price">
+            <h2>{{ car.price }} ₽ в сутки</h2>
+            <span class="text-muted">итого: {{ car.price * 3 }} ₽ за 3 суток</span>
+          </div>
+          <div class="btns">
+            <button class="btn btn-primary mr-1">Заказать</button>
+            <button class="btn border border-primary">Подробнее</button>
+          </div>
+        </div>
+      </div>
+      <!-- /car -->
+    </div>
+  </div>
+</div>

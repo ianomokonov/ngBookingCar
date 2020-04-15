@@ -1,5 +1,5 @@
-<form class="py-5">
-  <h2 class="mb-3">Подобрать по параметрам</h2>
+<form [formGroup]="filterForm">
+  <h2 class="mb-3 bk-header">Подобрать по параметрам</h2>
   <div class="row">
     <div class="col-6">
       <ngb-datepicker #dp (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
@@ -19,27 +19,34 @@
       </ng-template>
     </div>
     <div class="col d-flex flex-column justify-content-between">
-      <div class="row">
-        <div class="col">
-          <div class="form-group">
-            <label>Время</label>
-            <ngb-timepicker [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
+      <div>
+        <div class="row mb-3">
+          <div class="col">
+            <div class="form-group mb-0">
+              <label>Цена</label>
+              <input formControlName="price" type="number" class="form-control" />
+            </div>
           </div>
         </div>
-        <div class="col">
-          <div class="form-group">
-            <label>Место</label>
-            <input type="text" class="form-control" />
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label>Время</label>
+              <ngb-timepicker formControlName="time" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label>Место</label>
+              <select formControlName="place" class="form-control">
+                <option *ngFor="let place of places" [value]="place.id">{{ place.name }}</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div class="form-group mb-0">
-            <label>Цена</label>
-            <input type="text" class="form-control" />
-          </div>
-        </div>
+      <div class="text-right">
+        <button class="btn btn-primary">Найти</button>
       </div>
     </div>
   </div>
