@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { FiltersComponent } from './catalog/filters/filters.component';
 import { NgbDatePipe } from './utils/pipes/ngb-date-pipe';
 import { DetailsComponent } from './catalog/details/details.component';
+import { BookingFormComponent } from './booking-form/booking-form.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { DetailsComponent } from './catalog/details/details.component';
     CatalogComponent,
     FiltersComponent,
     NgbDatePipe,
-    DetailsComponent
+    DetailsComponent,
+    BookingFormComponent
   ],
   imports: [
     BrowserModule,

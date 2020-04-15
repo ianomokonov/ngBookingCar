@@ -23,11 +23,11 @@
 
         <div class="car-actions col-4 text-right">
           <div class="price">
-            <h2>{{ car.price }} ₽ в сутки</h2>
+            <h2>{{ car.price }} ₽ <span>в сутки</span></h2>
             <span class="text-muted">итого: {{ car.price * 3 }} ₽ за 3 суток</span>
           </div>
           <div class="btns">
-            <button class="btn btn-primary mr-1">Заказать</button>
+            <a class="btn btn-primary mr-1" [routerLink]="['/booking',1]">Заказать</a>
             <a class="btn border border-primary" [routerLink]="['/details',1]">Подробнее</a>
           </div>
         </div>
