@@ -1,25 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "bootstrap";
-@import "functions";
-@import "variables";
-@import "mixins";
+@import 'bootstrap';
+@import 'functions';
+@import 'variables';
+@import 'mixins';
 
-body{
-    font-family: Roboto;
+body {
+  font-family: Roboto;
 }
-.form-group{
-    label{
-        @extend .text-muted;
-        @extend small;
-        margin-bottom: 0.2rem;
-    }
+.form-group {
+  label {
+    @extend .text-muted;
+    @extend small;
+    margin-bottom: 0.2rem;
+  }
 }
-.form-control{
-    box-shadow: none !important;
+.form-control {
+  box-shadow: none !important;
 }
 
-.bk-header{
-    font-size: 1.2rem;
-    text-transform: uppercase;
+.bk-header {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+.tab-content {
+  border: 1px solid $gray-300;
+  border-top: 0;
+  border-radius: 0 0 2px 2px;
+  padding: 1rem;
 }

@@ -1,6 +1,6 @@
 <div class="cars-back">
   <div class="container">
-    <h2 class="bk-header mt-5">{{ header }}</h2>
+    <h2 class="bk-header mt-5" *ngIf="header">{{ header }}</h2>
     <div class="cars">
       <div class="row car" *ngFor="let car of cars">
         <div class="col-8 car-info-img row">
@@ -28,7 +28,7 @@
           </div>
           <div class="btns">
             <button class="btn btn-primary mr-1">Заказать</button>
-            <button class="btn border border-primary">Подробнее</button>
+            <a class="btn border border-primary" [routerLink]="['/details',1]">Подробнее</a>
           </div>
         </div>
       </div>

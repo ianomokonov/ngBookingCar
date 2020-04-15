@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="header my-4">
+    <div class="row">
+      <div class="col-3 img">
+        <img [src]="car.img" />
+      </div>
+      <div class="col">
+        <h2 class="car-title">
+          {{ car.name }}
+        </h2>
+        <div class="info mb-2">
+          <small class="mr-1 text-muted">Год выпуска:</small><b>{{ car.year }}</b>
+        </div>
+        <div class="description">
+          <h4>Описание</h4>
+          <p>
+            {{ car.description }}
+          </p>
+          <div class="price pb-3">
+            <a href="" class="btn btn-primary mr-3">Заказать</a>
+            <b>{{ car.price }} ₽</b> в сутки
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <ngb-tabset [destroyOnHide]="false">
+      <ngb-tab title="Технические характеристики">
+        <ng-template ngbTabContent>
+          <div class="characteristic row">
+            <div class="col-6" data-key="0">
+              <ul>
+                <li>
+                  <span>Тип двигателя</span><span>{{ car.engineType }}</span>
+                </li>
+                <li>
+                  <span>Максимальная мощность</span><span>{{ car.enginePower }} л.с.</span>
+                </li>
+                <li>
+                  <span>Максимальная скорость</span><span>{{ car.speed }} км/ч</span>
+                </li>
+                <li>
+                  <span>Время разгона 0 - 100 км/ч</span><span>{{ car.time }} с</span>
+                </li>
+                <li>
+                  <span>Расход топлива</span><span>{{ car.volumPerHundred }} л/100 км</span>
+                </li>
+              </ul>
+            </div>
+            <div class="col-6" data-key="6">
+              <ul>
+                <li>
+                  <span>Привод</span><span>{{ car.driveUnit }}</span>
+                </li>
+                <li>
+                  <span>Количество мест</span><span>{{ car.place }}</span>
+                </li>
+                <li><span>Объем багажника</span><span>{{car.backVolume}} л</span></li>
+                <li><span>Год выпуска</span><span>{{car.year}}</span></li>
+                <li>
+                  <span>Коробка передач</span><span>{{ car.kpp }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
+</div>

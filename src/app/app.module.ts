@@ -14,6 +14,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { RouterModule } from '@angular/router';
 import { FiltersComponent } from './catalog/filters/filters.component';
 import { NgbDatePipe } from './utils/pipes/ngb-date-pipe';
+import { DetailsComponent } from './catalog/details/details.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { NgbDatePipe } from './utils/pipes/ngb-date-pipe';
     NgbdDatepickerI18n,
     CatalogComponent,
     FiltersComponent,
-    NgbDatePipe
+    NgbDatePipe,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
