@@ -1,0 +1,27 @@
+<div class="filters">
+  <small class="text-muted"
+    ><a routerLink="/search"><i class="fas fa-arrow-left mr-1"></i>изменить</a></small
+  >
+  <div class="row mt-2">
+    <div class="col-3">
+      <div class="form-group">
+        <label>Дата</label>
+        <h6>{{ filters.period.fromDate | ngbDate | date: 'dd.MM.yyyy' }} - {{ filters.period.toDate | ngbDate | date: 'dd.MM.yyyy' }}</h6>
+      </div>
+      <div class="form-group">
+        <label>Время</label>
+        <h6>{{ filters.time.hour }} : {{ filters.time.minute }}</h6>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label>Место</label>
+        <h6>{{ filters.place.name }}</h6>
+      </div>
+      <div class="form-group">
+        <label>Цена</label>
+        <h6>{{ filters.price.from }} ₽ - {{ filters.price.to }} ₽</h6>
+      </div>
+    </div>
+  </div>
+</div>

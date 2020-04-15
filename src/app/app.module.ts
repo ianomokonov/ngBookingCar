@@ -9,6 +9,11 @@ import { FiltersFormComponent } from './search/filters-form/filters-form.compone
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchCarsComponent } from './search/search-cars/search-cars.component';
 import { SearchComponent } from './search/search.component';
+import { NgbdDatepickerI18n } from './utils/date-picker-i18.component';
+import { CatalogComponent } from './catalog/catalog.component';
+import { RouterModule } from '@angular/router';
+import { FiltersComponent } from './catalog/filters/filters.component';
+import { NgbDatePipe } from './utils/pipes/ngb-date-pipe';
 
 @NgModule({
   declarations: [
@@ -16,14 +21,19 @@ import { SearchComponent } from './search/search.component';
     MenuComponent,
     FiltersFormComponent,
     SearchCarsComponent,
-    SearchComponent
+    SearchComponent,
+    NgbdDatepickerI18n,
+    CatalogComponent,
+    FiltersComponent,
+    NgbDatePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule
   ],
   providers: [
     FormBuilder

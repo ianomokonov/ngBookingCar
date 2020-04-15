@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'bk-search-cars',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-cars.component.scss'],
 })
 export class SearchCarsComponent implements OnInit {
+
+  @Input() public header: string;
+
   constructor() {}
 
   cars = [

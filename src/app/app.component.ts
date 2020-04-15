@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ngBookingCar';
+  constructor(){
+    registerLocaleData(localeRu);
+  }
 }

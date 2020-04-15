@@ -69,7 +69,7 @@ export class FiltersFormComponent {
         },
       ],
       place: null,
-      time: null,
+      time: this.time,
       price: null,
     });
 
