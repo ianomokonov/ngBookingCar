@@ -79,7 +79,6 @@ export class FiltersFormComponent {
   }
 
   onDateSelection(date: NgbDate) {
-    console.log(this.filterForm.get('period').value)
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
