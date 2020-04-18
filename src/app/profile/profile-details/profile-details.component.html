@@ -1,15 +1,11 @@
 <bk-user-info></bk-user-info>
 <div class="container pt-3">
-  <ngb-tabset [destroyOnHide]="false">
-    <ngb-tab title="История заказов">
-      <ng-template ngbTabContent>
-        <bk-booking-history></bk-booking-history>
-      </ng-template>
-    </ngb-tab>
-    <ngb-tab title="Автомобили">
-      <ng-template ngbTabContent>
-        <bk-cars></bk-cars>
-      </ng-template>
-    </ngb-tab>
-  </ngb-tabset>
+  <ul ngbNav [activeId]="getActive()" class="nav-tabs">
+    <li [ngbNavItem]="link.fragment" *ngFor="let link of links">
+      <a ngbNavLink [routerLink]="link.fragment" routerLinkActive="active">{{ link.title }}</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
