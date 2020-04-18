@@ -15,7 +15,7 @@ export class BookingHistoryComponent implements OnInit {
       time: { hour: 10, minute: 30 },
       price: 1805,
       statusText: 'Запланирован',
-      statusClass: 'bg-info'
+      statusClass: 'bg-info',
     },
     {
       img: '../../assets/cars/logan_new.jpeg',
@@ -25,7 +25,8 @@ export class BookingHistoryComponent implements OnInit {
       time: { hour: 10, minute: 30 },
       price: 1805,
       statusText: 'Активен',
-      statusClass: 'bg-success'
+      statusClass: 'bg-success',
+      disabled: true
     },
     {
       img: '../../assets/cars/logan_new.jpeg',
@@ -35,7 +36,8 @@ export class BookingHistoryComponent implements OnInit {
       time: { hour: 10, minute: 30 },
       price: 1805,
       statusText: 'Окончен',
-      statusClass: 'bg-purple'
+      statusClass: 'bg-purple',
+      disabled: true
     },
     {
       img: '../../assets/cars/logan_new.jpeg',
@@ -45,7 +47,8 @@ export class BookingHistoryComponent implements OnInit {
       time: { hour: 10, minute: 30 },
       price: 1805,
       statusText: 'Отменен',
-      statusClass: 'bg-danger'
+      statusClass: 'bg-danger',
+      disabled: true
     },
   ];
 

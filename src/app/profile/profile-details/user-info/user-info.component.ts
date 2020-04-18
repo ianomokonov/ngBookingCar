@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditUserFormComponent } from './edit-user-form/edit-user-form.component';
 
 @Component({
   selector: 'bk-user-info',
@@ -13,7 +15,11 @@ export class UserInfoComponent implements OnInit {
     email: 'nomokonov.vana@yandex.ru',
     phone: '89151999845',
   };
-  constructor() {}
+  constructor(private modalService: NgbModal) {}
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
+
+  public edit(){
+    this.modalService.open(EditUserFormComponent)
+  }
 }

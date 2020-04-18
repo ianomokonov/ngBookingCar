@@ -1,33 +1,5 @@
-<div class="history py-3">
-  <h2 class="bk-header">История заказов</h2>
+<div class="history">
   <div class="orders">
-    <div class="row car mt-3" *ngFor="let car of orders" [title]="car.statusText">
-      <span class="status" [ngClass]="[car.statusClass]"></span>
-      <div class="col-8 car-info-img row">
-        <div class="car-img col-2">
-          <img [src]="car.img" />
-        </div>
-        <div class="car-info col">
-          <h2 class="car-title">{{ car.name }}</h2>
-          <div class="car-details">
-            <span class="car-places"
-              ><i class="far fa-calendar-minus"></i
-              ><b>{{ car.dateFrom | ngbDate | date: 'dd.MM.yyyy' }} {{ car.dateTo | ngbDate | date: ' - dd.MM.yyyy' }}</b></span
-            >
-            <span class="driver-license"
-              ><i class="far fa-clock"></i><b>{{ car.time.hour }} : {{ car.time.minute }}</b></span
-            >
-            <!-- <span class="car-kpp"><i class="fas fa-cogs"></i>{{ car.kpp }}</span> -->
-          </div>
-        </div>
-      </div>
-
-      <div class="car-actions col-4 text-right">
-        <div class="price">
-          <h2>{{ car.price }} ₽</h2>
-          <!-- <span class="text-muted">итого: {{ car.price * 3 }} ₽ за 3 суток</span>  TODO -->
-        </div>
-      </div>
-    </div>
+    <bk-order [car]="car" *ngFor="let car of orders; let last = las" [disabled]="car.disabled"></bk-order>
   </div>
 </div>

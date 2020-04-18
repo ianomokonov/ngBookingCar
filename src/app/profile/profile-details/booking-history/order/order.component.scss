@@ -1,0 +1,68 @@
+@import '../../../../search/search-cars/search-cars.component.scss';
+@import '../../../../../styles/colors';
+@import '../../../../utils/custom-date.scss';
+.car {
+  flex-direction: column;
+  .car-header {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: none;
+    margin: 0;
+    background-color: #fff;
+
+    .car-info-img {
+      display: flex;
+
+      .car-info {
+        .car-title {
+          font-size: 1.5rem;
+        }
+
+        .car-details {
+          display: flex;
+          flex-wrap: wrap;
+
+          & > span {
+            margin-right: 1rem;
+            i {
+              margin-right: 0.2rem;
+            }
+          }
+        }
+      }
+
+      .car-img {
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+    .car-actions {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .price {
+        h2 {
+          margin-bottom: 0;
+          font-size: 1.5rem;
+
+          span {
+            font-weight: normal;
+          }
+        }
+      }
+    }
+  }
+  position: relative;
+  overflow: hidden;
+  .status {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0.4rem;
+  }
+}

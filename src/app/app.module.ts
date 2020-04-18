@@ -24,6 +24,9 @@ import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
 import { UserInfoComponent } from './profile/profile-details/user-info/user-info.component';
 import { BookingHistoryComponent } from './profile/profile-details/booking-history/booking-history.component';
+import { OrderComponent } from './profile/profile-details/booking-history/order/order.component';
+import { CarsComponent } from './profile/profile-details/cars/cars.component';
+import { EditUserFormComponent } from './profile/profile-details/user-info/edit-user-form/edit-user-form.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +46,9 @@ import { BookingHistoryComponent } from './profile/profile-details/booking-histo
     ProfileDetailsComponent,
     UserInfoComponent,
     BookingHistoryComponent,
+    OrderComponent,
+    CarsComponent,
+    EditUserFormComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, RouterModule],
   providers: [FormBuilder, ProfileGuard, ApiService, AuthService],

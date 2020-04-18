@@ -1,17 +1,1 @@
-@import '../../../search/search-cars/search-cars.component.scss';
-@import '../../../../styles/colors';
-.orders {
-  .car {
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    .status {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 0.4rem;
-    }
-  }
-}
+
