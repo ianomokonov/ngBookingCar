@@ -22,7 +22,14 @@ html, body {
 
 .bk-header {
   font-size: 1.2rem;
+  line-height: 1.4rem;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+
+  .btn-link{
+    text-decoration: none;
+  }
 }
 
 .tab-content {

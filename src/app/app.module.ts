@@ -22,6 +22,8 @@ import { ProfileDetailsComponent } from './profile/profile-details/profile-detai
 import { ProfileGuard } from './guards/profile.guard';
 import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
+import { UserInfoComponent } from './profile/profile-details/user-info/user-info.component';
+import { BookingHistoryComponent } from './profile/profile-details/booking-history/booking-history.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { AuthService } from './services/auth.service';
     ProfileComponent,
     EnterComponent,
     ProfileDetailsComponent,
+    UserInfoComponent,
+    BookingHistoryComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, RouterModule],
   providers: [FormBuilder, ProfileGuard, ApiService, AuthService],
