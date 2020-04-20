@@ -45,3 +45,21 @@ button {
   padding: 1rem;
   margin: 0;
 }
+
+
+.ng-dirty{
+  &.ng-invalid{
+    border-color: $danger;
+
+    &.form-control-file{
+      border: 1px solid $danger;
+      padding-left: 0.5rem;
+    }
+  }
+}
+
+.form-control-file{
+  border-color: white;
+  padding-left: 0;
+  height: 100%;
+}

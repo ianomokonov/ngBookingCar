@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'details/:id', component: DetailsComponent },
   { path: 'booking/:id', component: BookingFormComponent },
   { path: 'edit-car/:id', component: EditCarComponent },
+  { path: 'add-car', component: EditCarComponent },
   {
     path: 'profile',
     component: ProfileComponent,

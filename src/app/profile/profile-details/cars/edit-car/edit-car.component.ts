@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'bk-edit-car',
@@ -23,7 +24,58 @@ export class EditCarComponent implements OnInit {
     place: 5,
     backVolume: 510,
   };
-  constructor() {}
+
+  carImg: File;
+
+  public carForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.carForm = this.fb.group({
+      img: [null, Validators.required],
+      name: [null, Validators.required],
+      description: [null, Validators.required],
+      price: [null, Validators.required],
+      fuelType: [null, Validators.required],
+      engineVolume: [null],
+      enginePower: [null, Validators.required],
+      speed: [null],
+      time: [null],
+      volumePerHundred: [null],
+      kpp: [null, Validators.required],
+      driveUnit: [null, Validators.required],
+      places: [null, Validators.required],
+      backVolume: [null],
+      license: [null],
+      createYear: [null, Validators.required],
+    });
+
+    this.carForm.valueChanges.subscribe((v) => {
+      console.log(v);
+    });
+  }
 
   ngOnInit(): void {}
+
+  saveFile({
+    target: {
+      files: [file],
+    },
+  }) {
+    const name = file?.name as string;
+    if (name && (name.endsWith('.png') || name.endsWith('.jpg') || name.endsWith('.jpeg'))) {
+      this.carImg = file;
+    }
+  }
+
+  saveCar(){
+    if(this.carForm.invalid){
+     for(const control of Object.values(this.carForm.controls)){
+      if(control.invalid){
+        control.markAsDirty();
+      }
+     }
+     return;
+    }
+    const newCar = this.carForm.getRawValue();
+  }
 }
