@@ -1,0 +1,39 @@
+.slider-wrapper {
+  display: flex;
+  align-items: center;
+  .slider-inner {
+    margin: 0 1rem;
+    height: 0.4rem;
+    min-width: 5rem;
+    background-color: lightgray;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+
+    .thumb {
+      position: absolute;
+      height: 1.2rem;
+      width: 0.4rem;
+      border-radius: inherit;
+      background-color: #007bff;
+      cursor: grab;
+
+      &.grabbing {
+        cursor: grabbing;
+      }
+    }
+  }
+  .from,
+  .to {
+    width: 3rem;
+  }
+
+  .from {
+    text-align: end;
+  }
+  .to {
+    text-align: start;
+  }
+}

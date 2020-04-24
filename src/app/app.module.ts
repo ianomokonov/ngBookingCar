@@ -28,6 +28,7 @@ import { OrderComponent } from './profile/profile-details/booking-history/order/
 import { CarsComponent } from './profile/profile-details/cars/cars.component';
 import { EditUserFormComponent } from './profile/profile-details/user-info/edit-user-form/edit-user-form.component';
 import { EditCarComponent } from './profile/profile-details/cars/edit-car/edit-car.component';
+import { DoubleSliderComponent } from './utils/double-slider/double-slider.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { EditCarComponent } from './profile/profile-details/cars/edit-car/edit-c
     CarsComponent,
     EditUserFormComponent,
     EditCarComponent,
+    DoubleSliderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, RouterModule],
   providers: [FormBuilder, ProfileGuard, ApiService, AuthService],
