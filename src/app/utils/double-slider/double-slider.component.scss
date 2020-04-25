@@ -12,6 +12,15 @@
     align-items: center;
     flex-grow: 1;
 
+    .slider-progress {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background-color: rgba(2, 117, 216, 0.5);
+    }
+
     .thumb {
       position: absolute;
       height: 1.2rem;
@@ -27,7 +36,7 @@
   }
   .from,
   .to {
-    width: 3rem;
+    min-width: 3rem;
   }
 
   .from {

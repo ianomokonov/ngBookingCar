@@ -1,33 +1,68 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, Input, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'bk-double-slider',
   templateUrl: './double-slider.component.html',
   styleUrls: ['./double-slider.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DoubleSliderComponent),
+      multi: true,
+    },
+  ],
 })
-export class DoubleSliderComponent implements OnInit, AfterViewInit {
+export class DoubleSliderComponent implements OnInit, AfterViewInit, ControlValueAccessor {
   @ViewChild('thumbLeft') private thumbLeftRef: ElementRef<HTMLSpanElement>;
   @ViewChild('thumbRight') private thumbRightRef: ElementRef<HTMLSpanElement>;
   @ViewChild('sliderInner') private sliderInnerRef: ElementRef<HTMLSpanElement>;
+  @ViewChild('progress') private progressRef: ElementRef<HTMLSpanElement>;
 
   private thumbLeft: HTMLSpanElement;
   private thumbRight: HTMLSpanElement;
   private sliderInner: HTMLSpanElement;
+  private progress: HTMLSpanElement;
 
   private shiftX: number;
   private sliderLeft: number;
 
   private currentThumb: HTMLSpanElement;
 
-  public range = {
-    min: 0,
-    max: 100,
-  };
+  @Input() public range: SliderRange;
+  @Input() public formatValue = (value) => value;
 
-  public selected = {
-    from: 0,
-    to: 100,
-  };
+  public selected: SliderSelected;
+
+  public disabled: boolean;
+
+  private onChange = (value: any) => {};
+  private onTouched = () => {};
+
+  /*
+    Value Accessor
+  */
+  registerOnChange(fn: any) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
+
+  writeValue(out: SliderSelected) {
+    this.selected = out;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
+  }
+
+  updateValue(value: SliderSelected) {
+    this.selected = value;
+    this.onChange(value);
+    this.onTouched();
+  }
 
   constructor() {}
 
@@ -37,17 +72,37 @@ export class DoubleSliderComponent implements OnInit, AfterViewInit {
     this.thumbLeft = this.thumbLeftRef.nativeElement;
     this.thumbRight = this.thumbRightRef.nativeElement;
     this.sliderInner = this.sliderInnerRef.nativeElement;
+    this.progress = this.progressRef.nativeElement;
 
     this.initThumbPosition();
     this.initThumbListeners();
   }
 
-  private initThumbPosition() {
-    const left = ((this.selected.from - this.range.min) / (this.range.max - this.range.min)) * 100;
-    const right = ((this.range.max - this.selected.to) / (this.range.max - this.range.min)) * 100;
+  public getProgressLeft() {
+    return this.thumbLeft.getBoundingClientRect().left - this.sliderInner.getBoundingClientRect().left;
+  }
 
-    this.thumbLeft.style.left = left + '%';
-    this.thumbRight.style.right = right + '%';
+  public getProgressRight() {
+    return this.thumbRight.getBoundingClientRect().right - this.sliderInner.getBoundingClientRect().right;
+  }
+
+  private initThumbPosition() {
+    if (!this.range) {
+      console.error('DoubleSlider', 'Укажите диапазон');
+      return;
+    }
+    if (!this.selected) {
+      console.error('DoubleSlider', 'Укажите выбранный диапазон');
+      return;
+    }
+    if (this.range) {
+      const left = ((this.selected.from - this.range.min) / (this.range.max - this.range.min)) * 100;
+      const right = ((this.range.max - this.selected.to) / (this.range.max - this.range.min)) * 100;
+
+      this.thumbLeft.style.left = left + '%';
+      this.thumbRight.style.right = right + '%';
+      return;
+    }
   }
 
   private initThumbListeners() {
@@ -76,12 +131,14 @@ export class DoubleSliderComponent implements OnInit, AfterViewInit {
 
   private onThumbMove = (event: PointerEvent) => {
     event.preventDefault();
+    if (!this.range) {
+      return;
+    }
 
     const { clientX } = event;
     this.sliderLeft = this.sliderInner.getBoundingClientRect().left;
 
     let newLeft = clientX + this.shiftX - this.sliderLeft;
-    console.log([this.sliderInner.getBoundingClientRect().left, this.sliderLeft]);
 
     // курсор вышел из слайдера => оставить бегунок в его границах.
     let leftEdge = 0;
@@ -105,17 +162,22 @@ export class DoubleSliderComponent implements OnInit, AfterViewInit {
     }
 
     this.currentThumb.style.left = newLeft + 'px';
+    this.progress.style.left = this.thumbLeft.style.left;
+    this.progress.style.right = (this.sliderInner.getBoundingClientRect().right - this.thumbRight.getBoundingClientRect().right) + 'px';
     this.setSelected(newLeft);
   };
 
   private setSelected(position) {
     if (this.currentThumb === this.thumbLeft) {
-      this.selected.from = Math.round(this.range.min + (position / this.sliderInner.offsetWidth) * (this.range.max - this.range.min));
-      return;
+      this.selected.from = Math.round(this.range.min + (position / this.sliderInner.offsetWidth) * (this.range.max - this.range.min)); 
     }
-    this.selected.to = Math.round(
-      this.range.min + ((position + this.currentThumb.offsetWidth) / this.sliderInner.offsetWidth) * (this.range.max - this.range.min)
-    );
+    if (this.currentThumb === this.thumbRight) {
+      this.selected.to = Math.round(
+        this.range.min + ((position + this.currentThumb.offsetWidth) / this.sliderInner.offsetWidth) * (this.range.max - this.range.min)
+      );
+    }
+
+    this.updateValue(this.selected);
   }
 
   private onMouseUp = (event: PointerEvent) => {
@@ -132,4 +194,14 @@ export class DoubleSliderComponent implements OnInit, AfterViewInit {
 
     elem.classList.add('grabbing');
   }
+}
+
+export interface SliderRange {
+  min: number;
+  max: number;
+}
+
+export interface SliderSelected {
+  from: number;
+  to: number;
 }

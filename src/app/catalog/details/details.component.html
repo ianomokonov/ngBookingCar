@@ -17,7 +17,7 @@
             {{ car.description }}
           </p>
           <div class="price pb-3">
-            <a href="" class="btn btn-primary mr-3">Заказать</a>
+            <a [routerLink]="['/booking', 1]" class="btn btn-primary mr-3">Заказать</a>
             <b>{{ car.price }} ₽</b> в сутки
           </div>
         </div>

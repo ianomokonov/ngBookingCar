@@ -24,7 +24,7 @@
             <div class="form-group mb-0">
               <label>Цена</label>
               <div class="my-1">
-                <bk-double-slider></bk-double-slider>
+                <bk-double-slider formControlName="price" [range]="priceRange" [formatValue]="priceFormatValue"></bk-double-slider>
               </div>
             </div>
           </div>

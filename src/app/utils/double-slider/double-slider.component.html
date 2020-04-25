@@ -1,8 +1,9 @@
 <div class="slider-wrapper">
-    <div class="from">{{selected.from}}</div>
+    <div class="from">{{formatValue(selected?.from)}}</div>
     <div class="slider-inner" #sliderInner>
+        <span class="slider-progress" #progress></span>
         <span class="thumb" #thumbLeft></span>
         <span class="thumb" #thumbRight></span>
     </div>
-    <div class="to">{{selected.to}}</div>
+    <div class="to">{{formatValue(selected?.to)}}</div>
 </div>

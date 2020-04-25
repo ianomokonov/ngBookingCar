@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { SliderRange } from 'src/app/utils/double-slider/double-slider.component';
 
 @Component({
   selector: 'bk-filters-form',
@@ -13,30 +14,32 @@ export class FiltersFormComponent {
   hourStep = 1;
   minuteStep = 30;
   time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
+  priceRange: SliderRange = { min: 1500, max: 8000 };
+  priceFormatValue = (value) => `₽ ${value}`;
 
   filterForm: FormGroup;
   places = [
     {
       id: 1,
-      name: 'Москва'
+      name: 'Москва',
     },
     {
       id: 2,
-      name: 'Санкт-Петербург'
+      name: 'Санкт-Петербург',
     },
     {
       id: 3,
-      name: 'Новосибирск'
+      name: 'Новосибирск',
     },
     {
       id: 4,
-      name: 'Екатеринбург'
+      name: 'Екатеринбург',
     },
     {
       id: 5,
-      name: 'Астрахань'
+      name: 'Астрахань',
     },
-  ]
+  ];
 
   public get fromDate(): NgbDate {
     return this.filterForm.get('period').value.fromDate;
@@ -70,12 +73,12 @@ export class FiltersFormComponent {
       ],
       place: null,
       time: this.time,
-      price: null,
+      price: { from: this.priceRange.min, to: this.priceRange.max },
     });
 
-    this.filterForm.valueChanges.subscribe(v => {
+    this.filterForm.valueChanges.subscribe((v) => {
       console.log(v);
-    })
+    });
   }
 
   onDateSelection(date: NgbDate) {
