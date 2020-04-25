@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-enter',
@@ -10,9 +11,9 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class EnterComponent implements OnInit {
   public enterForm: FormGroup;
-  constructor( private auth: AuthService, private router: Router, private fb: FormBuilder) {
+  constructor( private auth: AuthService, private api: ApiService, private router: Router, private fb: FormBuilder) {
     this.enterForm = this.fb.group({
-      login: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
     });
   }
@@ -33,27 +34,25 @@ export class EnterComponent implements OnInit {
 
   public onEnterClick(): void {
     if (this.enterForm.invalid) {
-      for (let [, value] of Object.entries(this.enterForm.controls)) {
+      for (let value of Object.values(this.enterForm.controls)) {
         if (value.invalid) {
           value.markAsTouched();
         }
       }
       return;
     }
-    const { login, password } = this.enterForm.getRawValue();
-    this.auth.setToken('admin');
-    this.router.navigate(['/profile/1']);
-    // this.api.enter(login, password).subscribe(
-    //   (token) => {
-    //     if (token) {
-    //       this.auth.setToken(token);
-    //       this.router.navigate(['/admin']);
-    //     }
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
+    this.api.enter(this.enterForm.getRawValue()).subscribe(
+      (token) => {
+
+        if (token) {
+          this.auth.setToken(token);
+          this.router.navigate(['/profile']);
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   public onBackClick(): void {

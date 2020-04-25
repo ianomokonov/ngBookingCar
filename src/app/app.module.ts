@@ -18,7 +18,6 @@ import { DetailsComponent } from './catalog/details/details.component';
 import { BookingFormComponent } from './booking-form/booking-form.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EnterComponent } from './profile/enter/enter.component';
-import { ProfileDetailsComponent } from './profile/profile-details/profile-details.component';
 import { ProfileGuard } from './guards/profile.guard';
 import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
@@ -29,6 +28,9 @@ import { CarsComponent } from './profile/profile-details/cars/cars.component';
 import { EditUserFormComponent } from './profile/profile-details/user-info/edit-user-form/edit-user-form.component';
 import { EditCarComponent } from './profile/profile-details/cars/edit-car/edit-car.component';
 import { DoubleSliderComponent } from './utils/double-slider/double-slider.component';
+import { FileUploaderComponent } from './utils/file-uploader/file-uploader.component';
+import { SignUpComponent } from './profile/sign-up/sign-up.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,6 @@ import { DoubleSliderComponent } from './utils/double-slider/double-slider.compo
     BookingFormComponent,
     ProfileComponent,
     EnterComponent,
-    ProfileDetailsComponent,
     UserInfoComponent,
     BookingHistoryComponent,
     OrderComponent,
@@ -53,8 +54,10 @@ import { DoubleSliderComponent } from './utils/double-slider/double-slider.compo
     EditUserFormComponent,
     EditCarComponent,
     DoubleSliderComponent,
+    FileUploaderComponent,
+    SignUpComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, RouterModule, HttpClientModule],
   providers: [FormBuilder, ProfileGuard, ApiService, AuthService],
   bootstrap: [AppComponent],
 })

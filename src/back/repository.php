@@ -1,0 +1,324 @@
+<?php
+    //обработка запросов
+    include_once './utils/token.php';
+    include_once './utils/database.php';
+    include_once 'models.php';
+    class BookingRepository{
+        private $database;
+        private $token;
+
+        public function __construct()
+        {
+            $this->database = new DataBase();
+            $this->token = new Token();
+        }
+
+        public function GetCars($dateFrom, $dateTo, $priceFrom, $priceTo){
+            $queryText = "SELECT * FROM car WHERE ";
+            if($priceFrom){
+                $queryText = $queryText."price > $priceFrom ";
+            }
+            if($priceTo){
+                if($priceFrom) {
+                    $queryText = $queryText."AND ";
+                }
+                $queryText = $queryText."price < $priceTo";
+            }
+            $query = $this->database->db->query($queryText);
+            $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
+            
+            return $query->fetchAll();
+            
+        }
+
+        public function GetCarDetails($carId){
+            if($carId == null){
+                return array("message" => "Введите id автомобиля", "method" => "GetCarDetails", "requestData" => $carId);
+            }
+
+            $query = $this->database->db->prepare("SELECT * from car WHERE id = ?");
+            $query->execute(array($carId));
+            $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
+            
+            return $query->fetch();
+            
+        }
+
+        public function AddOrder($userId, $order){
+            if($userId == null){
+                return array("message" => "Вы не вошли", "method" => "AddOrder", "requestData" => array("userId" => $userId, "order" => $order));
+            }
+            if($order == null){
+                return array("message" => "Заказ пуст", "method" => "AddOrder", "requestData" => array("userId" => $userId, "order" => $order));
+            }
+            $order['userId'] = $userId;
+            $insert = $this->database->genInsertQuery((array)$order, 'order');
+            $query = $this->database->db->prepare($insert[0]);
+            if($insert[1][0]!=null){
+                $query->execute($insert[1]);
+            }
+
+            return $this->database->db->lastInsertId();
+            
+        }
+
+        public function SignIn($user = null){
+            if($user != null){
+                $sth = $this->database->db->prepare("SELECT id, password FROM user WHERE email = ? LIMIT 1");
+                $sth->setFetchMode(PDO::FETCH_CLASS, 'User');
+                $sth->execute(array($user->email));
+                $fullUser = $sth->fetch();
+                
+                if($fullUser){
+                    if(!password_verify($user->password, $fullUser->password)){
+                        return array("message" => "Неверный пароль");
+                    }
+                    return $this->token->encode(array("id" => $fullUser->id));
+                } else {
+                    return array("message" => "Пользователь не найден");
+                }
+                
+            } else {
+                return array("message" => "Введите данные для регистрации");
+            }
+        }
+
+        public function SignUp($user = null){
+            if($user != null){
+                try{
+                    if($this->EmailExists($user->email)){
+                        return array("message" => "Пользователь с таким email уже существует");
+                    }
+                    $user->password = password_hash($user->password, PASSWORD_BCRYPT);
+                    $insert = $this->database->genInsertQuery((array)$user, 'user');
+                    $query = $this->database->db->prepare($insert[0]);
+                    if ($insert[1][0]!=null) {
+                        $query->execute($insert[1]);
+                    }
+                    return $this->token->encode(array("id" => $this->database->db->lastInsertId()));
+                } catch(Exception $e) {
+                    return array("message" => "Ошибка добавления пользователя", "error" => $e->getMessage());
+                }
+                
+            } else {
+                return array("message" => "Введите данные для регистрации");
+            }
+        }
+
+        private function GetUserById(int $id){
+            if($id){
+                $sth = $this->database->db->prepare("SELECT * FROM user WHERE id = ?");
+                $sth->setFetchMode(PDO::FETCH_CLASS, 'User');
+                $sth->execute(array($id));
+                return $sth->fetch();
+            } else {
+                return array("message" => "GetUserById -> id не может быть пустым");
+            }
+            
+        }
+
+        private function EmailExists(string $email){
+            $query = "SELECT id, email FROM user WHERE email = ?";
+ 
+            // подготовка запроса 
+            $stmt = $this->database->db->prepare( $query );
+            // инъекция 
+            $email=htmlspecialchars(strip_tags($email));
+            // выполняем запрос 
+            $stmt->execute(array($email));
+        
+            // получаем количество строк 
+            $num = $stmt->rowCount();
+
+            return $num > 0;
+        }
+
+        public function CreateGuest($guest){
+            if(!isset($guest->name) || $guest->name == null){
+                //http_response_code(403);
+                return array("message" => "Укажите имя", "method" => "CreateGuest", "requestData" => $guest);
+            }
+            $insert = $this->database->genInsertQuery((array)$guest, 'guest');
+            $query = $this->database->db->prepare($insert[0]);
+            if($insert[1][0]!=null){
+                $query->execute($insert[1]);
+            }
+            return $this->database->db->lastInsertId();
+        }
+
+        public function GenerateLink($link){
+            if($link == null || !isset($link->guestId) || $link->guestId == null){
+                //http_response_code(500);
+                return array("message" => "Укажите id гостя", "method" => "GenerateLink", "requestData" => $link);
+            }
+
+            if($link == null || !isset($link->header) || $link->header == null){
+                //http_response_code(500);
+                return array("message" => "Укажите заголовок приглашения для ссылки", "method" => "GenerateLink", "requestData" => $link);
+            }
+
+            if($this->LinkExists($link->guestId)){
+                //http_response_code(403);
+                return array("message" => "У гостя уже есть ссылка", "method" => "GenerateLink", "requestData" => $link);
+            }
+
+            $token = $this->token->encode(array('guestId' => $link->guestId));
+            $url = $this->baseUrl.'guest/'.$token;
+            $link->url = $url;
+            $guestId = $link->guestId;
+            unset( $link->guestId );
+            
+            $insert = $this->database->genInsertQuery((array)$link, 'link');
+            $query = $this->database->db->prepare($insert[0]);
+            if($insert[1][0]!=null){
+                $query->execute($insert[1]);
+            }
+
+            $linkId = $this->database->db->lastInsertId();
+
+            $this->UpdateGuest((object) array('id' => $guestId, 'linkId' => $linkId));
+
+            return $this->GetGuestLink($linkId);
+            
+        }
+
+        public function UpdateGuest($guest){
+            if($guest == null || !isset($guest->id)){
+                //http_response_code(500);
+                return array("message" => "Укажите id гостя", "method" => "UpdateGuest", "requestData" => $guest);
+            }
+
+            $guestId = $guest->id;
+            unset($guest->id);
+            $a = $this->database->genUpdateQuery(array_keys((array)$guest), array_values((array)$guest), "guest", $guestId);
+            $query = $this->database->db->prepare($a[0]);
+            $query->execute($a[1]);
+            return array('message' => 'Гость обновлен');
+        }
+
+        public function AddToLink($guest){
+            if($guest == null || !isset($guest->guestId) || !isset($guest->linkId)){
+                //http_response_code(500);
+                return array("message" => "Укажите id гостя и ссылки", "method" => "AddToLink", "requestData" => $guest);
+            }
+            $this->UpdateGuest((object) array('id' => $guest->guestId, 'linkId' => $guest->linkId));
+            return array("message" => "Гость добавлен в ссылку");
+            
+        }
+
+        public function RemoveFromLink($guest){
+            if($guest == null || !isset($guest->guestId) || !isset($guest->linkId)){
+                //http_response_code(500);
+                return array("message" => "Укажите id гостя и ссылки", "method" => "RemoveFromLink", "requestData" => $guest);
+            }
+            $this->UpdateGuest((object) array('id' => $guest->guestId, 'linkId' => null));
+            $this->CheckEmptyLink($guest->linkId);
+            return array("message" => "Гость убран из ссылки");
+        }
+        
+        public function GetStatistics(){
+            return array("message" => "Статистика");
+            
+        }
+
+        public function GetQuestioningResults(){
+            return array("message" => "Ответы");
+            
+        }
+
+        private function GetGuestLink($linkId = null)
+        {
+            if($linkId != null){
+                $query = $this->database->db->prepare("SELECT * FROM link WHERE id = ?");
+                $query->execute(array($linkId));
+                $query->setFetchMode(PDO::FETCH_CLASS, 'Link');
+                return $query->fetch();
+            }
+            return null;
+        }
+
+        private function GetGuestChildren($guestId = null)
+        {
+            if($guestId != null){
+                $query = $this->database->db->prepare("SELECT * FROM child WHERE guestId = ?");
+                $query->execute(array($guestId));
+                $query->setFetchMode(PDO::FETCH_CLASS, 'Child');
+                return $query->fetchAll();
+            }
+            return array();
+        } 
+
+        private function GetGuestNeighbours($guestId = null)
+        {
+            if($guestId != null){
+                $query = $this->database->db->prepare("SELECT n.id, neighbourId, guestId, g.name as neighbourName FROM neighbour n JOIN guest g ON n.neighbourId=g.id WHERE n.guestId = ?");
+                $query->execute(array($guestId));
+                $query->setFetchMode(PDO::FETCH_CLASS, 'Neighbour');
+                return $query->fetchAll();
+            }
+            return array();
+        } 
+
+        private function AddGuestChild($child)
+        {
+            $insert = $this->database->genInsertQuery((array)$child, 'child');
+            $query = $this->database->db->prepare($insert[0]);
+            if($insert[1][0]!=null){
+                $query->execute($insert[1]);
+            }
+        }
+
+        private function AddGuestNeighbour($neighbour)
+        {
+            $insert = $this->database->genInsertQuery((array)$neighbour, 'neighbour');
+            $query = $this->database->db->prepare($insert[0]);
+            if($insert[1][0]!=null){
+                $query->execute($insert[1]);
+            }
+        }
+
+        private function LinkExists($guestId){
+            $query = "SELECT linkId FROM guest WHERE id = ?";
+ 
+            // подготовка запроса 
+            $stmt = $this->database->db->prepare( $query );
+            // выполняем запрос 
+            $stmt->execute(array($guestId));
+
+            $guest = $stmt->fetch();
+            return isset($guest['linkId']) && $guest['linkId'] != null;
+        }
+
+        private function CheckEmptyLink($linkId){
+            $query = "SELECT * FROM guest WHERE linkId = ?";
+ 
+            // подготовка запроса 
+            $stmt = $this->database->db->prepare( $query );
+            // выполняем запрос 
+            $stmt->execute(array($linkId));
+
+            $count = $stmt->rowCount();
+            if($count == 0){
+                $query = "DELETE FROM link WHERE id = ?";
+ 
+                // подготовка запроса 
+                $stmt = $this->database->db->prepare( $query );
+                // выполняем запрос 
+                $stmt->execute(array($linkId));
+            }
+        }
+
+        private function RemoveGuestChildren($guestId){
+            $query = "DELETE FROM child WHERE guestId = ?";
+            $stmt = $this->database->db->prepare( $query );
+            $stmt->execute(array($guestId));
+        }
+        
+        private function RemoveGuestNeighbours($guestId){
+            $query = "DELETE FROM neighbour WHERE guestId = ?";
+            $stmt = $this->database->db->prepare( $query );
+            $stmt->execute(array($guestId));
+        }
+
+    }
+?>

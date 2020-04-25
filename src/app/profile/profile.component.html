@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<bk-user-info></bk-user-info>
+<div class="container pt-3">
+  <ul ngbNav [activeId]="getActive()" class="nav-tabs">
+    <li [ngbNavItem]="link.fragment" *ngFor="let link of links">
+      <a ngbNavLink [routerLink]="link.fragment" routerLinkActive="active">{{ link.title }}</a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

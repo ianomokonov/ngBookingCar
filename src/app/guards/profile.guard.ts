@@ -20,7 +20,7 @@ export class ProfileGuard implements CanActivate {
       //   })
       // );
     }
-    this.router.navigate(['/profile/enter']);
+    this.router.navigate(['/enter']);
     return false;
   }
 }

@@ -78,4 +78,10 @@ export class EditCarComponent implements OnInit {
     }
     const newCar = this.carForm.getRawValue();
   }
+
+  isUploadFileShown() {
+    const value = this.carForm.get('img').value;
+
+    return !value || value instanceof File; 
+  }
 }

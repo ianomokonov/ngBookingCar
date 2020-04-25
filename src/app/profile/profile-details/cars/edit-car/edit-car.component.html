@@ -1,6 +1,6 @@
 <div class="container py-3">
   <small
-    ><a routerLink="/profile/1/cars"><i class="fas fa-arrow-left mr-1"></i>список автомобилей</a></small
+    ><a routerLink="/profile/cars"><i class="fas fa-arrow-left mr-1"></i>список автомобилей</a></small
   >
   <h2 class="bk-header mt-3">
     Добавление автомобиля
@@ -10,7 +10,11 @@
       <div class="col">
         <div class="form-group">
           <label>Фотография</label>
-          <input formControlName="img" type="file" class="form-control form-control-file" (change)="saveFile($event)"/>
+          <!-- <input formControlName="img" type="file" class="form-control form-control-file" (change)="saveFile($event)"/> -->
+          <div>
+            <bk-file-uploader *ngIf="isUploadFileShown()" formControlName="img"></bk-file-uploader>
+          </div>
+          
         </div>
       </div>
       <div class="col">
