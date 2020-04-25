@@ -7,7 +7,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor() {}
 
   public intercept(req: HttpRequest<{}>, next: HttpHandler): Observable<HttpEvent<{}>> {
-    if (!req.url.includes('enter') && sessionStorage.getItem('bookingUserToken')) {
+    if (sessionStorage.getItem('bookingUserToken')) {
         let token=sessionStorage.getItem('bookingUserToken');
         const paramReq = req.clone({
             params: req.params.set('token', token)

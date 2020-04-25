@@ -20,6 +20,10 @@ export class ApiService {
     return this.http.post<string>(`${this.baseUrl}key=sign-up`, userData);
   }
 
+  public getUserInfo(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}key=get-user-info`);
+  }
+
   // //Гость
 
   // /** Получение информыции о госте */

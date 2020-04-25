@@ -8,6 +8,7 @@ include_once 'repository.php';
 include_once './utils/token.php';
 
 $repository = new BookingRepository();
+$token = new Token();
 // http://localhost/controller.php?key=get-cars&id=3&name=John
 if(isset($_GET['key'])){
     switch($_GET['key']){
@@ -18,7 +19,7 @@ if(isset($_GET['key'])){
             echo json_encode($repository->GetCarDetails($_GET['carId']));
             return;
         case 'add-order':
-            if($decodeToken = checkToken()){
+            if($decodeToken = checkToken($token)){
                 $data = json_decode(file_get_contents("php://input"));
                 echo json_encode($repository->AddOrder($decodeToken->userId, $data));
             }
@@ -32,31 +33,38 @@ if(isset($_GET['key'])){
             echo json_encode($repository->SignUp($data));
             return;
         case 'get-history':
-            if($decodeToken = checkToken()){
-                $data = json_decode(file_get_contents("php://input"));
-                echo json_encode($repository->GetHistory($decodeToken, $data));
+            if($decodeToken = checkToken($token)){
+                echo json_encode($repository->GetHistory($decodeToken->id));
             }
             return;
+        case 'get-user-info':
+            if($decodeToken = checkToken($token)){
+                $data = json_decode(file_get_contents("php://input"));
+                echo json_encode($repository->GetUserInfo($decodeToken->id));
+                return;
+            }
+            echo json_encode('Ошибка получения информации пользователя');
+            return;
         case 'add-car':
-            if($decodeToken = checkToken(true)){
+            if($decodeToken = checkToken($token, true)){
                 $data = json_decode(file_get_contents("php://input"));
                 echo json_encode($repository->AddCar($decodeToken, $data));
             }
             return;
         case 'update-car':
-            if($decodeToken = checkToken(true)){
+            if($decodeToken = checkToken($token, true)){
                 $data = json_decode(file_get_contents("php://input"));
                 echo json_encode($repository->UpdateCar($decodeToken, $data));
             }
             return;
         case 'update-user-info':
-            if($decodeToken = checkToken()){
+            if($decodeToken = checkToken($token)){
                 $data = json_decode(file_get_contents("php://input"));
                 echo json_encode($repository->UpdateUserInfo($decodeToken, $data));
             }
             return;
         case 'update-order':
-            if($decodeToken = checkToken()){
+            if($decodeToken = checkToken($token)){
                 $data = json_decode(file_get_contents("php://input"));
                 echo json_encode($repository->UpdateOrder($decodeToken, $data));
             }
@@ -71,7 +79,7 @@ if(isset($_GET['key'])){
     echo json_encode(array("message" => "Отсутствует ключ запроса."));
 }
 
-function checkToken($checkAdmin) {
+function checkToken($token, $checkAdmin = false) {
     try{
         $data = $token->decode($_GET['token']);
         if($checkAdmin && !$data->isAdmin){

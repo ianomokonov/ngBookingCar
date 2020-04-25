@@ -30,7 +30,8 @@ import { EditCarComponent } from './profile/profile-details/cars/edit-car/edit-c
 import { DoubleSliderComponent } from './utils/double-slider/double-slider.component';
 import { FileUploaderComponent } from './utils/file-uploader/file-uploader.component';
 import { SignUpComponent } from './profile/sign-up/sign-up.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -55,10 +56,10 @@ import { HttpClientModule } from '@angular/common/http';
     EditCarComponent,
     DoubleSliderComponent,
     FileUploaderComponent,
-    SignUpComponent,
+    SignUpComponent
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, RouterModule, HttpClientModule],
-  providers: [FormBuilder, ProfileGuard, ApiService, AuthService],
+  providers: [FormBuilder, ProfileGuard, ApiService, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

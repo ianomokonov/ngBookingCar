@@ -11,17 +11,17 @@
       <div class="col-sm-5">
         <div class="form-group">
           <label>ФИО</label>
-          <h6>{{ userInfo.surname }} {{ userInfo.name }} {{ userInfo.secondname }}</h6>
+          <h6>{{ userInfo?.surname }} {{ userInfo?.name }} {{ userInfo?.secondname }}</h6>
         </div>
         <div class="form-group">
           <label>Email</label>
-          <h6>{{ userInfo.email }}</h6>
+          <h6>{{ userInfo?.email || "–" }}</h6>
         </div>
       </div>
       <div class="col-sm">
         <div class="form-group">
           <label>Телефон</label>
-          <h6>{{ userInfo.phone }}</h6>
+          <h6>{{ userInfo?.phone || "–" }}</h6>
         </div>
       </div>
     </div>

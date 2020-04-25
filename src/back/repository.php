@@ -83,6 +83,13 @@
             }
         }
 
+        public function getUserInfo($userId){
+            $sth = $this->database->db->prepare("SELECT name, surname, middlename, phone, email FROM user WHERE id = ? LIMIT 1");
+            $sth->setFetchMode(PDO::FETCH_CLASS, 'User');
+            $sth->execute(array($userId));
+            return $sth->fetch();
+        }
+
         public function SignUp($user = null){
             if($user != null){
                 try{
