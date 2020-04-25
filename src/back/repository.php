@@ -2,15 +2,19 @@
     //обработка запросов
     include_once './utils/token.php';
     include_once './utils/database.php';
+    include_once './utils/filesUpload.php';
     include_once 'models.php';
     class BookingRepository{
         private $database;
         private $token;
+        private $filesUpload;
+        private $baseUrl = 'http://nomokonov.mv/booking';
 
         public function __construct()
         {
             $this->database = new DataBase();
             $this->token = new Token();
+            $this->filesUpload = new FilesUpload();
         }
 
         public function GetCars($dateFrom, $dateTo, $priceFrom, $priceTo){
@@ -31,6 +35,11 @@
             
             return $query->fetchAll();
             
+        }
+
+        public function UploadCarImg($file){
+            $newFileName = $this->filesUpload->upload($file, __DIR__.'\Files', uniqid());
+            return $this->baseUrl.'/Files'.'/'.$newFileName;
         }
 
         public function GetCarDetails($carId){
@@ -66,7 +75,7 @@
 
         public function SignIn($user = null){
             if($user != null){
-                $sth = $this->database->db->prepare("SELECT id, password FROM user WHERE email = ? LIMIT 1");
+                $sth = $this->database->db->prepare("SELECT id, password, isAdmin FROM user WHERE email = ? LIMIT 1");
                 $sth->setFetchMode(PDO::FETCH_CLASS, 'User');
                 $sth->execute(array($user->email));
                 $fullUser = $sth->fetch();
@@ -75,7 +84,7 @@
                     if(!password_verify($user->password, $fullUser->password)){
                         return array("message" => "Неверный пароль");
                     }
-                    return $this->token->encode(array("id" => $fullUser->id));
+                    return $this->token->encode(array("id" => $fullUser->id, "isAdmin" => $fullUser->isAdmin));
                 } else {
                     return array("message" => "Пользователь не найден");
                 }
@@ -111,6 +120,24 @@
                 
             } else {
                 return array("message" => "Введите данные для регистрации");
+            }
+        }
+
+        public function AddCar($car = null){
+            if($car != null){
+                try{
+                    $insert = $this->database->genInsertQuery((array)$car, 'car');
+                    $query = $this->database->db->prepare($insert[0]);
+                    if ($insert[1][0]!=null) {
+                        $query->execute($insert[1]);
+                    }
+                    return $this->database->db->lastInsertId();
+                } catch(Exception $e) {
+                    return array("message" => "Ошибка добавления автомобиля", "error" => $e->getMessage());
+                }
+                
+            } else {
+                return array("message" => "Введите данные автомобиля");
             }
         }
 

@@ -13,7 +13,8 @@ $token = new Token();
 if(isset($_GET['key'])){
     switch($_GET['key']){
         case 'get-cars':
-            echo json_encode($repository->GetCars($_GET['dateFrom'],$_GET['dateTo'],$_GET['priceFrom'],$_GET['priceTo']));
+            // echo json_encode($repository->GetCars($_GET['dateFrom'],$_GET['dateTo'],$_GET['priceFrom'],$_GET['priceTo']));
+            echo json_encode($repository->GetCars(null, null, null, null));
             return;
         case 'get-car-details':
             echo json_encode($repository->GetCarDetails($_GET['carId']));
@@ -48,7 +49,7 @@ if(isset($_GET['key'])){
         case 'add-car':
             if($decodeToken = checkToken($token, true)){
                 $data = json_decode(file_get_contents("php://input"));
-                echo json_encode($repository->AddCar($decodeToken, $data));
+                echo json_encode($repository->AddCar($data));
             }
             return;
         case 'update-car':
@@ -69,6 +70,13 @@ if(isset($_GET['key'])){
                 echo json_encode($repository->UpdateOrder($decodeToken, $data));
             }
             return;
+        case 'upload-car-img':
+            if($decodeToken = checkToken($token, true)){
+                echo json_encode($repository->UploadCarImg($_FILES['CarImage']));
+            } else {
+                echo json_encode(array("message" => "В доступе отказано"));
+            }
+            return;
         default: 
             echo json_encode(array("message" => "Ключ запроса не найден"));
             return;
@@ -82,8 +90,7 @@ if(isset($_GET['key'])){
 function checkToken($token, $checkAdmin = false) {
     try{
         $data = $token->decode($_GET['token']);
-        if($checkAdmin && !$data->isAdmin){
-            json_encode(array("message" => "В доступе отказано"));
+        if($checkAdmin && (!isset($data->isAdmin) || !$data->isAdmin)){
             return false;
         }
         return $data;
