@@ -3,21 +3,24 @@
     ><a routerLink="/profile/cars"><i class="fas fa-arrow-left mr-1"></i>список автомобилей</a></small
   >
   <h2 class="bk-header mt-3">
-    Добавление автомобиля
+    {{ car ? 'Редактирование' : 'Добавление' }} автомобиля
   </h2>
   <form class="mt-3" [formGroup]="carForm" (submit)="saveCar()">
     <div class="row">
       <div class="col">
         <div class="form-group">
           <label>Фотография</label>
-          <!-- <input formControlName="img" type="file" class="form-control form-control-file" (change)="saveFile($event)"/> -->
           <div>
+            <div *ngIf="!isUploadFileShown()" class="position-relative d-inline-block">
+              <img [src]="carForm.get('img').value">
+              <span class="remove-img" (click)="removeImg()">&times;</span>
+            </div>
             <bk-file-uploader *ngIf="isUploadFileShown()" formControlName="img"></bk-file-uploader>
           </div>
           
         </div>
       </div>
-      <div class="col">
+      <div class="col-9">
         <div class="form-group">
           <label>Название</label>
           <input formControlName="name" type="text" class="form-control">

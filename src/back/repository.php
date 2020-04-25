@@ -169,6 +169,30 @@
             return $num > 0;
         }
 
+        public function UpdateCar($car){
+            if($car == null || !isset($car->id)){
+                return array("message" => "Укажите id автомобиля", "method" => "UpdateCar", "requestData" => $car);
+            }
+
+            $carId = $car->id;
+            unset($car->id);
+            if($car->oldImg && $car->img != $car->oldImg){
+                $this->removeFile($car->oldImg);
+            }
+            unset($car->oldImg);
+            $a = $this->database->genUpdateQuery(array_keys((array)$car), array_values((array)$car), "car", $carId);
+            $query = $this->database->db->prepare($a[0]);
+            $query->execute($a[1]);
+            return array('message' => 'Автомобиль обновлен');
+        }
+
+        private function removeFile($filelink){
+            $path = explode($this->baseUrl.'/', $filelink);
+            if($path[1] && file_exists($path[1])){
+                unlink($path[1]);
+            }
+        }
+
         public function CreateGuest($guest){
             if(!isset($guest->name) || $guest->name == null){
                 //http_response_code(403);

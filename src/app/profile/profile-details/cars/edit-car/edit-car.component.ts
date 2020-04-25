@@ -1,37 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'bk-edit-car',
   templateUrl: './edit-car.component.html',
   styleUrls: ['./edit-car.component.scss'],
 })
-export class EditCarComponent implements OnInit {
-  car = {
-    img: '../../../assets/cars/logan_new.jpeg',
-    name: 'Renault Logan II MT',
-    year: 2017,
-    description:
-      'Аренда Рено Логан. - демократичный и надёжный седан, с большим багажником и энергоёмкой подвеской. Оптимальное решение, если вы хотите получить хороший уровень комфорта по приемлемой цене.',
-    price: 1805,
-    engineType: 'Бензиновый, 16',
-    enginePower: 82,
-    speed: 172,
-    time: 11.9,
-    volumPerHundred: 7.2,
-    kpp: 'Механическая',
-    driveUnit: 'Передний',
-    place: 5,
-    backVolume: 510,
-  };
-
-  carImg: File;
+export class EditCarComponent {
+  car;
 
   public carForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private api: ApiService, private router: Router) {
+  constructor(private fb: FormBuilder, private api: ApiService, private router: Router, private route: ActivatedRoute) {
     this.carForm = this.fb.group({
       img: [null, Validators.required],
       name: [null, Validators.required],
@@ -54,44 +37,64 @@ export class EditCarComponent implements OnInit {
     this.carForm.valueChanges.subscribe((v) => {
       console.log(v);
     });
-  }
 
-  ngOnInit(): void {}
-
-  saveFile({
-    target: {
-      files: [file],
-    },
-  }) {
-    const name = file?.name as string;
-    if (name && (name.endsWith('.png') || name.endsWith('.jpg') || name.endsWith('.jpeg'))) {
-      this.carImg = file;
-    }
-  }
-
-  saveCar(){
-    if(this.carForm.invalid){
-     for(const control of Object.values(this.carForm.controls)){
-      if(control.invalid){
-        control.markAsDirty();
+    this.route.params.subscribe((params) => {
+      if (params.id) {
+        this.updateCar(params.id);
       }
-     }
-     return;
+    });
+  }
+
+  public saveCar() {
+    if (this.carForm.invalid) {
+      for (const control of Object.values(this.carForm.controls)) {
+        if (control.invalid) {
+          control.markAsDirty();
+        }
+      }
+      return;
     }
     const newCar = this.carForm.getRawValue();
-    const formData = new FormData();
-    formData.append('CarImage', newCar.img, newCar.img.name.replace(' ','_'));
-    this.api.uploadCarImg(formData).subscribe(data => {
+    this.uploadCarImg(newCar.img).subscribe((data) => {
       newCar.img = data;
-      this.api.addCar(newCar).subscribe(carId => {
-        this.router.navigate(['../edit-car', carId]);
-      })
-    })
+      if (this.car) {
+        newCar.id = this.car.id;
+        newCar.oldImg = this.car.img;
+        this.api.updateCar(newCar).subscribe(() => {
+          this.updateCar(this.car.id);
+        });
+      } else {
+        this.api.addCar(newCar).subscribe((carId) => {
+          this.router.navigate(['../edit-car', carId]);
+        });
+      }
+    });
+  }
+
+  updateCar(id) {
+    this.api.getCar(id).subscribe((car) => {
+      this.car = car;
+      this.carForm.patchValue(car);
+    });
+  }
+
+  uploadCarImg(img): Observable<string> {
+    if (img instanceof File) {
+      const formData = new FormData();
+      formData.append('CarImage', img, img.name.replace(' ', '_'));
+      return this.api.uploadCarImg(formData);
+    } else {
+      return of(img);
+    }
+  }
+
+  removeImg() {
+    this.carForm.get('img').setValue(null);
   }
 
   isUploadFileShown() {
     const value = this.carForm.get('img').value;
 
-    return !value || value instanceof File; 
+    return !value || value instanceof File;
   }
 }

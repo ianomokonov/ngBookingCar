@@ -16,7 +16,8 @@ if(isset($_GET['key'])){
             // echo json_encode($repository->GetCars($_GET['dateFrom'],$_GET['dateTo'],$_GET['priceFrom'],$_GET['priceTo']));
             echo json_encode($repository->GetCars(null, null, null, null));
             return;
-        case 'get-car-details':
+            return;
+        case 'get-car':
             echo json_encode($repository->GetCarDetails($_GET['carId']));
             return;
         case 'add-order':
@@ -55,7 +56,7 @@ if(isset($_GET['key'])){
         case 'update-car':
             if($decodeToken = checkToken($token, true)){
                 $data = json_decode(file_get_contents("php://input"));
-                echo json_encode($repository->UpdateCar($decodeToken, $data));
+                echo json_encode($repository->UpdateCar($data));
             }
             return;
         case 'update-user-info':

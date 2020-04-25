@@ -28,12 +28,20 @@ export class ApiService {
     return this.http.get<any>(`${this.baseUrl}key=get-cars`);
   }
 
-  public uploadCarImg(data): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}key=upload-car-img`, data);
+  public getCar(carId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}key=get-car&carId=${carId}`);
+  }
+
+  public uploadCarImg(data): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}key=upload-car-img`, data);
   }
 
   public addCar(data): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}key=add-car`, data);
+  }
+
+  public updateCar(data): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}key=update-car`, data);
   }
 
   // //Гость
