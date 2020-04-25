@@ -14,13 +14,15 @@
         }
 
         public function GetCars($dateFrom, $dateTo, $priceFrom, $priceTo){
-            $queryText = "SELECT * FROM car WHERE ";
+            $queryText = "SELECT * FROM car ";
             if($priceFrom){
-                $queryText = $queryText."price > $priceFrom ";
+                $queryText = $queryText."WHERE price > $priceFrom ";
             }
             if($priceTo){
                 if($priceFrom) {
                     $queryText = $queryText."AND ";
+                } else {
+                    $queryText = $queryText."WHERE ";
                 }
                 $queryText = $queryText."price < $priceTo";
             }

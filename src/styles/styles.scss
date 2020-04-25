@@ -63,3 +63,9 @@ button {
   padding-left: 0;
   height: 100%;
 }
+
+.no-data{
+  @extend .text-muted;
+  display: flex;
+  justify-content: center;
+}

@@ -24,6 +24,18 @@ export class ApiService {
     return this.http.get<any>(`${this.baseUrl}key=get-user-info`);
   }
 
+  public getCars(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}key=get-cars`);
+  }
+
+  public uploadCarImg(data): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}key=upload-car-img`, data);
+  }
+
+  public addCar(data): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}key=add-car`, data);
+  }
+
   // //Гость
 
   // /** Получение информыции о госте */

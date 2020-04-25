@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'bk-cars',
@@ -6,57 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cars.component.scss'],
 })
 export class CarsComponent implements OnInit {
-  cars = [
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-  ];
-  constructor() {}
+  cars;
+  constructor(private api: ApiService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.api.getCars().subscribe(cars => {
+      this.cars = cars;
+    })
+  }
 }

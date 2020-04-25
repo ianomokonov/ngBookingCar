@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'bk-edit-car',
@@ -29,7 +30,7 @@ export class EditCarComponent implements OnInit {
 
   public carForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private api: ApiService) {
     this.carForm = this.fb.group({
       img: [null, Validators.required],
       name: [null, Validators.required],
@@ -77,6 +78,14 @@ export class EditCarComponent implements OnInit {
      return;
     }
     const newCar = this.carForm.getRawValue();
+    const formData = new FormData();
+    formData.append('CarImage', newCar.img, newCar.img.name.replace(' ','_'));
+    this.api.uploadCarImg(formData).subscribe(data => {
+      newCar.img = data;
+      this.api.addCar(newCar).subscribe(car => {
+        console.log(car)
+      })
+    })
   }
 
   isUploadFileShown() {
