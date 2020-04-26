@@ -10,6 +10,7 @@ export class ProfileComponent implements OnInit {
   public links = [
     { title: 'История заказов', fragment: 'history' },
     { title: 'Автомобили', fragment: 'cars' },
+    { title: 'Места сдачи', fragment: 'places' },
   ];
   constructor(public route: ActivatedRoute, private router: Router) { }
 

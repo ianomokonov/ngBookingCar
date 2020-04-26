@@ -2,13 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SliderRange } from 'src/app/utils/double-slider/double-slider.component';
+import { Place } from 'src/app/profile/profile-details/places/place/place.component';
+import { ApiService } from 'src/app/services/api.service';
+import { SearchService } from 'src/app/services/search.service';
+import { debounceTime } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'bk-filters-form',
   templateUrl: './filters-form.component.html',
   styleUrls: ['./filters-form.component.scss'],
 })
-export class FiltersFormComponent {
+export class FiltersFormComponent implements OnInit {
   hoveredDate: NgbDate | null = null;
 
   hourStep = 1;
@@ -18,28 +22,7 @@ export class FiltersFormComponent {
   priceFormatValue = (value) => `₽ ${value}`;
 
   filterForm: FormGroup;
-  places = [
-    {
-      id: 1,
-      name: 'Москва',
-    },
-    {
-      id: 2,
-      name: 'Санкт-Петербург',
-    },
-    {
-      id: 3,
-      name: 'Новосибирск',
-    },
-    {
-      id: 4,
-      name: 'Екатеринбург',
-    },
-    {
-      id: 5,
-      name: 'Астрахань',
-    },
-  ];
+  places: Place[];
 
   public get fromDate(): NgbDate {
     return this.filterForm.get('period').value.fromDate;
@@ -63,21 +46,33 @@ export class FiltersFormComponent {
     });
   }
 
-  constructor(private fb: FormBuilder, calendar: NgbCalendar) {
+  constructor(private fb: FormBuilder, calendar: NgbCalendar, private api: ApiService, private searchService: SearchService) {
     this.filterForm = this.fb.group({
-      period: [
-        {
-          fromDate: calendar.getToday(),
-          toDate: calendar.getNext(calendar.getToday(), 'd', 10),
-        },
-      ],
+      period: {
+        fromDate: calendar.getToday(),
+        toDate: calendar.getNext(calendar.getToday(), 'd', 10),
+      },
       place: null,
       time: this.time,
       price: { from: this.priceRange.min, to: this.priceRange.max },
     });
+    this.filterForm.valueChanges.pipe(debounceTime(300)).subscribe(() => {
+      const formValue = this.filterForm.getRawValue();
+      formValue.place = this.places.find(p => p.id == formValue.place);
+      this.searchService.model = formValue;
+    });
+  }
 
-    this.filterForm.valueChanges.subscribe((v) => {
-      console.log(v);
+  ngOnInit() {
+    if (this.searchService.model) {
+      const model = {...this.searchService.model} as any;
+      if(model.place){
+        model.place = model.place.id;
+      }
+      this.filterForm.patchValue(model);
+    }
+    this.api.getPlaces().subscribe((places) => {
+      this.places = places;
     });
   }
 

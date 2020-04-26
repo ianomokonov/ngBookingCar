@@ -27,8 +27,8 @@
             <span class="text-muted">итого: {{ car.price * 3 }} ₽ за 3 суток</span>
           </div>
           <div class="btns">
-            <a class="btn btn-primary mr-1" [routerLink]="['/booking',1]">Заказать</a>
-            <a class="btn btn-outline-primary" [routerLink]="['/details',1]">Подробнее</a>
+            <a class="btn btn-primary mr-1" [routerLink]="['/booking', car.id]">Заказать</a>
+            <a class="btn btn-outline-primary" [routerLink]="['/details', car.id]">Подробнее</a>
           </div>
         </div>
       </div>

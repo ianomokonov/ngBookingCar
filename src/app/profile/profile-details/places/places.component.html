@@ -1,0 +1,8 @@
+<div class="places">
+    <div class="place w-75 mb-1" *ngFor="let place of places">
+        <bk-place [place]="place" (placeUpdated)="updatePlaces()"></bk-place>
+    </div>
+    <div class="place w-75">
+        <bk-place (placeUpdated)="updatePlaces()"></bk-place>
+    </div>
+</div>

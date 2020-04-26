@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Place } from '../profile/profile-details/places/place/place.component';
 
 @Injectable()
 export class ApiService {
@@ -42,6 +43,22 @@ export class ApiService {
 
   public updateCar(data): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}key=update-car`, data);
+  }
+
+  public getPlaces(): Observable<Place[]> {
+    return this.http.get<Place[]>(`${this.baseUrl}key=get-places`);
+  }
+
+  public addPlace(data): Observable<number> {
+    return this.http.post<number>(`${this.baseUrl}key=add-place`, data);
+  }
+
+  public updatePlace(data): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}key=update-place`, data);
+  }
+
+  public deletePlace(id): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}key=delete-place&placeId=${id}`);
   }
 
   // //Гость

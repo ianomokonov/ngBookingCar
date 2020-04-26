@@ -1,66 +1,35 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
+import { SearchService, SearchModel } from 'src/app/services/search.service';
+import { takeWhile } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'bk-search-cars',
   templateUrl: './search-cars.component.html',
   styleUrls: ['./search-cars.component.scss'],
 })
-export class SearchCarsComponent implements OnInit {
-
+export class SearchCarsComponent implements OnInit, OnDestroy {
   @Input() public header: string;
 
-  constructor() {}
+  constructor(private api: ApiService, private searchService: SearchService) {}
 
-  cars = [
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-    {
-      img: '../../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      places: 5,
-      license: 'B',
-      kpp: 'Механика',
-      price: 1805,
-    },
-  ];
+  cars;
 
-  ngOnInit(): void {}
+  private rxAlive: boolean = true;
+
+  ngOnInit(): void {
+    this.searchService.$filtersUpdate.pipe(takeWhile(() => this.rxAlive)).subscribe((model) => {
+      this.updateCars(model);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.rxAlive = false;
+  }
+
+  updateCars(model?: SearchModel) {
+    this.api.getCars().subscribe((cars) => {
+      this.cars = cars;
+    });
+  }
 }

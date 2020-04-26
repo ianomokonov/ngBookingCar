@@ -9,7 +9,7 @@
           {{ car.name }}
         </h2>
         <div class="info mb-2">
-          <small class="mr-1 text-muted">Год выпуска:</small><b>{{ car.year }}</b>
+          <small class="mr-1 text-muted">Год выпуска:</small><b>{{ car.createYear }}</b>
         </div>
         <div class="description">
           <h4>Описание</h4>
@@ -17,7 +17,7 @@
             {{ car.description }}
           </p>
           <div class="price pb-3">
-            <a [routerLink]="['/booking', 1]" class="btn btn-primary mr-3">Заказать</a>
+            <a [routerLink]="['/booking', car.id]" class="btn btn-primary mr-3">Заказать</a>
             <b>{{ car.price }} ₽</b> в сутки
           </div>
         </div>
@@ -32,7 +32,7 @@
             <div class="col-6" data-key="0">
               <ul>
                 <li>
-                  <span>Тип двигателя</span><span>{{ car.engineType }}</span>
+                  <span>Тип двигателя</span><span>{{ car.fuelType }}, {{car.engineVolume}}</span>
                 </li>
                 <li>
                   <span>Максимальная мощность</span><span>{{ car.enginePower }} л.с.</span>
@@ -44,7 +44,7 @@
                   <span>Время разгона 0 - 100 км/ч</span><span>{{ car.time }} с</span>
                 </li>
                 <li>
-                  <span>Расход топлива</span><span>{{ car.volumPerHundred }} л/100 км</span>
+                  <span>Расход топлива</span><span>{{ car.volumePerHundred }} л/100 км</span>
                 </li>
               </ul>
             </div>
@@ -54,10 +54,14 @@
                   <span>Привод</span><span>{{ car.driveUnit }}</span>
                 </li>
                 <li>
-                  <span>Количество мест</span><span>{{ car.place }}</span>
+                  <span>Количество мест</span><span>{{ car.places }}</span>
                 </li>
-                <li><span>Объем багажника</span><span>{{car.backVolume}} л</span></li>
-                <li><span>Год выпуска</span><span>{{car.year}}</span></li>
+                <li>
+                  <span>Объем багажника</span><span>{{ car.backVolume }} л</span>
+                </li>
+                <li>
+                  <span>Год выпуска</span><span>{{ car.createYear }}</span>
+                </li>
                 <li>
                   <span>Коробка передач</span><span>{{ car.kpp }}</span>
                 </li>

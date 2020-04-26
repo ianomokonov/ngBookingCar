@@ -32,6 +32,9 @@ import { FileUploaderComponent } from './utils/file-uploader/file-uploader.compo
 import { SignUpComponent } from './profile/sign-up/sign-up.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { PlacesComponent } from './profile/profile-details/places/places.component';
+import { PlaceComponent } from './profile/profile-details/places/place/place.component';
+import { SearchService } from './services/search.service';
 
 @NgModule({
   declarations: [
@@ -56,10 +59,12 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     EditCarComponent,
     DoubleSliderComponent,
     FileUploaderComponent,
-    SignUpComponent
+    SignUpComponent,
+    PlacesComponent,
+    PlaceComponent
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, RouterModule, HttpClientModule],
-  providers: [FormBuilder, ProfileGuard, ApiService, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],
+  providers: [FormBuilder, ProfileGuard, ApiService, AuthService, SearchService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

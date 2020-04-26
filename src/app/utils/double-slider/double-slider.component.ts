@@ -101,6 +101,8 @@ export class DoubleSliderComponent implements OnInit, AfterViewInit, ControlValu
 
       this.thumbLeft.style.left = left + '%';
       this.thumbRight.style.right = right + '%';
+      this.progress.style.left = left + '%';
+      this.progress.style.right = right + '%';
       return;
     }
   }

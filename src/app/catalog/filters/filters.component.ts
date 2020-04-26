@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { SearchService, SearchModel } from 'src/app/services/search.service';
 
 @Component({
   selector: 'bk-filters',
@@ -7,23 +8,12 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./filters.component.scss'],
 })
 export class FiltersComponent implements OnInit {
-  filters = {
-    period: {
-      fromDate: new NgbDate(2020, 5, 5),
-      toDate: new NgbDate(2020, 5, 10),
-    },
-    time: { hour: 13, minute: 30, second: 0 },
-    place: {
-      id: 1,
-      name: 'Москва',
-    },
-    price: {
-      from: 5000,
-      to: 8000
-    }
-  };
+  filters: SearchModel;
 
-  constructor() {}
+  constructor(public searchService: SearchService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.filters = this.searchService.model;
+    this.searchService.initUpdate();
+  }
 }

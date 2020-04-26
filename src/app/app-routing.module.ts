@@ -11,6 +11,7 @@ import { BookingHistoryComponent } from './profile/profile-details/booking-histo
 import { CarsComponent } from './profile/profile-details/cars/cars.component';
 import { EditCarComponent } from './profile/profile-details/cars/edit-car/edit-car.component';
 import { SignUpComponent } from './profile/sign-up/sign-up.component';
+import { PlacesComponent } from './profile/profile-details/places/places.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'search' },
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'history' },
       { path: 'history', component: BookingHistoryComponent },
       { path: 'cars', component: CarsComponent },
+      { path: 'places', component: PlacesComponent },
     ],
   },
 ];

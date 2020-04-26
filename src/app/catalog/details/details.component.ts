@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'bk-details',
@@ -6,25 +8,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
-  car = {
-    img: '../../../assets/cars/logan_new.jpeg',
-    name: 'Renault Logan II MT',
-    year: 2017,
-    description:
-      'Аренда Рено Логан. - демократичный и надёжный седан, с большим багажником и энергоёмкой подвеской. Оптимальное решение, если вы хотите получить хороший уровень комфорта по приемлемой цене.',
-    price: 1805,
-    engineType: 'Бензиновый, 16',
-    enginePower: 82,
-    speed: 172,
-    time: 11.9,
-    volumPerHundred: 7.2,
-    kpp: 'Механическая',
-    driveUnit: 'Передний',
-    place: 5,
-    backVolume: 510
-  };
+  car;
 
-  constructor() {}
+  constructor(private route: ActivatedRoute, private api: ApiService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      if(params.id){
+        this.api.getCar(params.id).subscribe(car => {
+          this.car = car;
+        })
+      }
+    })
+  }
 }
