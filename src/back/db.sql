@@ -43,8 +43,8 @@ CREATE TABLE IF NOT EXISTS carOrder(
     dateTo varchar(100) NOT NULL,
     orderSum int(10) NOT NULL,
     time varchar(50) NOT NULL,
-
+    
     FOREIGN KEY (userId) REFERENCES user(id),
     FOREIGN KEY (carId) REFERENCES car(id),
-    FOREIGN KEY (placeId) REFERENCES place(id)
+    FOREIGN KEY (placeId) REFERENCES place(id) ON DELETE CASCADE
 );

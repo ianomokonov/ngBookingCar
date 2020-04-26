@@ -58,18 +58,18 @@ export class FiltersFormComponent implements OnInit {
     });
     this.filterForm.valueChanges.pipe(debounceTime(300)).subscribe(() => {
       const formValue = this.filterForm.getRawValue();
-      formValue.place = this.places.find(p => p.id == formValue.place);
+      formValue.place = this.places.find((p) => p.id == formValue.place);
       this.searchService.model = formValue;
     });
   }
 
   ngOnInit() {
     if (this.searchService.model) {
-      const model = {...this.searchService.model} as any;
-      if(model.place){
+      const model = { ...this.searchService.model } as any;
+      if (model.place) {
         model.place = model.place.id;
       }
-      this.filterForm.patchValue(model);
+      this.filterForm.patchValue(model, { emitEvent: false });
     }
     this.api.getPlaces().subscribe((places) => {
       this.places = places;

@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDate, NgbTimeStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { ApiService } from '../services/api.service';
+import { error } from '@angular/compiler/src/util';
+import { AuthService } from '../services/auth.service';
+import { Place } from '../profile/profile-details/places/place/place.component';
+import { forkJoin } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'bk-booking-form',
@@ -8,14 +15,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./booking-form.component.scss'],
 })
 export class BookingFormComponent implements OnInit {
-  public car = {
-    img: '../../assets/cars/logan_new.jpeg',
-    name: 'Renault Logan II MT',
-    places: 5,
-    license: 'B',
-    kpp: 'Механика',
-    price: 1805,
-  };
+  public car;
+  public user;
 
   hoveredDate: NgbDate | null = null;
 
@@ -24,28 +25,7 @@ export class BookingFormComponent implements OnInit {
   time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
 
   bookingForm: FormGroup;
-  places = [
-    {
-      id: 1,
-      name: 'Москва',
-    },
-    {
-      id: 2,
-      name: 'Санкт-Петербург',
-    },
-    {
-      id: 3,
-      name: 'Новосибирск',
-    },
-    {
-      id: 4,
-      name: 'Екатеринбург',
-    },
-    {
-      id: 5,
-      name: 'Астрахань',
-    },
-  ];
+  places: Place[];
 
   public get fromDate(): NgbDate {
     return this.bookingForm.get('order').get('period').value.fromDate;
@@ -68,12 +48,19 @@ export class BookingFormComponent implements OnInit {
       toDate: date,
     });
   }
-  constructor(private fb: FormBuilder, calendar: NgbCalendar) {
+  constructor(
+    private searchService: SearchService,
+    private fb: FormBuilder,
+    calendar: NgbCalendar,
+    private api: ApiService,
+    private auth: AuthService,
+    private route: ActivatedRoute
+  ) {
     this.bookingForm = this.fb.group({
       user: this.fb.group({
         name: null,
         surname: null,
-        secondName: null,
+        middlename: null,
         email: null,
         phone: null,
       }),
@@ -90,13 +77,38 @@ export class BookingFormComponent implements OnInit {
         sum: null,
       }),
     });
+  }
 
-    this.bookingForm.valueChanges.subscribe((v) => {
-      console.log(v);
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      if (params.id) {
+        this.initData(params.id);
+      }
     });
   }
 
-  ngOnInit(): void {}
+  initData(carId) {
+    const requests = [this.api.getPlaces(), this.api.getCar(carId)];
+    if (this.auth.getToken()) {
+      requests.push(this.api.getUserInfo());
+    }
+
+    forkJoin(requests).subscribe(([places, car, userInfo]) => {
+      this.places = places;
+      this.car = car;
+      if (userInfo) {
+        this.user = userInfo;
+        (this.bookingForm.get('user') as FormGroup).patchValue(this.user);
+      }
+    });
+
+    if (this.searchService.model) {
+      (this.bookingForm.get('order') as FormGroup).patchValue({
+        ...this.searchService.model,
+        place: this.searchService.model.place ? this.searchService.model.place.id : null,
+      });
+    }
+  }
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {

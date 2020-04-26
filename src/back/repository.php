@@ -37,6 +37,47 @@
             
         }
 
+        public function GetPlaces(){
+            $query = $this->database->db->query("SELECT * FROM place");
+            $query->setFetchMode(PDO::FETCH_CLASS, 'Place');
+            return $query->fetchAll();
+            
+        }
+
+        public function AddPlace($place){
+            if(!isset($place->name) || !$place->name){
+                return array("message" => "Укажите название места сдачи", "method" => "AddPlace", "requestData" => $place);
+            }
+            $insert = $this->database->genInsertQuery((array)$place, 'place');
+            $query = $this->database->db->prepare($insert[0]);
+            if($insert[1][0]!=null){
+                $query->execute($insert[1]);
+            }
+            return $this->database->db->lastInsertId();
+        }
+
+        public function UpdatePlace($place){
+            if(!isset($place->id) || !$place->id){
+                return array("message" => "Укажите id места сдачи", "method" => "UpdatePlace", "requestData" => $place);
+            }
+            if(!isset($place->name) || !$place->name){
+                return array("message" => "Укажите название места сдачи", "method" => "UpdatePlace", "requestData" => $place);
+            }
+
+            $placeId = $place->id;
+            unset($place->id);
+            $a = $this->database->genUpdateQuery(array_keys((array)$place), array_values((array)$place), "place", $placeId);
+            $query = $this->database->db->prepare($a[0]);
+            $query->execute($a[1]);
+            return array('message' => 'Место обновлено');
+        }
+
+        public function DeletePlace($placeId){
+            $query = $this->database->db->prepare("DELETE FROM place WHERE id = ?");
+            $query->execute(array($placeId));
+            return array('message' => 'Место удалено');
+        }
+
         public function UploadCarImg($file){
             $newFileName = $this->filesUpload->upload($file, __DIR__.'\Files', uniqid());
             return $this->baseUrl.'/Files'.'/'.$newFileName;

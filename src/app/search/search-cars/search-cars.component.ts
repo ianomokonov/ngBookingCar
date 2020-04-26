@@ -10,6 +10,7 @@ import { takeWhile } from 'rxjs/internal/operators';
 })
 export class SearchCarsComponent implements OnInit, OnDestroy {
   @Input() public header: string;
+  @Input() public limit: number;
 
   constructor(private api: ApiService, private searchService: SearchService) {}
 
@@ -28,7 +29,7 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
   }
 
   updateCars(model?: SearchModel) {
-    this.api.getCars().subscribe((cars) => {
+    this.api.getCars(model, this.limit).subscribe((cars) => {
       this.cars = cars;
     });
   }

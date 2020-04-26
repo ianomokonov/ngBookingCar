@@ -16,6 +16,25 @@ if(isset($_GET['key'])){
             // echo json_encode($repository->GetCars($_GET['dateFrom'],$_GET['dateTo'],$_GET['priceFrom'],$_GET['priceTo']));
             echo json_encode($repository->GetCars(null, null, null, null));
             return;
+        case 'get-places':
+            echo json_encode($repository->GetPlaces());
+            return;
+        case 'add-place':
+            if($decodeToken = checkToken($token, true)){
+                $data = json_decode(file_get_contents("php://input"));
+                echo json_encode($repository->AddPlace($data));
+            }
+            return;
+        case 'update-place':
+            if($decodeToken = checkToken($token, true)){
+                $data = json_decode(file_get_contents("php://input"));
+                echo json_encode($repository->UpdatePlace($data));
+            }
+            return;
+        case 'delete-place':
+            if($decodeToken = checkToken($token, true)){
+                echo json_encode($repository->DeletePlace($_GET['placeId']));
+            }
             return;
         case 'get-car':
             echo json_encode($repository->GetCarDetails($_GET['carId']));
@@ -45,7 +64,6 @@ if(isset($_GET['key'])){
                 echo json_encode($repository->GetUserInfo($decodeToken->id));
                 return;
             }
-            echo json_encode('Ошибка получения информации пользователя');
             return;
         case 'add-car':
             if($decodeToken = checkToken($token, true)){
@@ -90,14 +108,20 @@ if(isset($_GET['key'])){
 
 function checkToken($token, $checkAdmin = false) {
     try{
+        if(!isset($_GET['token'])){
+            http_response_code(401);
+            echo json_encode(array("message" => "Вход не выполнен"));
+            return false;
+        }
         $data = $token->decode($_GET['token']);
         if($checkAdmin && (!isset($data->isAdmin) || !$data->isAdmin)){
+            echo json_encode('В доступе отказано');
             return false;
         }
         return $data;
         
     } catch(Exception $e) {
-        return json_encode(array("message" => "В доступе отказано", "error" => $e->getMessage()));
+        return false;
     }
 }
 ?>
