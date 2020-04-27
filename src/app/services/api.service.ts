@@ -9,7 +9,7 @@ import { tap } from 'rxjs/internal/operators';
 
 @Injectable()
 export class ApiService {
-  private baseUrl: string = `http://nomokonov.mv/booking/controller.php`;
+  private baseUrl: string = `http://localhost/booking/controller.php`;
   constructor(private http: HttpClient) {}
 
   /** Проверка доступа админа */

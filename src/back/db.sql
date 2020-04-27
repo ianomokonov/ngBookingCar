@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS car(
     enginePower int(10),
     speed float,
     time float,
-    volumPerHundred float,
+    volumePerHundred float,
     kpp varchar(100)  NOT NULL,
     driveUnit varchar(100)  NOT NULL,
     places int(2)  NOT NULL,

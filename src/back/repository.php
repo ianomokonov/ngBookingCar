@@ -8,7 +8,7 @@
         private $database;
         private $token;
         private $filesUpload;
-        private $baseUrl = 'http://nomokonov.mv/booking';
+        private $baseUrl = 'http://localhost/booking';
 
         public function __construct()
         {
