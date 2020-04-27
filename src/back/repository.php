@@ -96,6 +96,37 @@
             
         }
 
+        public function GetPlace($id){
+            if($id == null){
+                return array("message" => "Введите id места", "method" => "GetPlace", "requestData" => $id);
+            }
+
+            $query = $this->database->db->prepare("SELECT * from place WHERE id = ?");
+            $query->execute(array($id));
+            $query->setFetchMode(PDO::FETCH_CLASS, 'Place');
+            
+            return $query->fetch();
+            
+        }
+
+        public function GetHistory($userId){
+            if($userId == null){
+                return array("message" => "Введите id пользователя", "method" => "GetHistory", "requestData" => $userId);
+            }
+
+            $query = $this->database->db->prepare("SELECT * from carorder WHERE userId = ?");
+            $query->execute(array($userId));
+            $query->setFetchMode(PDO::FETCH_CLASS, 'Order');
+            $orders = [];
+            while ($order = $query->fetch()) {
+                $order->car = $this->GetCarDetails($order->carId);
+                $order->place = $this->GetPlace($order->placeId);
+                $orders[] = $order;
+            }
+            return $orders;
+            
+        }
+
         public function AddOrder($userId, $order){
             if($userId == null){
                 return array("message" => "Вы не вошли", "method" => "AddOrder", "requestData" => array("userId" => $userId, "order" => $order));
@@ -123,11 +154,11 @@
                 
                 if($fullUser){
                     if(!password_verify($user->password, $fullUser->password)){
-                        return array("message" => "Неверный пароль");
+                        return false;
                     }
                     return $this->token->encode(array("id" => $fullUser->id, "isAdmin" => $fullUser->isAdmin));
                 } else {
-                    return array("message" => "Пользователь не найден");
+                    return false;
                 }
                 
             } else {
@@ -146,7 +177,7 @@
             if($user != null){
                 try{
                     if($this->EmailExists($user->email)){
-                        return array("message" => "Пользователь с таким email уже существует");
+                        return false;
                     }
                     $user->password = password_hash($user->password, PASSWORD_BCRYPT);
                     $insert = $this->database->genInsertQuery((array)$user, 'user');
@@ -156,11 +187,11 @@
                     }
                     return $this->token->encode(array("id" => $this->database->db->lastInsertId()));
                 } catch(Exception $e) {
-                    return array("message" => "Ошибка добавления пользователя", "error" => $e->getMessage());
+                    return false;
                 }
                 
             } else {
-                return array("message" => "Введите данные для регистрации");
+                return false;
             }
         }
 

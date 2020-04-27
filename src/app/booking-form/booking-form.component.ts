@@ -52,7 +52,6 @@ export class BookingFormComponent implements OnInit {
   constructor(
     private searchService: SearchService,
     private fb: FormBuilder,
-    calendar: NgbCalendar,
     private api: ApiService,
     private auth: AuthService,
     private route: ActivatedRoute,
@@ -165,7 +164,7 @@ export class BookingFormComponent implements OnInit {
     console.log(order)
 
     this.api.addOrder(order).subscribe(v => {
-      console.log(v);
+      this.router.navigate(['/profile']);
     })
   }
 

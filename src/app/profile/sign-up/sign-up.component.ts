@@ -11,22 +11,24 @@ import { Router } from '@angular/router';
 })
 export class SignUpComponent implements OnInit {
   public userForm: FormGroup;
+  public showError: boolean;
 
-  constructor(private fb: FormBuilder, private api: ApiService, private auth: AuthService, private router: Router ) {
+  constructor(private fb: FormBuilder, private api: ApiService, private auth: AuthService, private router: Router) {
     this.userForm = this.fb.group({
       name: [null, Validators.required],
       surname: [null, Validators.required],
       middlename: null,
       email: [null, [Validators.required, Validators.email]],
       phone: null,
-      password: [null, Validators.required]
+      password: [null, Validators.required],
     });
   }
 
   ngOnInit(): void {}
 
   public onSignUpClick() {
-    if(this.userForm.invalid) {
+    this.showError = false;
+    if (this.userForm.invalid) {
       for (let value of Object.values(this.userForm.controls)) {
         if (value.invalid) {
           value.markAsDirty();
@@ -35,10 +37,13 @@ export class SignUpComponent implements OnInit {
       return;
     }
 
-    this.api.signUp(this.userForm.getRawValue()).subscribe(token => {
-      this.auth.setToken(token);
-      this.router.navigate([this.auth.redirectUrl]);
-    })
-
+    this.api.signUp(this.userForm.getRawValue()).subscribe((token) => {
+      if (token) {
+        this.auth.setToken(token);
+        this.router.navigate([this.auth.redirectUrl]);
+      } else {
+        this.showError = true;
+      }
+    });
   }
 }

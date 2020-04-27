@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from 'src/app/services/api.service';
+import { Order } from 'src/app/models/order';
 
 @Component({
   selector: 'bk-booking-history',
@@ -6,53 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./booking-history.component.scss'],
 })
 export class BookingHistoryComponent implements OnInit {
-  public orders = [
-    {
-      img: '../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      dateFrom: { year: 2020, month: 10, day: 18 },
-      dateTo: { year: 2020, month: 10, day: 20 },
-      time: { hour: 10, minute: 30 },
-      price: 1805,
-      statusText: 'Запланирован',
-      statusClass: 'bg-info',
-    },
-    {
-      img: '../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      dateFrom: { year: 2020, month: 10, day: 18 },
-      dateTo: { year: 2020, month: 10, day: 20 },
-      time: { hour: 10, minute: 30 },
-      price: 1805,
-      statusText: 'Активен',
-      statusClass: 'bg-success',
-      disabled: true
-    },
-    {
-      img: '../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      dateFrom: { year: 2020, month: 10, day: 18 },
-      dateTo: { year: 2020, month: 10, day: 20 },
-      time: { hour: 10, minute: 30 },
-      price: 1805,
-      statusText: 'Окончен',
-      statusClass: 'bg-purple',
-      disabled: true
-    },
-    {
-      img: '../../assets/cars/logan_new.jpeg',
-      name: 'Renault Logan II MT',
-      dateFrom: { year: 2020, month: 10, day: 18 },
-      dateTo: { year: 2020, month: 10, day: 20 },
-      time: { hour: 10, minute: 30 },
-      price: 1805,
-      statusText: 'Отменен',
-      statusClass: 'bg-danger',
-      disabled: true
-    },
-  ];
+  public orders: Order[];
 
-  constructor() {}
+  constructor(private api: ApiService) {
+    this.api.getOrders().subscribe(orders => {
+      this.orders = orders;
+    })
+  }
 
   ngOnInit(): void {}
 }

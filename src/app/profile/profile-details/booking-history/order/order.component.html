@@ -1,18 +1,18 @@
-<div class="car mt-3" [title]="car.statusText">
+<div *ngIf="order" class="car mt-3" [title]="order?.statusText">
   <div class="car-header w-100" (click)="edit()">
     <div class="col-8 car-info-img row">
       <div class="car-img col-2">
-        <img [src]="car.img" />
+        <img [src]="order.car.img" />
       </div>
       <div class="car-info col">
-        <h2 class="car-title">{{ car.name }}</h2>
+        <h2 class="car-title">{{ order.car.name }}</h2>
         <div class="car-details">
           <span class="car-places"
             ><i class="far fa-calendar-minus"></i
-            ><b>{{ car.dateFrom | ngbDate | date: 'dd.MM.yyyy' }} {{ car.dateTo | ngbDate | date: ' - dd.MM.yyyy' }}</b></span
+            ><b>{{ order.dateFrom | ngbDate | date: 'dd.MM.yyyy' }} {{ order.dateTo | ngbDate | date: ' - dd.MM.yyyy' }}</b></span
           >
           <span class="driver-license"
-            ><i class="far fa-clock"></i><b>{{ car.time.hour }} : {{ car.time.minute }}</b></span
+            ><i class="far fa-clock"></i><b>{{ order.time['hour'] }} : {{ order.time['minute'] }}</b></span
           >
           <!-- <span class="car-kpp"><i class="fas fa-cogs"></i>{{ car.kpp }}</span> -->
         </div>
@@ -21,12 +21,12 @@
 
     <div class="car-actions col-4 text-right">
       <div class="price">
-        <h2>{{ car.price }} ₽</h2>
+        <h2>{{ order.car.price }} ₽</h2>
         <!-- <span class="text-muted">итого: {{ car.price * 3 }} ₽ за 3 суток</span>  TODO -->
       </div>
     </div>
   </div>
-  <span class="status" [ngClass]="[car.statusClass]"></span>
+  <span class="status" [ngClass]="[order.statusClass]"></span>
 
   <div class="row mt-3" [formGroup]="orderForm" *ngIf="isEditing">
     <div class="col-6">

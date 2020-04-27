@@ -5,6 +5,7 @@ import { SearchModel } from './search.service';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Place } from '../models/place';
 import { Order } from '../models/order';
+import { tap } from 'rxjs/internal/operators';
 
 @Injectable()
 export class ApiService {
@@ -87,8 +88,26 @@ export class ApiService {
     return this.http.post<any>(`${this.baseUrl}?key=add-order`, order);
   }
 
+  public getOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.baseUrl}?key=get-history`).pipe(
+      tap((orders) => {
+        orders.forEach((order) => {
+          order.dateFrom = this.stringToNgbDate(order.dateFrom as string);
+          order.dateTo = this.stringToNgbDate(order.dateTo as string);
+          const time = (order.time as string).split(':');
+          order.time = { hour: +time[0], minute: +time[1], second: 0 };
+        });
+      })
+    );
+  }
+
   private ngbDateToString(date: NgbDate): string {
-    const newDate = new Date(date.year, date.month, date.day);
+    const newDate = new Date(date.year, date.month - 1, date.day);
     return newDate.toLocaleDateString();
+  }
+
+  private stringToNgbDate(date: string): NgbDate {
+    const newDate = date.split('.');
+    return NgbDate.from({ year: +newDate[2], month: +newDate[1], day: +newDate[0] });
   }
 }

@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { NgbDate, NgbTimeStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Order, OrderStatus } from 'src/app/models/order';
+import { SearchModel } from 'src/app/services/search.service';
 
 @Component({
   selector: 'bk-order',
@@ -8,17 +10,40 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  @Input() public set carOrder(order: Order){
+    this.order = order;
+    if (this.order) {
+      const style = this.statuses.find((s) => s.status == +this.order.status);
+      if (style) {
+        this.order.statusClass = style.statusClass;
+        this.order.statusText = style.statusText;
+      } else {
+        this.order.statusClass = '';
+        this.order.statusText = '';
+      }
 
-  @Input() public car;
-  @Input() public disabled;
+      const formValue = {
+        period: {
+          fromDate: this.order.dateFrom as NgbDate,
+          toDate: this.order.dateTo as NgbDate
+        },
+        time: this.order.time as NgbTimeStruct,
+        place: this.order.placeId
+      }
+
+      this.orderForm.patchValue(formValue);
+    }
+  }
   
+  @Input() public disabled;
+  public order: Order;
+
   public isEditing;
 
   hoveredDate: NgbDate | null = null;
 
   hourStep = 1;
   minuteStep = 30;
-  time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
 
   orderForm: FormGroup;
   places = [
@@ -65,18 +90,11 @@ export class OrderComponent implements OnInit {
       toDate: date,
     });
   }
-  constructor(private fb: FormBuilder, calendar: NgbCalendar) {
+  constructor(private fb: FormBuilder) {
     this.orderForm = this.fb.group({
-      period: [
-        {
-          fromDate: calendar.getToday(),
-          toDate: calendar.getNext(calendar.getToday(), 'd', 10),
-        },
-      ],
+      period: null,
       place: null,
-      time: this.time,
-      carId: null,
-      sum: null,
+      time: null
     });
 
     this.orderForm.valueChanges.subscribe((v) => {
@@ -84,8 +102,8 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  public edit(){
-    if(!this.disabled){
+  public edit() {
+    if (!this.disabled) {
       this.isEditing = !this.isEditing;
     }
   }
@@ -114,4 +132,33 @@ export class OrderComponent implements OnInit {
   isRange(date: NgbDate) {
     return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
   }
+
+  private statuses: Status[] = [
+    {
+      status: OrderStatus.Planned,
+      statusText: 'Запланирован',
+      statusClass: 'bg-info',
+    },
+    {
+      status: OrderStatus.Active,
+      statusText: 'Активен',
+      statusClass: 'bg-success',
+    },
+    {
+      status: OrderStatus.Canceled,
+      statusText: 'Отменен',
+      statusClass: 'bg-danger',
+    },
+    {
+      status: OrderStatus.Ready,
+      statusText: 'Окончен',
+      statusClass: 'bg-purple',
+    },
+  ];
+}
+
+export interface Status {
+  status: OrderStatus;
+  statusText: string;
+  statusClass: string;
 }

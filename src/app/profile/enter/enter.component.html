@@ -12,6 +12,9 @@
         <label for="password">Пароль</label>
         <input id="password" type="password" class="form-control" formControlName="password" />
       </div>
+      <div class="alert alert-danger" role="alert" *ngIf="showError">
+        Неверный email или пароль
+      </div>
       <button type="submit" class="btn btn-primary">Войти</button>
       <a class="btn btn-link" routerLink="/sign-up">Регистрация</a>
     </form>

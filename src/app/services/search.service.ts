@@ -50,7 +50,7 @@ export interface SearchModel {
   period: SearchPeriod;
   time: NgbTimeStruct;
   place: Place;
-  price: SliderSelected;
+  price?: SliderSelected;
 }
 
 export interface SearchPeriod {

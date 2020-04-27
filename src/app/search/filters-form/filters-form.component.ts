@@ -64,6 +64,7 @@ export class FiltersFormComponent implements OnInit {
       this.filterForm.patchValue({
         ...this.searchService.model,
         place: this.searchService.model.place ? this.searchService.model.place.id : null,
+        price: this.searchService.model.price ? this.searchService.model.price : { from: this.priceRange.min, to: this.priceRange.max }
       });
     } else {
       this.filterForm.patchValue(
