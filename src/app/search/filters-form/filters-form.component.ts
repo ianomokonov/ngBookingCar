@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SliderRange } from 'src/app/utils/double-slider/double-slider.component';
-import { Place } from 'src/app/profile/profile-details/places/place/place.component';
 import { ApiService } from 'src/app/services/api.service';
 import { SearchService } from 'src/app/services/search.service';
 import { debounceTime } from 'rxjs/internal/operators';
+import { Router } from '@angular/router';
+import { Place } from 'src/app/models/place';
 
 @Component({
   selector: 'bk-filters-form',
@@ -17,8 +18,7 @@ export class FiltersFormComponent implements OnInit {
 
   hourStep = 1;
   minuteStep = 30;
-  time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
-  priceRange: SliderRange = { min: 1500, max: 8000 };
+  priceRange: SliderRange;
   priceFormatValue = (value) => `₽ ${value}`;
 
   filterForm: FormGroup;
@@ -46,34 +46,49 @@ export class FiltersFormComponent implements OnInit {
     });
   }
 
-  constructor(private fb: FormBuilder, calendar: NgbCalendar, private api: ApiService, private searchService: SearchService) {
+  constructor(private fb: FormBuilder, private router: Router, private api: ApiService, private searchService: SearchService) {
+    this.priceRange = this.searchService.priceRange;
     this.filterForm = this.fb.group({
-      period: {
-        fromDate: calendar.getToday(),
-        toDate: calendar.getNext(calendar.getToday(), 'd', 10),
-      },
+      period: null,
       place: null,
-      time: this.time,
-      price: { from: this.priceRange.min, to: this.priceRange.max },
+      time: null,
+      price: null,
     });
     this.filterForm.valueChanges.pipe(debounceTime(300)).subscribe(() => {
-      const formValue = this.filterForm.getRawValue();
-      formValue.place = this.places.find((p) => p.id == formValue.place);
-      this.searchService.model = formValue;
+      this.saveFilters();
     });
   }
 
   ngOnInit() {
     if (this.searchService.model) {
-      const model = { ...this.searchService.model } as any;
-      if (model.place) {
-        model.place = model.place.id;
-      }
-      this.filterForm.patchValue(model, { emitEvent: false });
+      this.filterForm.patchValue({
+        ...this.searchService.model,
+        place: this.searchService.model.place ? this.searchService.model.place.id : null,
+      });
+    } else {
+      this.filterForm.patchValue(
+        {
+          ...this.searchService.defaultModel,
+          place: this.searchService.defaultModel.place ? this.searchService.defaultModel.place.id : null,
+        },
+        { emitEvent: false }
+      );
     }
+
     this.api.getPlaces().subscribe((places) => {
       this.places = places;
     });
+  }
+
+  onSearchClick() {
+    this.saveFilters();
+    this.router.navigate(['/catalog']);
+  }
+
+  private saveFilters() {
+    const formValue = this.filterForm.getRawValue();
+    formValue.place = this.places.find((p) => p.id == formValue.place);
+    this.searchService.model = formValue;
   }
 
   onDateSelection(date: NgbDate) {

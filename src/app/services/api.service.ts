@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Place } from '../profile/profile-details/places/place/place.component';
 import { SearchModel } from './search.service';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { Place } from '../models/place';
+import { Order } from '../models/order';
 
 @Injectable()
 export class ApiService {
@@ -78,6 +79,12 @@ export class ApiService {
 
   public deletePlace(id): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}?key=delete-place&placeId=${id}`);
+  }
+
+  public addOrder(order: Order): Observable<any> {
+    order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
+    order.dateTo = this.ngbDateToString(order.dateTo as NgbDate);
+    return this.http.post<any>(`${this.baseUrl}?key=add-order`, order);
   }
 
   private ngbDateToString(date: NgbDate): string {

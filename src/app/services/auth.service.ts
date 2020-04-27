@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 export class AuthService{
     private token: string;
     private readonly KEY = 'bookingUserToken';
+    public redirectUrl: string = '/profile';
 
     constructor(){
         this.token = sessionStorage.getItem('bookingUserToken');
@@ -22,5 +23,9 @@ export class AuthService{
     public exit(){
         this.token = null;
         sessionStorage.removeItem(this.KEY);
+    }
+
+    public setDefaultUrl() {
+        this.redirectUrl = '/profile';
     }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { Place } from './place/place.component';
+import { Place } from 'src/app/models/place';
 
 @Component({
   selector: 'bk-places',

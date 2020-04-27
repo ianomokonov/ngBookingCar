@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NgbDate, NgbTimeStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ApiService } from '../services/api.service';
-import { error } from '@angular/compiler/src/util';
 import { AuthService } from '../services/auth.service';
-import { Place } from '../profile/profile-details/places/place/place.component';
 import { forkJoin } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { SearchService } from '../services/search.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { SearchService, SearchModel } from '../services/search.service';
+import { Place } from '../models/place';
+import { Order } from '../models/order';
 
 @Component({
   selector: 'bk-booking-form',
@@ -17,6 +17,7 @@ import { SearchService } from '../services/search.service';
 export class BookingFormComponent implements OnInit {
   public car;
   public user;
+  public periodDays: number = 1;
 
   hoveredDate: NgbDate | null = null;
 
@@ -54,7 +55,8 @@ export class BookingFormComponent implements OnInit {
     calendar: NgbCalendar,
     private api: ApiService,
     private auth: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.bookingForm = this.fb.group({
       user: this.fb.group({
@@ -65,21 +67,40 @@ export class BookingFormComponent implements OnInit {
         phone: null,
       }),
       order: this.fb.group({
-        period: [
-          {
-            fromDate: calendar.getToday(),
-            toDate: calendar.getNext(calendar.getToday(), 'd', 10),
-          },
-        ],
+        period: null,
         place: null,
-        time: this.time,
+        time: null,
         carId: null,
         sum: null,
       }),
     });
+
+    this.bookingForm.get('order').valueChanges.subscribe((value) => {
+      this.saveFilters(value);
+      this.setPeriodDays(value);
+    });
+  }
+
+  private saveFilters(formValue) {
+    formValue.place = this.places.find((p) => p.id == formValue.place);
+    this.searchService.model = formValue;
+  }
+
+  private setPeriodDays({ period: { fromDate, toDate } }: SearchModel) {
+    // console.log([fromDate, toDate])
+    if (!toDate) {
+      this.periodDays = 1;
+      return;
+    }
+
+    this.periodDays =
+      (new Date(toDate.year, toDate.month, toDate.day).getTime() - new Date(fromDate.year, fromDate.month, fromDate.day).getTime()) /
+        (24 * 3600000) +
+      1;
   }
 
   ngOnInit(): void {
+    this.auth.setDefaultUrl();
     this.route.params.subscribe((params) => {
       if (params.id) {
         this.initData(params.id);
@@ -98,16 +119,54 @@ export class BookingFormComponent implements OnInit {
       this.car = car;
       if (userInfo) {
         this.user = userInfo;
-        (this.bookingForm.get('user') as FormGroup).patchValue(this.user);
+        const userForm = this.bookingForm.get('user') as FormGroup;
+        userForm.patchValue(this.user);
+        userForm.disable();
       }
     });
-
+    const orderForm = this.bookingForm.get('order') as FormGroup;
     if (this.searchService.model) {
-      (this.bookingForm.get('order') as FormGroup).patchValue({
-        ...this.searchService.model,
-        place: this.searchService.model.place ? this.searchService.model.place.id : null,
-      });
+      orderForm.patchValue(
+        {
+          ...this.searchService.model,
+          place: this.searchService.model.place ? this.searchService.model.place.id : null,
+        },
+        { emitEvent: false }
+      );
+    } else {
+      orderForm.patchValue(
+        {
+          ...this.searchService.defaultModel,
+          place: this.searchService.defaultModel.place ? this.searchService.defaultModel.place.id : null,
+        },
+        { emitEvent: false }
+      );
     }
+
+    this.setPeriodDays(orderForm.getRawValue());
+    
+  }
+
+  enter() {
+    this.auth.redirectUrl = `/booking/${this.car.id}`;
+    this.router.navigate(['/enter']);
+  }
+
+  addOrder(){
+    const orderFormValue = (this.bookingForm.get('order') as FormGroup).getRawValue();
+    const order: Order = {
+      carId: this.car.id,
+      placeId: orderFormValue.place,
+      dateFrom: orderFormValue.period.fromDate,
+      dateTo: orderFormValue.period.toDate,
+      time: `${orderFormValue.time.hour}:${orderFormValue.time.minute}`,
+      orderSum: this.car.price * this.periodDays
+    }
+    console.log(order)
+
+    this.api.addOrder(order).subscribe(v => {
+      console.log(v);
+    })
   }
 
   onDateSelection(date: NgbDate) {

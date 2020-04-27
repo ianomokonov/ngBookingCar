@@ -46,7 +46,7 @@ export class EnterComponent implements OnInit {
 
         if (token) {
           this.auth.setToken(token);
-          this.router.navigate(['/profile']);
+          this.router.navigate([this.auth.redirectUrl]);
         }
       },
       (error) => {

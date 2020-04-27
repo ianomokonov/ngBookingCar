@@ -103,8 +103,8 @@
             if($order == null){
                 return array("message" => "Заказ пуст", "method" => "AddOrder", "requestData" => array("userId" => $userId, "order" => $order));
             }
-            $order['userId'] = $userId;
-            $insert = $this->database->genInsertQuery((array)$order, 'order');
+            $order->userId = $userId;
+            $insert = $this->database->genInsertQuery((array)$order, 'carorder');
             $query = $this->database->db->prepare($insert[0]);
             if($insert[1][0]!=null){
                 $query->execute($insert[1]);

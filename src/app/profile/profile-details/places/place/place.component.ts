@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
+import { Place } from 'src/app/models/place';
 
 @Component({
   selector: 'bk-place',
@@ -56,9 +57,4 @@ export class PlaceComponent implements OnInit {
       this.placeUpdated.emit();
     });
   }
-}
-
-export interface Place {
-  id: number;
-  name: string;
 }

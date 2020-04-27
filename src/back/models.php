@@ -19,7 +19,7 @@
         public $enginePower;
         public $speed;
         public $time;
-        public $volumPerHundred;
+        public $volumePerHundred;
         public $kpp;
         public $driveUnit;
         public $places;
@@ -31,5 +31,20 @@
     class Place {
         public $id;
         public $name;
+    }
+
+    class Order {
+        public $id;
+        public $userId;
+        public $carId;
+        public $placeId;
+        public $dateFrom;
+        public $dateTo;
+        public $orderSum;
+        public $time;
+
+        public $user;
+        public $car;
+        public $place;
     }
 ?>

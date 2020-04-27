@@ -1,23 +1,27 @@
 <div class="container pt-5">
   <form [formGroup]="bookingForm">
     <h2 class="bk-header">Ваши данные</h2>
-    <form formGroupName="user" class="row border-bottom pb-1">
-      <div class="col-4">
+    <form *ngIf="user" formGroupName="user" class="row px-0 mx-0 border-bottom pb-1">
+      <div class="col-4 pl-0">
         <div class="form-group"><label>Фамилия</label><input formControlName="surname" type="text" class="form-control" /></div>
       </div>
       <div class="col-4">
         <div class="form-group"><label>Имя</label><input formControlName="name" type="text" class="form-control" /></div>
       </div>
-      <div class="col-4">
+      <div class="col-4 pr-0">
         <div class="form-group"><label>Отчество</label><input formControlName="middlename" type="text" class="form-control" /></div>
       </div>
-      <div class="col-4">
+      <div class="col-4 pl-0">
         <div class="form-group"><label>Email</label><input formControlName="email" type="text" class="form-control" /></div>
       </div>
       <div class="col-4">
         <div class="form-group"><label>Телефон</label><input formControlName="phone" type="text" class="form-control" /></div>
       </div>
     </form>
+    <div *ngIf="!user" class="border-bottom pb-3">
+      <button class="btn btn-outline-primary" (click)="enter()">Войти в личный кабнет</button>
+      <small class="text-muted d-block mt-1">Необходимо войти в личный кабинет или зарегистрироваться</small>
+    </div>
     <h2 class="bk-header mt-3 mb-0">Данные заказа</h2>
     <form formGroupName="order">
       <div class="row car mt-3" *ngIf="car">
@@ -42,7 +46,7 @@
         <div class="car-actions col-4 text-right">
           <div class="price">
             <h2>{{ car.price }} ₽ <span>в сутки</span></h2>
-            <!-- <span class="text-muted">итого: {{ car.price * 3 }} ₽ за 3 суток</span> -->
+            <span class="text-muted">итого: {{ car.price * periodDays }} ₽ за {{periodDays}} {{ periodDays % 10 === 1 ? 'сутки' : 'суток'}}</span>
           </div>
         </div>
       </div>
@@ -87,9 +91,9 @@
           </div>
           <div class="text-right">
             <small class="text-muted mr-2">
-              К оплате 1805 ₽
+              К оплате {{ car?.price * periodDays }} ₽
             </small>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" [title]="!user ? 'Необходимо войти или зарегистрироваться' : ''" [disabled]="!user" (click)="addOrder()">
               Оформить заказ
             </button>
           </div>
