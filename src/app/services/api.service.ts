@@ -6,6 +6,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Place } from '../models/place';
 import { Order } from '../models/order';
 import { tap } from 'rxjs/internal/operators';
+import { User } from '../models/user';
 
 @Injectable()
 export class ApiService {
@@ -27,6 +28,10 @@ export class ApiService {
 
   public getUserInfo(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}?key=get-user-info`);
+  }
+
+  public editUser(user: User): Observable<boolean> {
+    return this.http.post<boolean>(`${this.baseUrl}?key=update-user-info`, user);
   }
 
   public getCars(model?: SearchModel, limit?: number): Observable<any> {

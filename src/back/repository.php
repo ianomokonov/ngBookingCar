@@ -173,6 +173,19 @@
             return $sth->fetch();
         }
 
+        public function UpdateUserInfo($userId, $user){
+            if(!$userId){
+                return array("message" => "Укажите id пользователя", "method" => "UpdateUserInfo", "requestData" => array($userId, $user));
+            }
+            if(!$user){
+                return array("message" => "Укажите данные", "method" => "UpdateUserInfo", "requestData" => $user);
+            }
+            $a = $this->database->genUpdateQuery(array_keys((array)$user), array_values((array)$user), "user", $userId);
+            $query = $this->database->db->prepare($a[0]);
+            $query->execute($a[1]);
+            return array('message' => 'Пользователь обновлен');
+        }
+
         public function SignUp($user = null){
             if($user != null){
                 try{

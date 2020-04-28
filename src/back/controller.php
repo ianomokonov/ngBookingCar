@@ -80,7 +80,7 @@ if(isset($_GET['key'])){
         case 'update-user-info':
             if($decodeToken = checkToken($token)){
                 $data = json_decode(file_get_contents("php://input"));
-                echo json_encode($repository->UpdateUserInfo($decodeToken, $data));
+                echo json_encode($repository->UpdateUserInfo($decodeToken->id, $data));
             }
             return;
         case 'update-order':
