@@ -1,12 +1,14 @@
 <div class="filters">
   <small
-    ><a routerLink="/search"><i class="fas fa-arrow-left mr-1"></i>изменить</a></small
+    ><a routerLink="/search"><i class="fas fa-arrow-left mr-1"></i>изменить</a>
+      <span class="ml-3 pl-3 border-left text-muted reset" (click)="resetFilters()">сбросить фильтры</span>
+    </small
   >
   <div class="row mt-2">
     <div class="col-3">
       <div class="form-group">
         <label>Дата</label>
-        <h6>{{ filters.period.fromDate | ngbDate | date: 'dd.MM.yyyy' }} - {{ filters.period.toDate | ngbDate | date: 'dd.MM.yyyy' }}</h6>
+        <h6>{{ filters.period.fromDate | ngbDate | date: 'dd.MM.yyyy' }} {{ filters.period.toDate | ngbDate | date: '- dd.MM.yyyy' }}</h6>
       </div>
       <div class="form-group">
         <label>Время</label>
@@ -20,7 +22,8 @@
       </div>
       <div class="form-group">
         <label>Цена</label>
-        <h6>{{ filters.price?.from || "–" }} {{  filters.price?.to ? '- ' + filters.price?.to : "" }} ₽ / сутки</h6>
+        <h6 *ngIf="filters.price?.from">{{ filters.price?.from || "–" }} {{  filters.price?.to ? '- ' + filters.price?.to : "" }} ₽ / сутки</h6>
+        <h6 *ngIf="!filters.price?.from">"–"</h6>
       </div>
     </div>
   </div>

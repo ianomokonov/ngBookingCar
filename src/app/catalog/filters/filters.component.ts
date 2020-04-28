@@ -16,4 +16,8 @@ export class FiltersComponent implements OnInit {
     this.filters = this.searchService.model;
     this.searchService.initUpdate();
   }
+
+  resetFilters() {
+    this.searchService.model = null;
+  }
 }
