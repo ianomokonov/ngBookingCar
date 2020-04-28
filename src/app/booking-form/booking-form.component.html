@@ -46,15 +46,26 @@
         <div class="car-actions col-4 text-right">
           <div class="price">
             <h2>{{ car.price }} ₽ <span>в сутки</span></h2>
-            <span class="text-muted">итого: {{ car.price * periodDays }} ₽ за {{periodDays}} {{ periodDays % 10 === 1 ? 'сутки' : 'суток'}}</span>
+            <span class="text-muted"
+              >итого: {{ car.price * periodDays }} ₽ за {{ periodDays }} {{ periodDays % 10 === 1 ? 'сутки' : 'суток' }}</span
+            >
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="carDates">
         <div class="col-6">
           <div class="form-group mb-0">
             <label>Период аренды</label>
-            <ngbd-datepicker-i18n #dp (dateSelect)="onDateSelection($event)" [dayTemplate]="t" [minDate]="this.searchService.minDate" outsideDays="hidden"> </ngbd-datepicker-i18n>
+            <ngbd-datepicker-i18n
+              #dp
+              (dateSelect)="onDateSelection($event)"
+              [dayTemplate]="t"
+              [minDate]="this.searchService.minDate"
+              [maxDate]="maxDate"
+              [markDisabled]="isDisabled"
+              outsideDays="hidden"
+            >
+            </ngbd-datepicker-i18n>
 
             <ng-template #t let-date let-focused="focused">
               <span
@@ -91,10 +102,13 @@
             </div>
           </div>
           <div class="text-right">
-            <small class="text-muted mr-2">
-              К оплате {{ car?.price * periodDays }} ₽
-            </small>
-            <button class="btn btn-primary" [title]="!user ? 'Необходимо войти или зарегистрироваться' : ''" [disabled]="!user" (click)="addOrder()">
+            <small class="text-muted mr-2"> К оплате {{ car?.price * periodDays }} ₽ </small>
+            <button
+              class="btn btn-primary"
+              [title]="!user ? 'Необходимо войти или зарегистрироваться' : ''"
+              [disabled]="!user"
+              (click)="addOrder()"
+            >
               Оформить заказ
             </button>
           </div>

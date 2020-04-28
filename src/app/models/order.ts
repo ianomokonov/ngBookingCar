@@ -27,3 +27,7 @@ export enum OrderStatus {
   Canceled = 3,
   Ready = 4,
 }
+export interface DateRange {
+  dateFrom: NgbDate;
+  dateTo?: NgbDate;
+}

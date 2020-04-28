@@ -50,7 +50,9 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
     [(ngModel)]="model"
     [displayMonths]="2"
     [minDate]="minDate"
+    [maxDate]="maxDate"
     [dayTemplate]="dayTemplate"
+    [markDisabled]="markDisabled"
     (select)="onDateSelect($event)"
   ></ngb-datepicker>
 `,
@@ -59,6 +61,8 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
 export class NgbdDatepickerI18n {
   @Input() dayTemplate;
   @Input() minDate;
+  @Input() maxDate;
+  @Input() markDisabled;
   @Output() dateSelect: EventEmitter<NgbDate> = new EventEmitter<NgbDate>();
   model: NgbDateStruct;
 

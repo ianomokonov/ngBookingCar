@@ -47,4 +47,9 @@
         public $car;
         public $place;
     }
+
+    class DateRange {
+        public $dateFrom;
+        public $dateTo;
+    }
 ?>

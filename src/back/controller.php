@@ -39,6 +39,9 @@ if(isset($_GET['key'])){
         case 'get-car':
             echo json_encode($repository->GetCarDetails($_GET['carId']));
             return;
+        case 'get-car-dates':
+            echo json_encode($repository->GetCarDates($_GET['carId']));
+            return;
         case 'add-order':
             if($decodeToken = checkToken($token)){
                 $data = json_decode(file_get_contents("php://input"));

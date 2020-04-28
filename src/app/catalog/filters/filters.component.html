@@ -23,7 +23,7 @@
       <div class="form-group">
         <label>Цена</label>
         <h6 *ngIf="filters.price?.from">{{ filters.price?.from || "–" }} {{  filters.price?.to ? '- ' + filters.price?.to : "" }} ₽ / сутки</h6>
-        <h6 *ngIf="!filters.price?.from">"–"</h6>
+        <h6 *ngIf="!filters.price?.from">–</h6>
       </div>
     </div>
   </div>

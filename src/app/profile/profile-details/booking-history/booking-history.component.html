@@ -1,5 +1,5 @@
 <div class="history">
   <div class="orders">
-    <bk-order [carOrder]="order" *ngFor="let order of orders; let last = las"></bk-order>
+    <bk-order [carOrder]="order" *ngFor="let order of orders;" (orderUpdated)="getOrders()"></bk-order>
   </div>
 </div>

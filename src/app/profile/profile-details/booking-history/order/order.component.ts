@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { NgbDate, NgbTimeStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Order, OrderStatus, UpdateOrder } from 'src/app/models/order';
+import { Order, OrderStatus, UpdateOrder, DateRange } from 'src/app/models/order';
 import { SearchModel } from 'src/app/services/search.service';
 import { ApiService } from 'src/app/services/api.service';
 import { takeWhile } from 'rxjs/internal/operators';
@@ -40,6 +40,9 @@ export class OrderComponent implements OnInit {
         this.disabled = true;
       }
       this.orderForm.patchValue(formValue);
+      if(this.fromDate && !this.toDate){
+        this.setMaxDate(this.fromDate);
+      }
     }
   }
 
@@ -50,6 +53,7 @@ export class OrderComponent implements OnInit {
   public isEditing;
 
   public minDate: NgbDate;
+  public maxDate: NgbDate;
   public today: NgbDate;
 
   hoveredDate: NgbDate | null = null;
@@ -180,11 +184,27 @@ export class OrderComponent implements OnInit {
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
+      this.setMaxDate(date);
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
+      this.maxDate = null;
     } else {
       this.toDate = null;
       this.fromDate = date;
+      this.setMaxDate(date);
+    }
+  }
+
+  setMaxDate(fromDate: NgbDate){
+    if(!this.order.car.dates){
+      this.maxDate = null;
+      return;
+    }
+    const maxDate = this.order.car.dates.filter((range: DateRange) => range.dateFrom.after(fromDate))[0];
+    if(maxDate){
+      this.maxDate = maxDate.dateFrom;
+    } else {
+      this.maxDate = null;
     }
   }
 
@@ -199,9 +219,32 @@ export class OrderComponent implements OnInit {
   isRange(date: NgbDate) {
     return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
   }
-  
-  isDisabled(date: NgbDate) {
-    return date.before(this.minDate);
+
+  isDisabled = (date: NgbDate) => {
+    if (date.before(this.minDate)) {
+      return true;
+    }
+    if (date.after(this.maxDate)) {
+      return true;
+    }
+    if(!this.order.car.dates){
+      return false;
+    }
+    
+    for(let range of this.order.car.dates){
+      if(date.equals(range.dateFrom) || date.equals(range.dateTo)){
+        return true;
+      }
+
+      if(!range.dateTo){
+        continue;
+      }
+
+      if(date.after(range.dateFrom) && date.before(range.dateTo)){
+        return true;
+      }
+    }
+    return false;
   }
 
   private statuses: Status[] = [

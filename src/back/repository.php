@@ -109,6 +109,23 @@
             
         }
 
+        public function GetCarDates($carId, $orderId = null){
+            if($carId == null){
+                return array("message" => "Введите id автомобиля", "method" => "GetHistory", "requestData" => $carId);
+            }
+
+            $str = "SELECT id, dateFrom, dateTo from carorder WHERE dateFrom > now() AND carId = ? AND ( status = 1 OR status = 2 )";
+            if($orderId){
+                $str = "SELECT id, dateFrom, dateTo from carorder WHERE id != $orderId AND dateFrom > now() AND carId = ? AND ( status = 1 OR status = 2 )";
+            }
+
+            $query = $this->database->db->prepare($str);
+            $query->execute(array($carId));
+            $query->setFetchMode(PDO::FETCH_CLASS, 'DateRange');
+            return $query->fetchAll();
+            
+        }
+
         public function GetHistory($userId){
             if($userId == null){
                 return array("message" => "Введите id пользователя", "method" => "GetHistory", "requestData" => $userId);
@@ -120,6 +137,7 @@
             $orders = [];
             while ($order = $query->fetch()) {
                 $order->car = $this->GetCarDetails($order->carId);
+                $order->car->dates = $this->GetCarDates($order->carId, $order->id);
                 $order->place = $this->GetPlace($order->placeId);
                 $orders[] = $order;
             }

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { SearchModel } from './search.service';
 import { NgbDate, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Place } from '../models/place';
-import { Order, UpdateOrder } from '../models/order';
+import { Order, UpdateOrder, DateRange } from '../models/order';
 import { tap } from 'rxjs/internal/operators';
 import { User } from '../models/user';
 
@@ -112,6 +112,21 @@ export class ApiService {
           order.dateFrom = this.stringToNgbDate(order.dateFrom as string);
           order.dateTo = order.dateTo ? this.stringToNgbDate(order.dateTo as string) : null;
           order.time = this.stringToNgbTime(order.time as string);
+          order.car.dates.forEach((range) => {
+            range.dateFrom = this.stringToNgbDate(range.dateFrom as any);
+            range.dateTo = order.dateTo ? this.stringToNgbDate(range.dateTo as any) : null;
+          });
+        });
+      })
+    );
+  }
+
+  public getCarDates(carId: number): Observable<DateRange[]> {
+    return this.http.get<DateRange[]>(`${this.baseUrl}?key=get-car-dates&carId=${carId}`).pipe(
+      tap((orders) => {
+        orders.forEach((order) => {
+          order.dateFrom = this.stringToNgbDate(order.dateFrom as any);
+          order.dateTo = order.dateTo ? this.stringToNgbDate(order.dateTo as any) : null;
         });
       })
     );
@@ -120,10 +135,13 @@ export class ApiService {
   private ngbDateToString(date: NgbDate): string {
     const newDate = new Date(date.year, date.month - 1, date.day);
     const [year, month, day] = [newDate.getFullYear(), newDate.getMonth() + 1, newDate.getDate()];
-    return `${ year< 10 ? `0${year}` : year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
+    return `${year < 10 ? `0${year}` : year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
   }
 
   private stringToNgbDate(date: string): NgbDate {
+    if(!date){
+      return null;
+    }
     const newDate = date.split('-');
     return NgbDate.from({ year: +newDate[0], month: +newDate[1], day: +newDate[2] });
   }
@@ -134,6 +152,6 @@ export class ApiService {
 
   private stringToNgbTime(time: string): NgbTimeStruct {
     const newTime = time.split(':');
-    return {hour: +newTime[0], minute: +newTime[1], second: 0};
+    return { hour: +newTime[0], minute: +newTime[1], second: 0 };
   }
 }

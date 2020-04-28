@@ -7,7 +7,7 @@ import { forkJoin } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService, SearchModel } from '../services/search.service';
 import { Place } from '../models/place';
-import { Order } from '../models/order';
+import { Order, DateRange } from '../models/order';
 
 @Component({
   selector: 'bk-booking-form',
@@ -27,6 +27,7 @@ export class BookingFormComponent implements OnInit {
 
   bookingForm: FormGroup;
   places: Place[];
+  carDates: DateRange[];
 
   public get fromDate(): NgbDate {
     return this.bookingForm.get('order').get('period').value.fromDate;
@@ -49,6 +50,9 @@ export class BookingFormComponent implements OnInit {
       toDate: date,
     });
   }
+
+  maxDate: NgbDate;
+
   constructor(
     public searchService: SearchService,
     private fb: FormBuilder,
@@ -108,19 +112,23 @@ export class BookingFormComponent implements OnInit {
   }
 
   initData(carId) {
-    const requests = [this.api.getPlaces(), this.api.getCar(carId)];
+    const requests = [this.api.getPlaces(), this.api.getCar(carId), this.api.getCarDates(carId)];
     if (this.auth.getToken()) {
       requests.push(this.api.getUserInfo());
     }
 
-    forkJoin(requests).subscribe(([places, car, userInfo]) => {
+    forkJoin(requests).subscribe(([places, car, carDates, userInfo]) => {
       this.places = places;
       this.car = car;
+      this.carDates = carDates;
       if (userInfo) {
         this.user = userInfo;
         const userForm = this.bookingForm.get('user') as FormGroup;
         userForm.patchValue(this.user);
         userForm.disable();
+      }
+      if(this.fromDate && !this.toDate){
+        this.setMaxDate(this.fromDate);
       }
     });
     const orderForm = this.bookingForm.get('order') as FormGroup;
@@ -132,18 +140,8 @@ export class BookingFormComponent implements OnInit {
         },
         { emitEvent: false }
       );
-    } else {
-      orderForm.patchValue(
-        {
-          ...this.searchService.defaultModel,
-          place: this.searchService.defaultModel.place ? this.searchService.defaultModel.place.id : null,
-        },
-        { emitEvent: false }
-      );
     }
-
     this.setPeriodDays(orderForm.getRawValue());
-    
   }
 
   enter() {
@@ -151,7 +149,7 @@ export class BookingFormComponent implements OnInit {
     this.router.navigate(['/enter']);
   }
 
-  addOrder(){
+  addOrder() {
     const orderForm = this.bookingForm.get('order') as FormGroup;
     if (orderForm.invalid) {
       for (const control of Object.values(orderForm.controls)) {
@@ -168,22 +166,38 @@ export class BookingFormComponent implements OnInit {
       dateFrom: orderFormValue.period.fromDate,
       dateTo: orderFormValue.period.toDate,
       time: orderFormValue.time,
-      orderSum: this.car.price * this.periodDays
-    }
+      orderSum: this.car.price * this.periodDays,
+    };
 
-    this.api.addOrder(order).subscribe(v => {
+    this.api.addOrder(order).subscribe((v) => {
       this.router.navigate(['/profile']);
-    })
+    });
   }
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
+      this.setMaxDate(date);
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
+      this.maxDate = null;
     } else {
       this.toDate = null;
       this.fromDate = date;
+      this.setMaxDate(date);
+    }
+  }
+
+  setMaxDate(fromDate: NgbDate){
+    if(!this.carDates){
+      this.maxDate = null;
+      return;
+    }
+    const maxDate = this.carDates.filter((range: DateRange) => range.dateFrom.after(fromDate))[0];
+    if(maxDate){
+      this.maxDate = maxDate.dateFrom;
+    } else {
+      this.maxDate = null;
     }
   }
 
@@ -198,8 +212,31 @@ export class BookingFormComponent implements OnInit {
   isRange(date: NgbDate) {
     return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
   }
-  
-  isDisabled(date: NgbDate) {
-    return date.before(this.searchService.minDate);
+
+  isDisabled = (date: NgbDate) => {
+    if (date.before(this.searchService.minDate)) {
+      return true;
+    }
+    if (date.after(this.maxDate)) {
+      return true;
+    }
+    if(!this.carDates){
+      return false;
+    }
+    
+    for(let range of this.carDates){
+      if(date.equals(range.dateFrom) || date.equals(range.dateTo)){
+        return true;
+      }
+
+      if(!range.dateTo){
+        continue;
+      }
+
+      if(date.after(range.dateFrom) && date.before(range.dateTo)){
+        return true;
+      }
+    }
+    return false;
   }
 }

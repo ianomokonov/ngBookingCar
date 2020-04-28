@@ -1,3 +1,5 @@
+import { DateRange } from './order';
+
 export interface Car {
   id?: number;
   img: string;
@@ -16,4 +18,5 @@ export interface Car {
   backVolume?: number;
   license?: string;
   createYear?: number;
+  dates?: DateRange[];
 }
