@@ -45,8 +45,12 @@ export class ApiService {
         }
       }
       if (model.price) {
-        url.searchParams.set('priceFrom', model.price.from.toString());
-        url.searchParams.set('priceTo', model.price.to.toString());
+        if(model.price.from != 1500){
+          url.searchParams.set('priceFrom', model.price.from.toString());
+        }
+        if(model.price.to != 8000){
+          url.searchParams.set('priceTo', model.price.to.toString());
+        }
       }
     }
     if (limit) {

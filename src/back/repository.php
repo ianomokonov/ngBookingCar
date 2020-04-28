@@ -32,10 +32,20 @@
                 $queryText = $queryText."price < $priceTo ";
             }
             if(isset($query['dateFrom']) && isset($query['dateTo']) && !!($dateFrom = $query['dateFrom']) && $dateTo = $query['dateTo']){
-                $queryText = $queryText." AND 0 = (SELECT COUNT(*) FROM carorder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateTo < '$dateTo' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateFrom < '$dateTo' AND co.dateTo > '$dateTo' OR co.dateTo > '$dateFrom' AND co.dateTo < '$dateTo' AND co.dateFrom < '$dateFrom') ";
+                if(isset($priceFrom) || isset($priceTo)) {
+                    $queryText = $queryText."AND ";
+                } else {
+                    $queryText = $queryText."WHERE ";
+                }
+                $queryText = $queryText."0 = (SELECT COUNT(*) FROM carorder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateTo < '$dateTo' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateFrom < '$dateTo' AND co.dateTo > '$dateTo' OR co.dateTo > '$dateFrom' AND co.dateTo < '$dateTo' AND co.dateFrom < '$dateFrom') ";
             }
             if(!isset($query['dateTo']) && isset($query['dateFrom']) && $dateFrom = $query['dateFrom']){
-                $queryText = $queryText." AND 0 = (SELECT COUNT(*) FROM carorder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateFrom' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateFrom') ";
+                if(isset($priceFrom) || isset($priceTo)) {
+                    $queryText = $queryText."AND ";
+                } else {
+                    $queryText = $queryText."WHERE ";
+                }
+                $queryText = $queryText." 0 = (SELECT COUNT(*) FROM carorder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateFrom' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateFrom') ";
             }
             if(isset($query['limit']) && $limit = $query['limit']){
                 $queryText = $queryText."LIMIT $limit";
