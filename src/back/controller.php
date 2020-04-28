@@ -13,8 +13,7 @@ $token = new Token();
 if(isset($_GET['key'])){
     switch($_GET['key']){
         case 'get-cars':
-            // echo json_encode($repository->GetCars($_GET['dateFrom'],$_GET['dateTo'],$_GET['priceFrom'],$_GET['priceTo']));
-            echo json_encode($repository->GetCars(null, null, null, null));
+            echo json_encode($repository->GetCars($_GET));
             return;
         case 'get-places':
             echo json_encode($repository->GetPlaces());

@@ -17,19 +17,30 @@
             $this->filesUpload = new FilesUpload();
         }
 
-        public function GetCars($dateFrom, $dateTo, $priceFrom, $priceTo){
+        public function GetCars($query){
+            
             $queryText = "SELECT * FROM car ";
-            if($priceFrom){
+            if(isset($query['priceFrom']) && $priceFrom = $query['priceFrom']){
                 $queryText = $queryText."WHERE price > $priceFrom ";
             }
-            if($priceTo){
+            if(isset($query['priceTo']) && $priceTo = $query['priceTo']){
                 if($priceFrom) {
                     $queryText = $queryText."AND ";
                 } else {
                     $queryText = $queryText."WHERE ";
                 }
-                $queryText = $queryText."price < $priceTo";
+                $queryText = $queryText."price < $priceTo ";
             }
+            if(isset($query['dateFrom']) && isset($query['dateTo']) && !!($dateFrom = $query['dateFrom']) && $dateTo = $query['dateTo']){
+                $queryText = $queryText." AND 0 = (SELECT COUNT(*) FROM carorder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateTo < '$dateTo' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateFrom < '$dateTo' AND co.dateTo > '$dateTo' OR co.dateTo > '$dateFrom' AND co.dateTo < '$dateTo' AND co.dateFrom < '$dateFrom') ";
+            }
+            if(!isset($query['dateTo']) && isset($query['dateFrom']) && $dateFrom = $query['dateFrom']){
+                $queryText = $queryText." AND 0 = (SELECT COUNT(*) FROM carorder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateFrom' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateFrom') ";
+            }
+            if(isset($query['limit']) && $limit = $query['limit']){
+                $queryText = $queryText."LIMIT $limit";
+            }
+            // return $queryText;
             $query = $this->database->db->query($queryText);
             $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
             
@@ -114,9 +125,9 @@
                 return array("message" => "Введите id автомобиля", "method" => "GetHistory", "requestData" => $carId);
             }
 
-            $str = "SELECT id, dateFrom, dateTo from carorder WHERE dateFrom > now() AND carId = ? AND ( status = 1 OR status = 2 )";
+            $str = "SELECT id, dateFrom, dateTo from carorder WHERE dateFrom > now() AND carId = ? AND status IN (1,2)";
             if($orderId){
-                $str = "SELECT id, dateFrom, dateTo from carorder WHERE id != $orderId AND dateFrom > now() AND carId = ? AND ( status = 1 OR status = 2 )";
+                $str = $str." AND id != $orderId";
             }
 
             $query = $this->database->db->prepare($str);

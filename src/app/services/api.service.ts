@@ -133,6 +133,9 @@ export class ApiService {
   }
 
   private ngbDateToString(date: NgbDate): string {
+    if(!date){
+      return null;
+    }
     const newDate = new Date(date.year, date.month - 1, date.day);
     const [year, month, day] = [newDate.getFullYear(), newDate.getMonth() + 1, newDate.getDate()];
     return `${year < 10 ? `0${year}` : year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
