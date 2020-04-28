@@ -12,6 +12,16 @@ $token = new Token();
 // http://localhost/controller.php?key=get-cars&id=3&name=John
 if(isset($_GET['key'])){
     switch($_GET['key']){
+        case 'check-admin':
+            if($decodeToken = checkToken($token, true)){
+                if($decodeToken){
+                    echo json_encode($decodeToken->isAdmin == "1");
+                } else {
+                    echo json_encode($decodeToken);
+                }
+                
+            }
+            return;
         case 'get-cars':
             echo json_encode($repository->GetCars($_GET));
             return;
@@ -116,13 +126,10 @@ if(isset($_GET['key'])){
 function checkToken($token, $checkAdmin = false) {
     try{
         if(!isset($_GET['token'])){
-            http_response_code(401);
-            echo json_encode(array("message" => "Вход не выполнен"));
             return false;
         }
         $data = $token->decode($_GET['token']);
         if($checkAdmin && (!isset($data->isAdmin) || !$data->isAdmin)){
-            echo json_encode('В доступе отказано');
             return false;
         }
         return $data;

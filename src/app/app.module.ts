@@ -35,6 +35,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { PlacesComponent } from './profile/profile-details/places/places.component';
 import { PlaceComponent } from './profile/profile-details/places/place/place.component';
 import { SearchService } from './services/search.service';
+import { AdminGuard } from './guards/admin.guard';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,7 @@ import { SearchService } from './services/search.service';
     PlaceComponent
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, RouterModule, HttpClientModule],
-  providers: [FormBuilder, ProfileGuard, ApiService, AuthService, SearchService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],
+  providers: [FormBuilder, ProfileGuard, AdminGuard, ApiService, AuthService, SearchService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

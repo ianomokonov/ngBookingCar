@@ -15,7 +15,7 @@ export class ApiService {
 
   /** Проверка доступа админа */
   public checkAccess(): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}?key=get-access`);
+    return this.http.get<boolean>(`${this.baseUrl}?key=check-admin`);
   }
 
   public enter(userData): Observable<string> {
