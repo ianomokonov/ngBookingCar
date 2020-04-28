@@ -12,7 +12,7 @@
             ><b>{{ fromDate | ngbDate | date: 'dd.MM.yyyy' }} {{ toDate | ngbDate | date: ' - dd.MM.yyyy' }}</b></span
           >
           <span class="driver-license"
-            ><i class="far fa-clock"></i><b>{{ order.time['hour'] }} : {{ order.time['minute'] }}</b></span
+            ><i class="far fa-clock"></i><b>{{ api.ngbTimeToString(this.orderForm.get('time').value) }}</b></span
           >
           <!-- <span class="car-kpp"><i class="fas fa-cogs"></i>{{ car.kpp }}</span> -->
         </div>
@@ -64,7 +64,7 @@
           <div class="col">
             <div class="form-group">
               <label>Время подачи</label>
-              <ngb-timepicker formControlName="time" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
+              <ngb-timepicker [readonlyInputs]="true" formControlName="time" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
             </div>
           </div>
           <div class="col">

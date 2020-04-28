@@ -108,7 +108,7 @@ export class OrderComponent implements OnInit {
   }
 
   private rxAlive: boolean = true;
-  constructor(private fb: FormBuilder, private calendar: NgbCalendar, private api: ApiService) {
+  constructor(private fb: FormBuilder, private calendar: NgbCalendar, public api: ApiService) {
     this.orderForm = this.fb.group({
       period: [null, Validators.required],
       place: [null, Validators.required],

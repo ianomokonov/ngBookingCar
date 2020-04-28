@@ -59,6 +59,19 @@ button {
       border: 1px solid $danger;
       padding-left: 0.5rem;
     }
+
+    .validation-message{
+      color: $danger;
+    }
+  }
+}
+
+.validation-message{
+  @extend .text-muted;
+}
+.ng-invalid{
+  .validation-message{
+    color: $danger !important;
   }
 }
 

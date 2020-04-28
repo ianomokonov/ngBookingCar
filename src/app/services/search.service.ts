@@ -25,6 +25,9 @@ export class SearchService {
 
   public set model(model: SearchModel) {
     this._model = model;
+    if(model && (!model.period || !model.period.fromDate) && !model.time && !model.place && (!model.price || !model.price.from && !model.price.to)){
+      this._model = null;
+    }
     sessionStorage.setItem('bookingSearchModel', JSON.stringify(this._model));
     this.$filtersUpdate.next(this._model);
   }

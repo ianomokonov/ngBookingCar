@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDate, NgbTimeStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
 import { forkJoin } from 'rxjs';
@@ -18,6 +18,7 @@ export class BookingFormComponent implements OnInit {
   public car;
   public user;
   public periodDays: number = 1;
+  public submitted;
 
   hoveredDate: NgbDate | null = null;
 
@@ -26,26 +27,27 @@ export class BookingFormComponent implements OnInit {
   time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
 
   bookingForm: FormGroup;
+  period: FormControl;
   places: Place[];
   carDates: DateRange[];
 
   public get fromDate(): NgbDate {
-    return this.bookingForm.get('order').get('period').value.fromDate;
+    return this.period.value.fromDate;
   }
 
   public get toDate(): NgbDate | null {
-    return this.bookingForm.get('order').get('period').value.toDate;
+    return this.period.value.toDate;
   }
 
   public set fromDate(date: NgbDate) {
-    this.bookingForm.get('order').get('period').setValue({
+    this.period.setValue({
       fromDate: date,
       toDate: this.toDate,
     });
   }
 
   public set toDate(date: NgbDate) {
-    this.bookingForm.get('order').get('period').setValue({
+    this.period.setValue({
       fromDate: this.fromDate,
       toDate: date,
     });
@@ -70,13 +72,18 @@ export class BookingFormComponent implements OnInit {
         phone: null,
       }),
       order: this.fb.group({
-        period: null,
-        place: null,
+        period: [{
+          fromDate: null,
+          toDate: null
+        }, [Validators.required]],
+        place: [null, [Validators.required]],
         time: null,
         carId: null,
         sum: null,
       }),
     });
+    this.period = this.bookingForm.get('order').get('period') as FormControl;
+    this.bookingForm.get('order').get('time').setValue(this.searchService.defaultModel.time);
 
     this.bookingForm.get('order').valueChanges.subscribe((value) => {
       this.saveFilters(value);
@@ -132,6 +139,7 @@ export class BookingFormComponent implements OnInit {
       }
     });
     const orderForm = this.bookingForm.get('order') as FormGroup;
+    
     if (this.searchService.model) {
       orderForm.patchValue(
         {
@@ -140,8 +148,9 @@ export class BookingFormComponent implements OnInit {
         },
         { emitEvent: false }
       );
+      this.setPeriodDays(orderForm.getRawValue());
     }
-    this.setPeriodDays(orderForm.getRawValue());
+    
   }
 
   enter() {
@@ -150,6 +159,7 @@ export class BookingFormComponent implements OnInit {
   }
 
   addOrder() {
+    this.submitted = true;
     const orderForm = this.bookingForm.get('order') as FormGroup;
     if (orderForm.invalid) {
       for (const control of Object.values(orderForm.controls)) {
@@ -157,6 +167,10 @@ export class BookingFormComponent implements OnInit {
           control.markAsDirty();
         }
       }
+      return;
+    }
+    if(!this.period.value.fromDate){
+      this.bookingForm.markAsDirty();
       return;
     }
     const orderFormValue = orderForm.getRawValue();

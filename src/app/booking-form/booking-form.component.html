@@ -54,7 +54,7 @@
       </div>
       <div class="row" *ngIf="carDates">
         <div class="col-6">
-          <div class="form-group mb-0">
+          <div class="form-group mb-0" [ngClass]="{ 'ng-invalid': submitted }">
             <label>Период аренды</label>
             <ngbd-datepicker-i18n
               #dp
@@ -80,6 +80,7 @@
                 {{ date.day }}
               </span>
             </ng-template>
+            <small *ngIf="!this.period?.value?.fromDate" class="d-block mt-2 validation-message">Укажите период аренды</small>
           </div>
         </div>
         <div class="col d-flex flex-column justify-content-between">
@@ -88,7 +89,7 @@
               <div class="col">
                 <div class="form-group">
                   <label>Время подачи</label>
-                  <ngb-timepicker formControlName="time" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
+                  <ngb-timepicker  [readonlyInputs]="true" formControlName="time" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
                 </div>
               </div>
               <div class="col">
