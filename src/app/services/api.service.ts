@@ -153,7 +153,7 @@ export class ApiService {
     return NgbDate.from({ year: +newDate[0], month: +newDate[1], day: +newDate[2] });
   }
 
-  private ngbTimeToString(time: NgbTimeStruct): string {
+  public ngbTimeToString(time: NgbTimeStruct): string {
     return `${time.hour < 10 ? `0${time.hour}` : time.hour}:${time.minute < 10 ? `0${time.minute}` : time.minute}`;
   }
 
