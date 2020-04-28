@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDate, NgbCalendar, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { SliderRange } from 'src/app/utils/double-slider/double-slider.component';
 import { ApiService } from 'src/app/services/api.service';
 import { SearchService } from 'src/app/services/search.service';
@@ -24,23 +24,25 @@ export class FiltersFormComponent implements OnInit {
   filterForm: FormGroup;
   places: Place[];
 
+  period: FormControl;
+
   public get fromDate(): NgbDate {
-    return this.filterForm.get('period').value.fromDate;
+    return this.period.value.fromDate;
   }
 
   public get toDate(): NgbDate | null {
-    return this.filterForm.get('period').value.toDate;
+    return this.period.value.toDate;
   }
 
   public set fromDate(date: NgbDate) {
-    this.filterForm.get('period').setValue({
+    this.period.setValue({
       fromDate: date,
       toDate: this.toDate,
     });
   }
 
   public set toDate(date: NgbDate) {
-    this.filterForm.get('period').setValue({
+    this.period.setValue({
       fromDate: this.fromDate,
       toDate: date,
     });
@@ -54,7 +56,12 @@ export class FiltersFormComponent implements OnInit {
       time: null,
       price: null,
     });
-    this.filterForm.valueChanges.pipe(debounceTime(300)).subscribe(() => {
+    this.period = this.filterForm.get('period') as FormControl;
+
+    this.period.valueChanges.pipe(debounceTime(300)).subscribe(() => {
+      this.saveFilters();
+    });
+    this.filterForm.get('price').valueChanges.pipe(debounceTime(300)).subscribe(() => {
       this.saveFilters();
     });
   }
