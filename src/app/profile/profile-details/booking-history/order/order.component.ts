@@ -36,7 +36,7 @@ export class OrderComponent implements OnInit {
       const fromDateNgb = this.order.dateFrom as NgbDate;
       
       this.minDate = this.calendar.getNext(this.today, 'd', 5);
-      if(fromDateNgb.before(this.minDate)){
+      if(this.order.status != OrderStatus.Planned || fromDateNgb.before(this.minDate)){
         this.disabled = true;
       }
       this.orderForm.patchValue(formValue);
@@ -146,6 +146,16 @@ export class OrderComponent implements OnInit {
 
 
     this.api.updateOrder(order).pipe(takeWhile(() => this.rxAlive)).subscribe(() => {
+      this.orderUpdated.emit(this.order.id);
+    })
+  }
+
+  public cancel(){
+    if(this.disabled){
+      return;
+    }
+
+    this.api.cancelOrder(this.order.id).pipe(takeWhile(() => this.rxAlive)).subscribe(() => {
       this.orderUpdated.emit(this.order.id);
     })
   }

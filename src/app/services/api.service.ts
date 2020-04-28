@@ -101,6 +101,10 @@ export class ApiService {
     return this.http.post<any>(`${this.baseUrl}?key=update-order`, order);
   }
 
+  public cancelOrder(orderId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}?key=cancel-order&orderId=${orderId}`);
+  }
+
   public getOrders(): Observable<Order[]> {
     return this.http.get<Order[]>(`${this.baseUrl}?key=get-history`).pipe(
       tap((orders) => {

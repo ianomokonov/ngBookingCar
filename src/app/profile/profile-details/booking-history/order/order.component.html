@@ -69,12 +69,17 @@
         </div>
       </div>
       <div class="text-right">
-        <small class="text-muted mr-2">
+        <small class="text-muted">
           К оплате {{order.orderSum}} ₽
         </small>
-        <button class="btn btn-primary" (click)="onSaveClick()">
-          Сохранить
-        </button>
+        <div class="btns">
+          <button class="btn btn-outline-danger mr-2" (click)="cancel()">
+            Отменить
+          </button>
+          <button class="btn btn-primary" (click)="onSaveClick()">
+            Сохранить
+          </button>
+        </div>
       </div>
     </div>
   </div>

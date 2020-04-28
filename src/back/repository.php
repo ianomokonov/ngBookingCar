@@ -114,7 +114,7 @@
                 return array("message" => "Введите id пользователя", "method" => "GetHistory", "requestData" => $userId);
             }
 
-            $query = $this->database->db->prepare("SELECT * from carorder WHERE userId = ? ORDER BY dateFrom DESC");
+            $query = $this->database->db->prepare("SELECT * from carorder WHERE userId = ? ORDER BY status ASC, dateFrom DESC");
             $query->execute(array($userId));
             $query->setFetchMode(PDO::FETCH_CLASS, 'Order');
             $orders = [];
@@ -156,6 +156,15 @@
             $query = $this->database->db->prepare($a[0]);
             $query->execute($a[1]);
             return array('message' => 'Заказ обновлен');
+        }
+
+        public function CancelOrder($orderId){
+            if(!$orderId){
+                return array("message" => "Укажите id заказа", "method" => "CancelOrder", "requestData" => $orderId);
+            }
+            $query = $this->database->db->prepare("UPDATE carorder SET status=3 WHERE id=?");
+            $query->execute(array($orderId));
+            return array('message' => 'Заказ отменен');
         }
 
         public function SignIn($user = null){

@@ -89,6 +89,11 @@ if(isset($_GET['key'])){
                 echo json_encode($repository->UpdateOrder($data));
             }
             return;
+        case 'cancel-order':
+            if($decodeToken = checkToken($token)){
+                echo json_encode($repository->CancelOrder($_GET['orderId']));
+            }
+            return;
         case 'upload-car-img':
             if($decodeToken = checkToken($token, true)){
                 echo json_encode($repository->UploadCarImg($_FILES['CarImage']));

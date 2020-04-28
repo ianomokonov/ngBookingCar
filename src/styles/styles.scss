@@ -8,12 +8,12 @@
 html,
 body {
   font-family: Roboto;
-  height: 100%;
+  min-height: 100%;
 }
 
-body {
-  background: linear-gradient(180deg, rgba(245, 245, 245, 0) 1.04%, #F5F5F5 100%);
-}
+// body {
+//   background: linear-gradient(180deg, rgba(245, 245, 245, 0) 1.04%, #F5F5F5 100%);
+// }
 .form-group {
   label {
     @extend .text-muted;
