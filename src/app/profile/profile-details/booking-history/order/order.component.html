@@ -9,7 +9,7 @@
         <div class="car-details">
           <span class="car-places"
             ><i class="far fa-calendar-minus"></i
-            ><b>{{ order.dateFrom | ngbDate | date: 'dd.MM.yyyy' }} {{ order.dateTo | ngbDate | date: ' - dd.MM.yyyy' }}</b></span
+            ><b>{{ fromDate | ngbDate | date: 'dd.MM.yyyy' }} {{ toDate | ngbDate | date: ' - dd.MM.yyyy' }}</b></span
           >
           <span class="driver-license"
             ><i class="far fa-clock"></i><b>{{ order.time['hour'] }} : {{ order.time['minute'] }}</b></span

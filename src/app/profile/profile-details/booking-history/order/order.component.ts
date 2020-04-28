@@ -34,7 +34,7 @@ export class OrderComponent implements OnInit {
       };
 
       const fromDateNgb = this.order.dateFrom as NgbDate;
-
+      
       this.minDate = this.calendar.getNext(this.today, 'd', 5);
       if(fromDateNgb.before(this.minDate)){
         this.disabled = true;

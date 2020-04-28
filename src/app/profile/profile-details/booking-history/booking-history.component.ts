@@ -12,6 +12,7 @@ export class BookingHistoryComponent implements OnInit {
 
   constructor(private api: ApiService) {
     this.api.getOrders().subscribe(orders => {
+      console.log(orders)
       this.orders = orders;
     })
   }

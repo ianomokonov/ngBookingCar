@@ -115,12 +115,13 @@ export class ApiService {
 
   private ngbDateToString(date: NgbDate): string {
     const newDate = new Date(date.year, date.month - 1, date.day);
-    return newDate.toLocaleDateString();
+    const [year, month, day] = [newDate.getFullYear(), newDate.getMonth() + 1, newDate.getDate()];
+    return `${ year< 10 ? `0${year}` : year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
   }
 
   private stringToNgbDate(date: string): NgbDate {
-    const newDate = date.split('.');
-    return NgbDate.from({ year: +newDate[2], month: +newDate[1], day: +newDate[0] });
+    const newDate = date.split('-');
+    return NgbDate.from({ year: +newDate[0], month: +newDate[1], day: +newDate[2] });
   }
 
   private ngbTimeToString(time: NgbTimeStruct): string {

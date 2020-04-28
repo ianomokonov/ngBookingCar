@@ -114,7 +114,7 @@
                 return array("message" => "Введите id пользователя", "method" => "GetHistory", "requestData" => $userId);
             }
 
-            $query = $this->database->db->prepare("SELECT * from carorder WHERE userId = ?");
+            $query = $this->database->db->prepare("SELECT * from carorder WHERE userId = ? ORDER BY dateFrom DESC");
             $query->execute(array($userId));
             $query->setFetchMode(PDO::FETCH_CLASS, 'Order');
             $orders = [];
