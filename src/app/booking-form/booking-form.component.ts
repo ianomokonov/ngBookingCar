@@ -50,7 +50,7 @@ export class BookingFormComponent implements OnInit {
     });
   }
   constructor(
-    private searchService: SearchService,
+    public searchService: SearchService,
     private fb: FormBuilder,
     private api: ApiService,
     private auth: AuthService,
@@ -152,16 +152,24 @@ export class BookingFormComponent implements OnInit {
   }
 
   addOrder(){
-    const orderFormValue = (this.bookingForm.get('order') as FormGroup).getRawValue();
+    const orderForm = this.bookingForm.get('order') as FormGroup;
+    if (orderForm.invalid) {
+      for (const control of Object.values(orderForm.controls)) {
+        if (control.invalid) {
+          control.markAsDirty();
+        }
+      }
+      return;
+    }
+    const orderFormValue = orderForm.getRawValue();
     const order: Order = {
       carId: this.car.id,
       placeId: orderFormValue.place,
       dateFrom: orderFormValue.period.fromDate,
       dateTo: orderFormValue.period.toDate,
-      time: `${orderFormValue.time.hour}:${orderFormValue.time.minute}`,
+      time: orderFormValue.time,
       orderSum: this.car.price * this.periodDays
     }
-    console.log(order)
 
     this.api.addOrder(order).subscribe(v => {
       this.router.navigate(['/profile']);
@@ -189,5 +197,9 @@ export class BookingFormComponent implements OnInit {
 
   isRange(date: NgbDate) {
     return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
+  }
+  
+  isDisabled(date: NgbDate) {
+    return date.before(this.searchService.minDate);
   }
 }

@@ -49,6 +49,7 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
   <ngb-datepicker
     [(ngModel)]="model"
     [displayMonths]="2"
+    [minDate]="minDate"
     [dayTemplate]="dayTemplate"
     (select)="onDateSelect($event)"
   ></ngb-datepicker>
@@ -57,6 +58,7 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
 })
 export class NgbdDatepickerI18n {
   @Input() dayTemplate;
+  @Input() minDate;
   @Output() dateSelect: EventEmitter<NgbDate> = new EventEmitter<NgbDate>();
   model: NgbDateStruct;
 

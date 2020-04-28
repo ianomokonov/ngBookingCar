@@ -40,9 +40,10 @@ CREATE TABLE IF NOT EXISTS carOrder(
     carId int(10) NOT NULL,
     placeId int(10) NOT NULL,
     dateFrom varchar(100) NOT NULL,
-    dateTo varchar(100) NOT NULL,
+    dateTo varchar(100) NULL,
     orderSum int(10) NOT NULL,
     time varchar(50) NOT NULL,
+    status int(2) DEFAULT 1,
     
     FOREIGN KEY (userId) REFERENCES user(id),
     FOREIGN KEY (carId) REFERENCES car(id),

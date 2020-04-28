@@ -54,7 +54,7 @@
         <div class="col-6">
           <div class="form-group mb-0">
             <label>Период аренды</label>
-            <ngbd-datepicker-i18n #dp (dateSelect)="onDateSelection($event)" [dayTemplate]="t" outsideDays="hidden"> </ngbd-datepicker-i18n>
+            <ngbd-datepicker-i18n #dp (dateSelect)="onDateSelection($event)" [dayTemplate]="t" [minDate]="this.searchService.minDate" outsideDays="hidden"> </ngbd-datepicker-i18n>
 
             <ng-template #t let-date let-focused="focused">
               <span
@@ -62,6 +62,7 @@
                 [class.focused]="focused"
                 [class.range]="isRange(date)"
                 [class.faded]="isHovered(date) || isInside(date)"
+                [class.disabled]="isDisabled(date)"
                 (mouseenter)="hoveredDate = date"
                 (mouseleave)="hoveredDate = null"
               >

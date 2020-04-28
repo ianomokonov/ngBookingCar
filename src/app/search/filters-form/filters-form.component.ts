@@ -46,7 +46,7 @@ export class FiltersFormComponent implements OnInit {
     });
   }
 
-  constructor(private fb: FormBuilder, private router: Router, private api: ApiService, private searchService: SearchService) {
+  constructor(private fb: FormBuilder, private router: Router, private api: ApiService, public searchService: SearchService) {
     this.priceRange = this.searchService.priceRange;
     this.filterForm = this.fb.group({
       period: null,
@@ -113,5 +113,9 @@ export class FiltersFormComponent implements OnInit {
 
   isRange(date: NgbDate) {
     return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
+  }
+
+  isDisabled(date: NgbDate) {
+    return date.before(this.searchService.minDate);
   }
 }

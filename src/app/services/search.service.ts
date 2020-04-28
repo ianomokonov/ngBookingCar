@@ -10,16 +10,9 @@ export class SearchService {
 
   private time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
   public priceRange: SliderRange = { min: 1500, max: 8000 };
+  public minDate: NgbDate;
 
-  public defaultModel: SearchModel = {
-    period: {
-      fromDate: this.calendar.getToday(),
-      toDate: this.calendar.getNext(this.calendar.getToday(), 'd', 10),
-    },
-    place: null,
-    time: this.time,
-    price: { from: this.priceRange.min, to: this.priceRange.max },
-  };
+  public defaultModel: SearchModel;
 
   public $filtersUpdate: BehaviorSubject<SearchModel>;
 
@@ -39,6 +32,16 @@ export class SearchService {
   constructor(private calendar: NgbCalendar) {
     this._model = this.model;
     this.$filtersUpdate = new BehaviorSubject(this._model);
+    this.minDate = this.calendar.getNext(this.calendar.getToday(), 'd', 5);
+    this.defaultModel = {
+      period: {
+        fromDate: this.minDate,
+        toDate: this.calendar.getNext(this.minDate, 'd', 10),
+      },
+      place: null,
+      time: this.time,
+      price: { from: this.priceRange.min, to: this.priceRange.max },
+    };
   }
 
   public initUpdate() {

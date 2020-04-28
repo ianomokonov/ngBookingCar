@@ -2,14 +2,17 @@ import { NgbDate, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Car } from './car';
 import { Place } from './place';
 
-export interface Order {
+export interface UpdateOrder {
   id?: number;
-  carId: number;
   placeId: number;
   dateFrom: string | NgbDate;
   dateTo: string | NgbDate;
   orderSum: number;
   time: string | NgbTimeStruct;
+}
+
+export interface Order extends UpdateOrder {
+  carId: number;
   status?: OrderStatus;
   statusText?: string;
   statusClass?: string;

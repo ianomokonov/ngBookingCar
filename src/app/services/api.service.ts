@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SearchModel } from './search.service';
-import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Place } from '../models/place';
-import { Order } from '../models/order';
+import { Order, UpdateOrder } from '../models/order';
 import { tap } from 'rxjs/internal/operators';
 import { User } from '../models/user';
 
@@ -89,8 +89,16 @@ export class ApiService {
 
   public addOrder(order: Order): Observable<any> {
     order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
-    order.dateTo = this.ngbDateToString(order.dateTo as NgbDate);
+    order.dateTo = order.dateTo ? this.ngbDateToString(order.dateTo as NgbDate) : null;
+    order.time = this.ngbTimeToString(order.time as NgbTimeStruct);
     return this.http.post<any>(`${this.baseUrl}?key=add-order`, order);
+  }
+
+  public updateOrder(order: UpdateOrder): Observable<any> {
+    order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
+    order.dateTo = order.dateTo ? this.ngbDateToString(order.dateTo as NgbDate) : null;
+    order.time = this.ngbTimeToString(order.time as NgbTimeStruct);
+    return this.http.post<any>(`${this.baseUrl}?key=update-order`, order);
   }
 
   public getOrders(): Observable<Order[]> {
@@ -98,9 +106,8 @@ export class ApiService {
       tap((orders) => {
         orders.forEach((order) => {
           order.dateFrom = this.stringToNgbDate(order.dateFrom as string);
-          order.dateTo = this.stringToNgbDate(order.dateTo as string);
-          const time = (order.time as string).split(':');
-          order.time = { hour: +time[0], minute: +time[1], second: 0 };
+          order.dateTo = order.dateTo ? this.stringToNgbDate(order.dateTo as string) : null;
+          order.time = this.stringToNgbTime(order.time as string);
         });
       })
     );
@@ -114,5 +121,14 @@ export class ApiService {
   private stringToNgbDate(date: string): NgbDate {
     const newDate = date.split('.');
     return NgbDate.from({ year: +newDate[2], month: +newDate[1], day: +newDate[0] });
+  }
+
+  private ngbTimeToString(time: NgbTimeStruct): string {
+    return `${time.hour < 10 ? `0${time.hour}` : time.hour}:${time.minute < 10 ? `0${time.minute}` : time.minute}`;
+  }
+
+  private stringToNgbTime(time: string): NgbTimeStruct {
+    const newTime = time.split(':');
+    return {hour: +newTime[0], minute: +newTime[1], second: 0};
   }
 }

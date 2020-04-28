@@ -86,7 +86,7 @@ if(isset($_GET['key'])){
         case 'update-order':
             if($decodeToken = checkToken($token)){
                 $data = json_decode(file_get_contents("php://input"));
-                echo json_encode($repository->UpdateOrder($decodeToken, $data));
+                echo json_encode($repository->UpdateOrder($data));
             }
             return;
         case 'upload-car-img':

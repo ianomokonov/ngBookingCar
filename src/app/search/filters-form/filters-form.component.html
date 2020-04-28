@@ -2,13 +2,14 @@
   <h2 class="mb-3 bk-header">Подобрать по параметрам</h2>
   <div class="row">
     <div class="col-6">
-      <ngbd-datepicker-i18n #dp (dateSelect)="onDateSelection($event)" [dayTemplate]="t" outsideDays="hidden"> </ngbd-datepicker-i18n>
+      <ngbd-datepicker-i18n #dp (dateSelect)="onDateSelection($event)" [minDate]="searchService.minDate" [dayTemplate]="t" outsideDays="hidden"> </ngbd-datepicker-i18n>
 
       <ng-template #t let-date let-focused="focused">
         <span
           class="custom-day"
           [class.focused]="focused"
           [class.range]="isRange(date)"
+          [class.disabled]="isDisabled(date)"
           [class.faded]="isHovered(date) || isInside(date)"
           (mouseenter)="hoveredDate = date"
           (mouseleave)="hoveredDate = null"

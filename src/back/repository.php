@@ -145,6 +145,19 @@
             
         }
 
+        public function UpdateOrder($order){
+            if(!$order || !isset($order->id) || !$order->id){
+                return array("message" => "Укажите id заказа", "method" => "UpdateOrder", "requestData" => $order);
+            }
+
+            $orderId = $order->id;
+            unset($order->id);
+            $a = $this->database->genUpdateQuery(array_keys((array)$order), array_values((array)$order), "carorder", $orderId);
+            $query = $this->database->db->prepare($a[0]);
+            $query->execute($a[1]);
+            return array('message' => 'Заказ обновлен');
+        }
+
         public function SignIn($user = null){
             if($user != null){
                 $sth = $this->database->db->prepare("SELECT id, password, isAdmin FROM user WHERE email = ? LIMIT 1");
