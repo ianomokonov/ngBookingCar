@@ -17,11 +17,24 @@
                 }
                 &:nth-of-type(2){
                     width: 8rem;
+                    padding-left: 0.2rem;
                 }
                 background-color: #fff;
-                margin-bottom: -1px;
+                margin-bottom: -2px;
                 font-size: 0.8rem;
                 line-height: 0.8rem;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px){
+    .characteristic{
+        li{
+            span{
+                &:nth-of-type(2){
+                    width: auto !important;
+                }
             }
         }
     }

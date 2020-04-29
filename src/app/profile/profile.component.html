@@ -2,7 +2,9 @@
 <div class="container pt-3">
   <ul ngbNav [activeId]="getActive()" class="nav-tabs">
     <li [ngbNavItem]="link.fragment" *ngFor="let link of links">
-      <a ngbNavLink [routerLink]="link.fragment" routerLinkActive="active">{{ link.title }}</a>
+      <a ngbNavLink [routerLink]="link.fragment" routerLinkActive="active"
+        ><span class="d-none d-sm-inline">{{ link.title }}</span> <i class="{{link.class}} d-sm-none"></i
+      ></a>
     </li>
   </ul>
   <div class="tab-content">

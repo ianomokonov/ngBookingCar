@@ -1,9 +1,9 @@
 <div class="row">
-  <div class="col-9">
+  <div class="col-sm-9">
     <input [formControl]="placeControl" type="text" class="form-control mr-1" />
   </div>
-  <div class="col btns text-left pl-0">
-    <button class="btn btn-outline-success mr-1" *ngIf="!placeInstanse?.id" (click)="addPlace()" title="Добавить">
+  <div class="col-sm btns py-1 py-sm-0 text-right text-sm-left pl-0">
+    <button class="btn btn-outline-success" *ngIf="!placeInstanse?.id" (click)="addPlace()" title="Добавить">
       <i class="fas fa-plus"></i>
     </button>
     <ng-container *ngIf="placeInstanse?.id">
@@ -13,7 +13,7 @@
         title="Сохранить"
         [disabled]="placeControl.pristine"
       ></button>
-      <button class="btn btn-outline-danger mr-1" (click)="deletePlace()"><i class="fas fa-times" title="Удалить"></i></button>
+      <button class="btn btn-outline-danger" (click)="deletePlace()"><i class="fas fa-times" title="Удалить"></i></button>
     </ng-container>
   </div>
 </div>

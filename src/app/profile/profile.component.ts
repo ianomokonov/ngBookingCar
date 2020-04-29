@@ -9,7 +9,7 @@ import { takeWhile } from 'rxjs/internal/operators';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  public links = [{ title: 'История заказов', fragment: 'history' }];
+  public links = [{ title: 'История заказов', fragment: 'history', class: 'fas fa-history' }];
   rxAlive: boolean = true;
   constructor(public route: ActivatedRoute, private api: ApiService) {}
 
@@ -19,7 +19,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .pipe(takeWhile(() => this.rxAlive))
       .subscribe((isAdmin) => {
         if (isAdmin) {
-          this.links.push({ title: 'Автомобили', fragment: 'cars' }, { title: 'Места сдачи', fragment: 'places' });
+          this.links.push(
+            { title: 'Автомобили', fragment: 'cars', class: 'fas fa-car' },
+            { title: 'Места сдачи', fragment: 'places', class: 'fas fa-map-marker-alt' }
+          );
         }
       });
   }

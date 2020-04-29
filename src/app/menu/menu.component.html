@@ -10,7 +10,10 @@
         <a class="nav-link" routerLink="/catalog" routerLinkActive="active">Каталог</a>
       </div>
 
-      <a class="nav-link mr-0" routerLink="/profile" routerLinkActive="active">{{ user ? user.name +' '+ user.surname : 'Личный кабинет' }}</a>
+      <a class="nav-link mr-0" routerLink="/profile" routerLinkActive="active"
+        ><span class="d-none d-md-inline">{{ user ? user.name + ' ' + user.surname : 'Личный кабинет' }}</span>
+        <i class="fas fa-user d-md-none"></i>
+      </a>
     </nav>
   </div>
 </div>

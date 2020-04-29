@@ -25,11 +25,11 @@
     <h2 class="bk-header mt-3 mb-0">Данные заказа</h2>
     <form formGroupName="order">
       <div class="row car" *ngIf="car">
-        <div class="col-md-8 car-info-img row">
-          <div class="car-img col-4">
+        <div class="col-md-8 car-info-img row p-0 px-sm-3">
+          <div class="car-img col-sm-4 ">
             <img [src]="car.img" />
           </div>
-          <div class="car-info col-8">
+          <div class="car-info col-sm-8">
             <h2 class="car-title">{{ car.name }}</h2>
             <div class="car-details">
               <span class="car-places"
@@ -43,7 +43,7 @@
           </div>
         </div>
 
-        <div class="car-actions col-md-4 text-right">
+        <div class="car-actions col-md-4 text-right p-0 px-sm-3">
           <div class="price">
             <h2>{{ car.price }} ₽ <span>в сутки</span></h2>
             <span class="text-muted">итого: {{ car.price * 3 }} ₽ за 3 суток</span>
@@ -81,7 +81,7 @@
             <small *ngIf="!this.period?.value?.fromDate" class="d-block mt-2 validation-message">Укажите период аренды</small>
           </div>
         </div>
-        <div class="pt-sm-3 pt-md-0 col-4 col-md-3 col-xl-3">
+        <div class="pt-sm-3 pt-md-0 col-sm-4 col-md-3 col-xl-3">
           <div class="form-group">
             <label>Время подачи</label>
             <ngb-timepicker [readonlyInputs]="true" formControlName="time" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>

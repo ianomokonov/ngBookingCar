@@ -11,7 +11,7 @@
     font-size: 0.8rem;
     line-height: 0.8rem;
   }
-  background: no-repeat url(../../assets/logo-car.jpg) right 0.2rem bottom;
+  background: no-repeat url(../../assets/logo-car.jpg) left 5rem bottom;
   background-size: auto 1.5rem;
   margin-right: 8rem;
 }
@@ -21,7 +21,6 @@ a {
   margin-right: 1rem;
   display: flex;
   align-items: center;
-  max-width: 125px;
   text-overflow: ellipsis;
   white-space: nowrap;
   
@@ -45,8 +44,14 @@ nav{
   justify-content: space-between;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .logo{
     margin-right: 3rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .container{
+    flex-direction: column;
   }
 }

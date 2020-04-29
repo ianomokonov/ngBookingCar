@@ -67,7 +67,7 @@
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
     .car-actions{
         margin-top: 1.5rem;
@@ -93,4 +93,18 @@
     .car-details{
         font-size: 0.8rem !important;
     }    
+}
+
+@media (max-width: 576px) {
+
+    .car-actions{
+        flex-direction: column !important;
+        align-items: flex-start;
+        margin-top: 1rem;
+
+        .btns{
+            margin-top: 1rem;
+        }
+        
+    }   
 }
