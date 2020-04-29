@@ -2,7 +2,7 @@
   <div class="header my-4">
     <div class="row">
       <div class="col-3 img">
-        <img [src]="car.img" />
+        <img [src]="car.img" class="w-100" />
       </div>
       <div class="col">
         <h2 class="car-title">
@@ -11,7 +11,7 @@
         <div class="info mb-2">
           <small class="mr-1 text-muted">Год выпуска:</small><b>{{ car.createYear }}</b>
         </div>
-        <div class="description">
+        <div class="description d-none d-md-block">
           <h4>Описание</h4>
           <p>
             {{ car.description }}
@@ -23,16 +23,26 @@
         </div>
       </div>
     </div>
+    <div class="description d-md-none">
+      <h4>Описание</h4>
+      <p>
+        {{ car.description }}
+      </p>
+      <div class="price pb-3">
+        <a [routerLink]="['/booking', car.id]" class="btn btn-primary mr-3">Заказать</a>
+        <b>{{ car.price }} ₽</b> в сутки
+      </div>
+    </div>
   </div>
   <div class="content">
     <ngb-tabset [destroyOnHide]="false">
       <ngb-tab title="Технические характеристики">
         <ng-template ngbTabContent>
           <div class="characteristic row">
-            <div class="col-6" data-key="0">
+            <div class="col-md-6" data-key="0">
               <ul>
                 <li>
-                  <span>Тип двигателя</span><span>{{ car.fuelType }}, {{car.engineVolume}}</span>
+                  <span>Тип двигателя</span><span>{{ car.fuelType }}, {{ car.engineVolume }}</span>
                 </li>
                 <li>
                   <span>Максимальная мощность</span><span>{{ car.enginePower }} л.с.</span>
@@ -48,7 +58,7 @@
                 </li>
               </ul>
             </div>
-            <div class="col-6" data-key="6">
+            <div class="col-md-6" data-key="6">
               <ul>
                 <li>
                   <span>Привод</span><span>{{ car.driveUnit }}</span>

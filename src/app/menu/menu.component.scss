@@ -21,6 +21,10 @@ a {
   margin-right: 1rem;
   display: flex;
   align-items: center;
+  max-width: 125px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  
   &.active {
     position: relative;
     &:after {
@@ -39,4 +43,10 @@ nav{
   flex-grow: 1;
   display: flex;
   justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+  .logo{
+    margin-right: 3rem;
+  }
 }

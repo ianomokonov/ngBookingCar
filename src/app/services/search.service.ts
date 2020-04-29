@@ -34,7 +34,6 @@ export class SearchService {
 
   constructor(private calendar: NgbCalendar) {
     this._model = this.model;
-    this.$filtersUpdate = new BehaviorSubject(this._model);
     this.minDate = this.calendar.getNext(this.calendar.getToday(), 'd', 5);
     this.defaultModel = {
       period: {
@@ -45,6 +44,7 @@ export class SearchService {
       time: this.time,
       price: { from: this.priceRange.min, to: this.priceRange.max },
     };
+    this.$filtersUpdate = new BehaviorSubject(this._model || this.defaultModel);
   }
 
   public initUpdate() {

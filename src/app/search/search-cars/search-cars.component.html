@@ -3,7 +3,7 @@
     <h2 class="bk-header mt-5" *ngIf="header && cars?.length">{{ header }}</h2>
     <div class="cars">
       <div class="row car" *ngFor="let car of cars">
-        <div class="col-8 car-info-img row">
+        <div class="col-md-8 car-info-img row">
           <div class="car-img col-4">
             <img [src]="car.img" />
           </div>
@@ -21,12 +21,12 @@
           </div>
         </div>
 
-        <div class="car-actions col-4 text-right">
+        <div class="car-actions col-md-4 text-right">
           <div class="price">
             <h2>{{ car.price }} ₽ <span>в сутки</span></h2>
             <span class="text-muted">итого: {{ car.price * 3 }} ₽ за 3 суток</span>
           </div>
-          <div class="btns">
+          <div class="btns d-flex justify-content-end">
             <a class="btn btn-primary mr-1" [routerLink]="['/booking', car.id]">Заказать</a>
             <a class="btn btn-outline-primary" [routerLink]="['/details', car.id]">Подробнее</a>
           </div>

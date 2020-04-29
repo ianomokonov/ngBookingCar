@@ -48,7 +48,8 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
   template: `
   <ngb-datepicker
     [(ngModel)]="model"
-    [displayMonths]="2"
+    [displayMonths]="displayMonths"
+    outsideDays="collapsed"
     [minDate]="minDate"
     [maxDate]="maxDate"
     [dayTemplate]="dayTemplate"
@@ -60,6 +61,7 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
 })
 export class NgbdDatepickerI18n {
   @Input() dayTemplate;
+  @Input() displayMonths = 2;
   @Input() minDate;
   @Input() maxDate;
   @Input() markDisabled;

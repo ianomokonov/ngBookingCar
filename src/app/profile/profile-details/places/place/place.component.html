@@ -1,9 +1,18 @@
-<div class="d-flex">
-  <input [formControl]="placeControl" type="text" class="form-control mr-1" />
-  <div class="btns text-left">
-    <button class="btn btn-outline-success mr-1" *ngIf="!placeInstanse?.id" (click)="addPlace()" title="Добавить"><i class="fas fa-plus"></i></button>
+<div class="row">
+  <div class="col-9">
+    <input [formControl]="placeControl" type="text" class="form-control mr-1" />
+  </div>
+  <div class="col btns text-left pl-0">
+    <button class="btn btn-outline-success mr-1" *ngIf="!placeInstanse?.id" (click)="addPlace()" title="Добавить">
+      <i class="fas fa-plus"></i>
+    </button>
     <ng-container *ngIf="placeInstanse?.id">
-      <button class="far fa-save btn btn-outline-primary mr-1" (click)="updatePlace()" title="Сохранить" [disabled]="placeControl.pristine"></button>
+      <button
+        class="far fa-save btn btn-outline-primary mr-1"
+        (click)="updatePlace()"
+        title="Сохранить"
+        [disabled]="placeControl.pristine"
+      ></button>
       <button class="btn btn-outline-danger mr-1" (click)="deletePlace()"><i class="fas fa-times" title="Удалить"></i></button>
     </ng-container>
   </div>

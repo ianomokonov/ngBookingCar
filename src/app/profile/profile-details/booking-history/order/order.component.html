@@ -1,7 +1,7 @@
 <div *ngIf="order" class="car mt-3" [title]="order?.statusText">
   <div class="car-header w-100" (click)="edit()">
-    <div class="col-8 car-info-img row">
-      <div class="car-img col-2">
+    <div class="col-md-8 car-info-img row">
+      <div class="car-img col-4 col-md-2">
         <img [src]="order.car.img" />
       </div>
       <div class="car-info col">
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="car-actions col-4 text-right">
+    <div class="car-actions col-md-3 text-right d-none d-md-block">
       <div class="price">
         <h2>{{ order.orderSum }} ₽</h2>
         <!-- <span class="text-muted">итого: {{ car.price * 3 }} ₽ за 3 суток</span>  TODO -->
@@ -29,9 +29,9 @@
   <span class="status" [ngClass]="[order.statusClass]"></span>
 
   <div class="row mt-3" [formGroup]="orderForm" *ngIf="isEditing">
-    <div class="col-6">
+    <div class="col-7 col-sm-9 col-md-9 col-xl-6">
       <div class="form-group mb-0">
-        <label>Период аренды</label>
+        <label class="d-block">Период аренды</label>
         <ngbd-datepicker-i18n
           #dp
           (dateSelect)="onDateSelection($event)"
@@ -58,23 +58,19 @@
         </ng-template>
       </div>
     </div>
-    <div class="col d-flex flex-column justify-content-between">
+    <div class="pt-sm-3 pt-md-0 col-4 col-md-3 col-xl-3">
+      <div class="form-group">
+        <label>Время подачи</label>
+        <ngb-timepicker [readonlyInputs]="true" formControlName="time" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
+      </div>
+    </div>
+    <div class="pt-3 pt-md-0 col-sm-8 col-md-12 col-xl-3 d-flex flex-column justify-content-between">
       <div>
-        <div class="row">
-          <div class="col">
-            <div class="form-group">
-              <label>Время подачи</label>
-              <ngb-timepicker [readonlyInputs]="true" formControlName="time" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
-            </div>
-          </div>
-          <div class="col">
-            <div class="form-group">
-              <label>Место подачи</label>
-              <select formControlName="place" class="form-control">
-                <option *ngFor="let place of places" [value]="place.id">{{ place.name }}</option>
-              </select>
-            </div>
-          </div>
+        <div class="form-group">
+          <label>Место подачи</label>
+          <select formControlName="place" class="form-control">
+            <option *ngFor="let place of places" [value]="place.id">{{ place.name }}</option>
+          </select>
         </div>
       </div>
       <div class="text-right">

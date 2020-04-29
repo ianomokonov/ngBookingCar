@@ -65,3 +65,32 @@
         
     }
 }
+
+
+@media (max-width: 768px) {
+
+    .car-actions{
+        margin-top: 1.5rem;
+        flex-direction: row !important;
+        align-items: flex-end;
+
+        .price{
+            text-align: left;
+            h2{
+                font-size: 1.2rem !important;
+            }
+
+            span{
+                font-size: 0.8rem;
+            }
+        }
+        
+    }
+
+    .car-title{
+        font-size: 1.2rem !important;
+    }
+    .car-details{
+        font-size: 0.8rem !important;
+    }    
+}
