@@ -8,7 +8,7 @@
         private $database;
         private $token;
         private $filesUpload;
-        private $baseUrl = 'http://localhost/booking';
+        private $baseUrl = 'http://client.nomokoiw.beget.tech/booking';
 
         public function __construct()
         {
@@ -37,7 +37,7 @@
                 } else {
                     $queryText = $queryText."WHERE ";
                 }
-                $queryText = $queryText."0 = (SELECT COUNT(*) FROM carorder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateTo < '$dateTo' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateFrom < '$dateTo' AND co.dateTo > '$dateTo' OR co.dateTo > '$dateFrom' AND co.dateTo < '$dateTo' AND co.dateFrom < '$dateFrom') ";
+                $queryText = $queryText."0 = (SELECT COUNT(*) FROM carOrder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateTo < '$dateTo' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateFrom < '$dateTo' AND co.dateTo > '$dateTo' OR co.dateTo > '$dateFrom' AND co.dateTo < '$dateTo' AND co.dateFrom < '$dateFrom') ";
             }
             if(!isset($query['dateTo']) && isset($query['dateFrom']) && $dateFrom = $query['dateFrom']){
                 if(isset($priceFrom) || isset($priceTo)) {
@@ -45,7 +45,7 @@
                 } else {
                     $queryText = $queryText."WHERE ";
                 }
-                $queryText = $queryText." 0 = (SELECT COUNT(*) FROM carorder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateFrom' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateFrom') ";
+                $queryText = $queryText." 0 = (SELECT COUNT(*) FROM carOrder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateFrom' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateFrom') ";
             }
             if(isset($query['limit']) && $limit = $query['limit']){
                 $queryText = $queryText."LIMIT $limit";
@@ -100,7 +100,7 @@
         }
 
         public function UploadCarImg($file){
-            $newFileName = $this->filesUpload->upload($file, __DIR__.'\Files', uniqid());
+            $newFileName = $this->filesUpload->upload($file, 'Files', uniqid());
             return $this->baseUrl.'/Files'.'/'.$newFileName;
         }
 
@@ -135,7 +135,7 @@
                 return array("message" => "Введите id автомобиля", "method" => "GetHistory", "requestData" => $carId);
             }
 
-            $str = "SELECT id, dateFrom, dateTo from carorder WHERE dateFrom > now() AND carId = ? AND status IN (1,2)";
+            $str = "SELECT id, dateFrom, dateTo from carOrder WHERE dateFrom > now() AND carId = ? AND status IN (1,2)";
             if($orderId){
                 $str = $str." AND id != $orderId";
             }
@@ -152,7 +152,7 @@
                 return array("message" => "Введите id пользователя", "method" => "GetHistory", "requestData" => $userId);
             }
 
-            $query = $this->database->db->prepare("SELECT * from carorder WHERE userId = ? ORDER BY status ASC, dateFrom DESC");
+            $query = $this->database->db->prepare("SELECT * from carOrder WHERE userId = ? ORDER BY status ASC, dateFrom DESC");
             $query->execute(array($userId));
             $query->setFetchMode(PDO::FETCH_CLASS, 'Order');
             $orders = [];
@@ -174,7 +174,7 @@
                 return array("message" => "Заказ пуст", "method" => "AddOrder", "requestData" => array("userId" => $userId, "order" => $order));
             }
             $order->userId = $userId;
-            $insert = $this->database->genInsertQuery((array)$order, 'carorder');
+            $insert = $this->database->genInsertQuery((array)$order, 'carOrder');
             $query = $this->database->db->prepare($insert[0]);
             if($insert[1][0]!=null){
                 $query->execute($insert[1]);
@@ -191,7 +191,7 @@
 
             $orderId = $order->id;
             unset($order->id);
-            $a = $this->database->genUpdateQuery(array_keys((array)$order), array_values((array)$order), "carorder", $orderId);
+            $a = $this->database->genUpdateQuery(array_keys((array)$order), array_values((array)$order), "carOrder", $orderId);
             $query = $this->database->db->prepare($a[0]);
             $query->execute($a[1]);
             return array('message' => 'Заказ обновлен');
@@ -201,7 +201,7 @@
             if(!$orderId){
                 return array("message" => "Укажите id заказа", "method" => "CancelOrder", "requestData" => $orderId);
             }
-            $query = $this->database->db->prepare("UPDATE carorder SET status=3 WHERE id=?");
+            $query = $this->database->db->prepare("UPDATE carOrder SET status=3 WHERE id=?");
             $query->execute(array($orderId));
             return array('message' => 'Заказ отменен');
         }

@@ -7,10 +7,12 @@ import { Place } from '../models/place';
 import { Order, UpdateOrder, DateRange } from '../models/order';
 import { tap } from 'rxjs/internal/operators';
 import { User } from '../models/user';
+import { environment } from 'src/environments/environment.prod';
+// import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class ApiService {
-  private baseUrl: string = `http://localhost/booking/controller.php`;
+  private baseUrl: string = environment.baseUrl;
   constructor(private http: HttpClient) {}
 
   /** Проверка доступа админа */

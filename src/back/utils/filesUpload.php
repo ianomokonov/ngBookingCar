@@ -6,7 +6,7 @@ class FilesUpload{
         }
         if($file != null){
             $n = basename($prefix."_".$file['name']);
-            $d = $path."\\".$n;
+            $d = $path."/".$n;
             if(move_uploaded_file($file['tmp_name'], $d)){
                 return($n);
             }else{

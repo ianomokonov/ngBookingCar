@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  baseUrl: 'http://client.nomokoiw.beget.tech/booking/controller.php',
 };
