@@ -76,7 +76,7 @@ export class BookingFormComponent implements OnInit {
           fromDate: null,
           toDate: null
         }, [Validators.required]],
-        place: [null, [Validators.required]],
+        place: [null],
         time: null,
         carId: null,
         sum: null,
@@ -97,7 +97,6 @@ export class BookingFormComponent implements OnInit {
   }
 
   private setPeriodDays({ period: { fromDate, toDate } }: SearchModel) {
-    // console.log([fromDate, toDate])
     if (!toDate) {
       this.periodDays = 1;
       return;
@@ -123,9 +122,13 @@ export class BookingFormComponent implements OnInit {
     if (this.auth.getToken()) {
       requests.push(this.api.getUserInfo());
     }
+    const orderForm = this.bookingForm.get('order') as FormGroup;
 
     forkJoin(requests).subscribe(([places, car, carDates, userInfo]) => {
       this.places = places;
+      if(this.places && this.places.length){
+        orderForm.get('place').setValidators(Validators.required);
+      }
       this.car = car;
       this.carDates = carDates;
       if (userInfo) {
@@ -138,7 +141,7 @@ export class BookingFormComponent implements OnInit {
         this.setMaxDate(this.fromDate);
       }
     });
-    const orderForm = this.bookingForm.get('order') as FormGroup;
+    
     
     if (this.searchService.model) {
       orderForm.patchValue(

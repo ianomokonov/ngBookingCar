@@ -1,6 +1,6 @@
 <div class="history">
   <div class="orders">
-    <bk-order [carOrder]="order" *ngFor="let order of orders;" (orderUpdated)="getOrders()"></bk-order>
+    <bk-order [carOrder]="order" [places]="places" *ngFor="let order of orders;" (orderUpdated)="getOrders()"></bk-order>
     <div class="text-center pt-1" *ngIf="!orders?.length" >
       <div class="no-data">
         Вы еще не сделали ни одного заказа

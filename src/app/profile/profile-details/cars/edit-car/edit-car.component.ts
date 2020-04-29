@@ -34,10 +34,6 @@ export class EditCarComponent {
       createYear: [null, Validators.required],
     });
 
-    this.carForm.valueChanges.subscribe((v) => {
-      console.log(v);
-    });
-
     this.route.params.subscribe((params) => {
       if (params.id) {
         this.updateCar(params.id);

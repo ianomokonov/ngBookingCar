@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { Order } from 'src/app/models/order';
 import { takeWhile } from 'rxjs/internal/operators';
+import { Place } from 'src/app/models/place';
 
 @Component({
   selector: 'bk-booking-history',
@@ -10,12 +11,17 @@ import { takeWhile } from 'rxjs/internal/operators';
 })
 export class BookingHistoryComponent implements OnInit {
   public orders: Order[];
+  public places: Place[];
   private rxAlive: boolean = true;
 
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
     this.getOrders();
+    this.api.getPlaces().pipe(takeWhile(() => this.rxAlive))
+    .subscribe((places) => {
+      this.places = places;
+    });
   }
 
   getOrders() {

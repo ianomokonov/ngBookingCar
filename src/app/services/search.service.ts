@@ -44,7 +44,7 @@ export class SearchService {
       time: this.time,
       price: { from: this.priceRange.min, to: this.priceRange.max },
     };
-    this.$filtersUpdate = new BehaviorSubject(this._model || this.defaultModel);
+    this.$filtersUpdate = new BehaviorSubject(this._model);
   }
 
   public initUpdate() {

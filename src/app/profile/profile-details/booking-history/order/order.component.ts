@@ -62,28 +62,7 @@ export class OrderComponent implements OnInit {
   minuteStep = 30;
 
   orderForm: FormGroup;
-  places = [
-    {
-      id: 1,
-      name: 'Москва',
-    },
-    {
-      id: 2,
-      name: 'Санкт-Петербург',
-    },
-    {
-      id: 3,
-      name: 'Новосибирск',
-    },
-    {
-      id: 4,
-      name: 'Екатеринбург',
-    },
-    {
-      id: 5,
-      name: 'Астрахань',
-    },
-  ];
+  @Input() public places = [];
 
   public get fromDate(): NgbDate {
     return this.orderForm.get('period').value.fromDate;
@@ -111,7 +90,7 @@ export class OrderComponent implements OnInit {
   constructor(private fb: FormBuilder, private calendar: NgbCalendar, public api: ApiService) {
     this.orderForm = this.fb.group({
       period: [null, Validators.required],
-      place: [null, Validators.required],
+      place: [null],
       time: [null, Validators.required],
     });
 
@@ -155,7 +134,7 @@ export class OrderComponent implements OnInit {
   }
 
   public cancel(){
-    if(this.disabled){
+    if(this.disabled || !confirm('Вы уверены, что хотите отменить заказ?')){
       return;
     }
 
@@ -179,7 +158,11 @@ export class OrderComponent implements OnInit {
       this.order.orderSum = this.order.car.price * periodDays;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if(this.places && this.places.length){
+      this.orderForm.get('place').setValidators(Validators.required);
+    }
+  }
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {

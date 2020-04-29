@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS carOrder(
     id int(10) PRIMARY KEY AUTO_INCREMENT,
     userId int(10) NOT NULL,
     carId int(10) NOT NULL,
-    placeId int(10) NOT NULL,
+    placeId int(10) NULL,
     dateFrom DATE NOT NULL,
     dateTo DATE NULL,
     orderSum int(10) NOT NULL,

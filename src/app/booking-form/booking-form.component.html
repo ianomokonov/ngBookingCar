@@ -50,34 +50,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="row car mt-3" *ngIf="car">
-        <div class="col-md-9 car-info-img row">
-          <div class="car-img col-4 col-md-4 p-0">
-            <img [src]="car.img" />
-          </div>
-          <div class="car-info col">
-            <h2 class="car-title">{{ car.name }}</h2>
-            <div class="car-details">
-              <span class="car-places"
-                ><i class="fas fa-user"></i><b>{{ car.places }}</b> мест</span
-              >
-              <span class="driver-license"
-                ><i class="fas fa-id-badge"></i>Категория <b>{{ car.license }}</b></span
-              >
-              <span class="car-kpp"><i class="fas fa-cogs"></i>{{ car.kpp }}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="car-actions col text-right">
-          <div class="price">
-            <h2>{{ car.price }} ₽ <span>в сутки</span></h2>
-            <span class="text-muted"
-              >итого: {{ car.price * periodDays }} ₽ за {{ periodDays }} {{ periodDays % 10 === 1 ? 'сутки' : 'суток' }}</span
-            >
-          </div>
-        </div>
-      </div> -->
       <div class="row" *ngIf="carDates">
         <div class="col-7 col-sm-9 col-md-9 col-xl-6">
           <div class="form-group mb-0" [ngClass]="{ 'ng-invalid': submitted }">
@@ -115,9 +87,9 @@
             <ngb-timepicker [readonlyInputs]="true" formControlName="time" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
           </div>
         </div>
-        <div class="pt-3 pt-md-0 col-sm-8 col-md-12 col-xl-3 d-flex flex-column justify-content-between">
+        <div class="pt-3 pt-xl-0 col-sm-8 col-md-12 col-xl-3 d-flex flex-column justify-content-between">
           <div>
-            <div class="form-group">
+            <div class="form-group" *ngIf="this.places?.length">
               <label>Место подачи</label>
               <select formControlName="place" class="form-control">
                 <option *ngFor="let place of places" [value]="place.id">{{ place.name }}</option>
