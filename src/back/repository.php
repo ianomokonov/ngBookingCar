@@ -37,7 +37,7 @@
                 } else {
                     $queryText = $queryText."WHERE ";
                 }
-                $queryText = $queryText."0 = (SELECT COUNT(*) FROM carOrder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateTo < '$dateTo' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateFrom < '$dateTo' AND co.dateTo > '$dateTo' OR co.dateTo > '$dateFrom' AND co.dateTo < '$dateTo' AND co.dateFrom < '$dateFrom') ";
+                $queryText = $queryText."0 = (SELECT COUNT(*) FROM carOrder co WHERE co.carId = car.id ) OR 0 = (SELECT COUNT(*) FROM carOrder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateTo < '$dateTo' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateTo' OR co.dateFrom > '$dateFrom' AND co.dateFrom < '$dateTo' AND co.dateTo > '$dateTo' OR co.dateTo > '$dateFrom' AND co.dateTo < '$dateTo' AND co.dateFrom < '$dateFrom') ";
             }
             if(!isset($query['dateTo']) && isset($query['dateFrom']) && $dateFrom = $query['dateFrom']){
                 if(isset($priceFrom) || isset($priceTo)) {
@@ -45,7 +45,7 @@
                 } else {
                     $queryText = $queryText."WHERE ";
                 }
-                $queryText = $queryText." 0 = (SELECT COUNT(*) FROM carOrder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateFrom' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateFrom') ";
+                $queryText = $queryText."0 = (SELECT COUNT(*) FROM carOrder co WHERE co.carId = car.id ) OR 0 = (SELECT COUNT(*) FROM carOrder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateFrom' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateFrom') ";
             }
             if(isset($query['limit']) && $limit = $query['limit']){
                 $queryText = $queryText."LIMIT $limit";
