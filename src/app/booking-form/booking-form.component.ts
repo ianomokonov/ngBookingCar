@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SearchService, SearchModel } from '../services/search.service';
 import { Place } from '../models/place';
 import { Order, DateRange } from '../models/order';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'bk-booking-form',
@@ -58,7 +59,7 @@ export class BookingFormComponent implements OnInit {
   constructor(
     public searchService: SearchService,
     private fb: FormBuilder,
-    private api: ApiService,
+    private api: ApiService, private loadingService: LoadingService,
     private auth: AuthService,
     private route: ActivatedRoute,
     private router: Router
@@ -115,7 +116,7 @@ export class BookingFormComponent implements OnInit {
     }
     const orderForm = this.bookingForm.get('order') as FormGroup;
 
-    forkJoin(requests).subscribe(([places, car, carDates, userInfo]) => {
+    const subscription = forkJoin(requests).subscribe(([places, car, carDates, userInfo]) => {
       this.places = places;
       if (this.places && this.places.length) {
         orderForm.get('place').setValidators(Validators.required);
@@ -131,7 +132,10 @@ export class BookingFormComponent implements OnInit {
       if (this.fromDate && !this.toDate) {
         this.setMaxDate(this.fromDate);
       }
+      this.loadingService.removeSubscription(subscription);
     });
+
+    this.loadingService.addSubscription(subscription);
 
     if (this.searchService.model) {
       orderForm.patchValue(
@@ -175,9 +179,11 @@ export class BookingFormComponent implements OnInit {
       orderSum: this.car.price * this.periodDays,
     };
 
-    this.api.addOrder(order).subscribe((v) => {
+    const subscription = this.api.addOrder(order).subscribe((v) => {
+      this.loadingService.removeSubscription(subscription);
       this.router.navigate(['/profile']);
     });
+    this.loadingService.addSubscription(subscription);
   }
 
   onDateSelection(date: NgbDate) {

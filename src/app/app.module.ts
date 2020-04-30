@@ -37,6 +37,8 @@ import { PlaceComponent } from './profile/profile-details/places/place/place.com
 import { SearchService } from './services/search.service';
 import { AdminGuard } from './guards/admin.guard';
 import { CarPlacesPipe } from './utils/pipes/car-places.pipe';
+import { LoaderComponent } from './utils/loader/loader.component';
+import { LoadingService } from './services/loading.service';
 
 @NgModule({
   declarations: [
@@ -64,10 +66,20 @@ import { CarPlacesPipe } from './utils/pipes/car-places.pipe';
     FileUploaderComponent,
     SignUpComponent,
     PlacesComponent,
-    PlaceComponent
+    PlaceComponent,
+    LoaderComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, RouterModule, HttpClientModule],
-  providers: [FormBuilder, ProfileGuard, AdminGuard, ApiService, AuthService, SearchService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],
+  providers: [
+    LoadingService,
+    FormBuilder,
+    ProfileGuard,
+    AdminGuard,
+    ApiService,
+    AuthService,
+    SearchService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

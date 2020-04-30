@@ -5,6 +5,7 @@ import { Order, OrderStatus, UpdateOrder, DateRange } from 'src/app/models/order
 import { SearchModel, SearchService } from 'src/app/services/search.service';
 import { ApiService } from 'src/app/services/api.service';
 import { takeWhile } from 'rxjs/internal/operators';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'bk-order',
@@ -87,7 +88,7 @@ export class OrderComponent implements OnInit {
   }
 
   private rxAlive: boolean = true;
-  constructor(private fb: FormBuilder, private calendar: NgbCalendar, public api: ApiService) {
+  constructor(private fb: FormBuilder, private calendar: NgbCalendar, public api: ApiService, private loadingService: LoadingService) {
     this.orderForm = this.fb.group({
       period: [null, Validators.required],
       place: [null],
@@ -128,9 +129,10 @@ export class OrderComponent implements OnInit {
     }
 
 
-    this.api.updateOrder(order).pipe(takeWhile(() => this.rxAlive)).subscribe(() => {
+    const subscription = this.api.updateOrder(order).pipe(takeWhile(() => this.rxAlive)).subscribe(() => {
       this.orderUpdated.emit(this.order.id);
     })
+    this.loadingService.addSubscription(subscription);
   }
 
   public cancel(){
@@ -138,9 +140,11 @@ export class OrderComponent implements OnInit {
       return;
     }
 
-    this.api.cancelOrder(this.order.id).pipe(takeWhile(() => this.rxAlive)).subscribe(() => {
+    const subscription = this.api.cancelOrder(this.order.id).pipe(takeWhile(() => this.rxAlive)).subscribe(() => {
       this.orderUpdated.emit(this.order.id);
+      this.loadingService.removeSubscription(subscription);
     })
+    this.loadingService.addSubscription(subscription);
   }
 
   private setOrderSum(model: SearchModel) {

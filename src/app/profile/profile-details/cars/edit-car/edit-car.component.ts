@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'bk-edit-car',
@@ -14,7 +15,7 @@ export class EditCarComponent {
 
   public carForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private api: ApiService, private router: Router, private route: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private api: ApiService, private loadingService: LoadingService, private router: Router, private route: ActivatedRoute) {
     this.carForm = this.fb.group({
       img: [null, Validators.required],
       name: [null, Validators.required],
@@ -51,27 +52,35 @@ export class EditCarComponent {
       return;
     }
     const newCar = this.carForm.getRawValue();
-    this.uploadCarImg(newCar.img).subscribe((data) => {
+    const subs = this.uploadCarImg(newCar.img).subscribe((data) => {
       newCar.img = data;
       if (this.car) {
         newCar.id = this.car.id;
         newCar.oldImg = this.car.img;
-        this.api.updateCar(newCar).subscribe(() => {
+        const subscription = this.api.updateCar(newCar).subscribe(() => {
           this.updateCar(this.car.id);
+          this.loadingService.removeSubscription(subscription);
         });
+        this.loadingService.addSubscription(subscription);
       } else {
-        this.api.addCar(newCar).subscribe((carId) => {
+        const subscription = this.api.addCar(newCar).subscribe((carId) => {
+          this.loadingService.removeSubscription(subscription);
           this.router.navigate(['../edit-car', carId]);
         });
+        this.loadingService.addSubscription(subscription);
       }
+      this.loadingService.removeSubscription(subs);
     });
+    this.loadingService.addSubscription(subs);
   }
 
   updateCar(id) {
-    this.api.getCar(id).subscribe((car) => {
+    const subscription = this.api.getCar(id).subscribe((car) => {
       this.car = car;
       this.carForm.patchValue(car);
+      this.loadingService.removeSubscription(subscription);
     });
+    this.loadingService.addSubscription(subscription);
   }
 
   uploadCarImg(img): Observable<string> {

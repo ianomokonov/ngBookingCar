@@ -3,6 +3,7 @@ import { User } from '../models/user';
 import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
 import { takeWhile } from 'rxjs/internal/operators';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'bk-menu',
@@ -12,7 +13,7 @@ import { takeWhile } from 'rxjs/internal/operators';
 export class MenuComponent implements OnInit, OnDestroy {
   public user: User;
   private rxAlive: boolean = true;
-  constructor(private api: ApiService, private auth: AuthService) {}
+  constructor(private api: ApiService, private loadingService: LoadingService, private auth: AuthService) {}
 
   ngOnInit(): void {
     this.getUser();
@@ -29,9 +30,11 @@ export class MenuComponent implements OnInit, OnDestroy {
   getUser() {
     this.user = null;
     if (this.auth.getToken()) {
-      this.api.getUserInfo().subscribe((user) => {
+      const subscription = this.api.getUserInfo().subscribe((user) => {
         this.user = user;
+        this.loadingService.removeSubscription(subscription);
       });
+      this.loadingService.addSubscription(subscription);
     }
   }
 }

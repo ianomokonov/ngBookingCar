@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { ApiService } from 'src/app/services/api.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-enter',
@@ -12,7 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 export class EnterComponent implements OnInit {
   public enterForm: FormGroup;
   public showError: boolean;
-  constructor( private auth: AuthService, private api: ApiService, private router: Router, private fb: FormBuilder) {
+  constructor( private auth: AuthService, private api: ApiService, private loadingService: LoadingService, private router: Router, private fb: FormBuilder) {
     this.enterForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
@@ -43,7 +44,7 @@ export class EnterComponent implements OnInit {
       }
       return;
     }
-    this.api.enter(this.enterForm.getRawValue()).subscribe(
+    const subscription = this.api.enter(this.enterForm.getRawValue()).subscribe(
       (token) => {
 
         if (token) {
@@ -52,10 +53,12 @@ export class EnterComponent implements OnInit {
         } else {
           this.showError = true;
         }
+        this.loadingService.addSubscription(subscription);
 
       },
       (error) => {
         console.log(error);
+        this.loadingService.addSubscription(subscription);
       }
     );
   }

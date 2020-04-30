@@ -7,6 +7,7 @@ import { SearchService } from 'src/app/services/search.service';
 import { debounceTime } from 'rxjs/internal/operators';
 import { Router } from '@angular/router';
 import { Place } from 'src/app/models/place';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'bk-filters-form',
@@ -48,7 +49,7 @@ export class FiltersFormComponent implements OnInit {
     });
   }
 
-  constructor(private fb: FormBuilder, private router: Router, private api: ApiService, public searchService: SearchService) {
+  constructor(private fb: FormBuilder, private router: Router, private api: ApiService, private loadingService: LoadingService, public searchService: SearchService) {
     this.priceRange = this.searchService.priceRange;
     this.filterForm = this.fb.group({
       period: null,
@@ -83,9 +84,11 @@ export class FiltersFormComponent implements OnInit {
       );
     }
 
-    this.api.getPlaces().subscribe((places) => {
+    const subscription = this.api.getPlaces().subscribe((places) => {
       this.places = places;
+      this.loadingService.removeSubscription(subscription);
     });
+    this.loadingService.addSubscription(subscription);
   }
 
   onSearchClick() {

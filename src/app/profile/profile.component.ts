@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { takeWhile } from 'rxjs/internal/operators';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'bk-profile',
@@ -11,7 +12,7 @@ import { takeWhile } from 'rxjs/internal/operators';
 export class ProfileComponent implements OnInit, OnDestroy {
   public links = [{ title: 'История заказов', fragment: 'history', class: 'fas fa-history' }];
   rxAlive: boolean = true;
-  constructor(public route: ActivatedRoute, private api: ApiService) {}
+  constructor(public route: ActivatedRoute, private api: ApiService, private loadingService: LoadingService,) {}
 
   ngOnInit(): void {
     this.api

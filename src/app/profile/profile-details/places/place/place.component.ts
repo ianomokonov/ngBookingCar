@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Place } from 'src/app/models/place';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'bk-place',
@@ -20,7 +21,7 @@ export class PlaceComponent implements OnInit {
 
   public placeControl: FormControl;
 
-  constructor(private api: ApiService) {
+  constructor(private api: ApiService, private loadingService: LoadingService,) {
     this.placeControl = new FormControl(null, [Validators.required]);
   }
 
@@ -31,11 +32,13 @@ export class PlaceComponent implements OnInit {
       this.placeControl.markAsDirty();
       return;
     }
-    this.api.addPlace({ name: this.placeControl.value }).subscribe(() => {
+    const subscription = this.api.addPlace({ name: this.placeControl.value }).subscribe(() => {
       this.placeUpdated.emit();
       this.placeControl.markAsPristine();
       this.placeControl.setValue(null);
+      this.loadingService.removeSubscription(subscription);
     });
+    this.loadingService.addSubscription(subscription);
   }
 
   deletePlace() {
@@ -43,9 +46,11 @@ export class PlaceComponent implements OnInit {
       this.placeControl.markAsDirty();
       return;
     }
-    this.api.deletePlace(this.placeInstanse.id).subscribe(() => {
+    const subscription = this.api.deletePlace(this.placeInstanse.id).subscribe(() => {
       this.placeUpdated.emit();
+      this.loadingService.removeSubscription(subscription);
     });
+    this.loadingService.addSubscription(subscription);
   }
 
   updatePlace() {
@@ -53,8 +58,10 @@ export class PlaceComponent implements OnInit {
       this.placeControl.markAsDirty();
       return;
     }
-    this.api.updatePlace({ id: this.placeInstanse.id, name: this.placeControl.value }).subscribe(() => {
+    const subscription = this.api.updatePlace({ id: this.placeInstanse.id, name: this.placeControl.value }).subscribe(() => {
       this.placeUpdated.emit();
+      this.loadingService.removeSubscription(subscription);
     });
+    this.loadingService.addSubscription(subscription);
   }
 }
