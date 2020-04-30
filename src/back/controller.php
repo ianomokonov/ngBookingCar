@@ -66,8 +66,12 @@ if(isset($_GET['key'])){
             echo json_encode($repository->SignUp($data));
             return;
         case 'get-history':
+            if($decodeToken = checkToken($token, true)){
+                echo json_encode($repository->GetHistory($decodeToken->id, true));
+                return;
+            }
             if($decodeToken = checkToken($token)){
-                echo json_encode($repository->GetHistory($decodeToken->id));
+                echo json_encode($repository->GetHistory($decodeToken->id, false));
             }
             return;
         case 'get-user-info':

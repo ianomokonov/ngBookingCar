@@ -1,6 +1,7 @@
 import { NgbDate, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Car } from './car';
 import { Place } from './place';
+import { User } from './user';
 
 export interface UpdateOrder {
   id?: number;
@@ -19,6 +20,7 @@ export interface Order extends UpdateOrder {
 
   car?: Car;
   place?: Place;
+  user?: User;
 }
 
 export enum OrderStatus {

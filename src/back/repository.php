@@ -132,7 +132,7 @@
 
         public function GetCarDates($carId, $orderId = null){
             if($carId == null){
-                return array("message" => "Введите id автомобиля", "method" => "GetHistory", "requestData" => $carId);
+                return array("message" => "Введите id автомобиля", "method" => "GetCarDates", "requestData" => $carId);
             }
 
             $str = "SELECT id, dateFrom, dateTo from carOrder WHERE dateFrom > now() AND carId = ? AND status IN (1,2)";
@@ -147,12 +147,15 @@
             
         }
 
-        public function GetHistory($userId){
+        public function GetHistory($userId, $isAdmin){
             if($userId == null){
                 return array("message" => "Введите id пользователя", "method" => "GetHistory", "requestData" => $userId);
             }
-
-            $query = $this->database->db->prepare("SELECT * from carOrder WHERE userId = ? ORDER BY status ASC, dateFrom DESC");
+            $text = "SELECT * from carOrder WHERE userId = ? ORDER BY status ASC, dateFrom DESC";
+            if($isAdmin){
+                $text = "SELECT * from carOrder ORDER BY status ASC, dateFrom DESC";
+            }
+            $query = $this->database->db->prepare($text);
             $query->execute(array($userId));
             $query->setFetchMode(PDO::FETCH_CLASS, 'Order');
             $orders = [];
@@ -160,6 +163,10 @@
                 $order->car = $this->GetCarDetails($order->carId);
                 $order->car->dates = $this->GetCarDates($order->carId, $order->id);
                 $order->place = $this->GetPlace($order->placeId);
+                if($isAdmin){
+                    $order->user = $this->getUserInfo($order->userId);
+                }
+                unset($order->userId);
                 $orders[] = $order;
             }
             return $orders;
