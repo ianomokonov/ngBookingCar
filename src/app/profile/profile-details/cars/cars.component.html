@@ -12,7 +12,7 @@
       <h2 class="car-title">{{ car.name }}</h2>
       <div class="car-details">
         <span class="car-places"
-          ><i class="fas fa-user"></i><b>{{ car.places }}</b> мест</span
+          ><i class="fas fa-user"></i><b>{{ car.places |carPlaces }}</b></span
         >
         <span class="driver-license"
           ><i class="fas fa-id-badge"></i>Категория <b>{{ car.license }}</b></span

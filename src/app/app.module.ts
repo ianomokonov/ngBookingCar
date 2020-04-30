@@ -36,6 +36,7 @@ import { PlacesComponent } from './profile/profile-details/places/places.compone
 import { PlaceComponent } from './profile/profile-details/places/place/place.component';
 import { SearchService } from './services/search.service';
 import { AdminGuard } from './guards/admin.guard';
+import { CarPlacesPipe } from './utils/pipes/car-places.pipe';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { AdminGuard } from './guards/admin.guard';
     CatalogComponent,
     FiltersComponent,
     NgbDatePipe,
+    CarPlacesPipe,
     DetailsComponent,
     BookingFormComponent,
     ProfileComponent,

@@ -10,7 +10,6 @@ export class NgbDatePipe implements PipeTransform {
         if(value.year && value.month && value.day){
             return new Date(value.year, value.month - 1, value.day);
         }
-        console.log(value)
         const date = value.split('-');
         return new Date(+date[2], +date[1] - 1, +date[0]);
         
