@@ -26,7 +26,7 @@
     <form formGroupName="order">
       <div class="row car" *ngIf="car">
         <div class="col-md-8 car-info-img row p-0 px-sm-3">
-          <div class="car-img col-sm-4 ">
+          <div class="car-img col-sm-4">
             <img [src]="car.img" />
           </div>
           <div class="car-info col-sm-8">
@@ -46,7 +46,9 @@
         <div class="car-actions col-md-4 text-right p-0 px-sm-3">
           <div class="price">
             <h2>{{ car.price }} ₽ <span>в сутки</span></h2>
-            <span class="text-muted">итого: {{ car.price * 3 }} ₽ за 3 суток</span>
+            <span class="text-muted"
+              >итого: {{ car.price * periodDays }} ₽ за {{ periodDays }} {{ periodDays % 10 === 1 ? 'сутки' : 'суток' }}</span
+            >
           </div>
         </div>
       </div>
@@ -58,7 +60,7 @@
               #dp
               (dateSelect)="onDateSelection($event)"
               [dayTemplate]="t"
-              [minDate]="this.searchService.minDate"
+              [minDate]="searchService.minDate"
               [maxDate]="maxDate"
               [markDisabled]="isDisabled"
               outsideDays="hidden"

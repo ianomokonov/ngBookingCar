@@ -15,12 +15,14 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
   constructor(private api: ApiService, private searchService: SearchService) {}
 
   cars;
+  periodDays: number = 1;
 
   private rxAlive: boolean = true;
 
   ngOnInit(): void {
     this.searchService.$filtersUpdate.pipe(takeWhile(() => this.rxAlive)).subscribe((model) => {
       this.updateCars(model);
+      this.periodDays = SearchService.setPeriodDays(model);
     });
   }
 

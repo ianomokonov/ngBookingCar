@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angu
 import { NgbDate, NgbTimeStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Order, OrderStatus, UpdateOrder, DateRange } from 'src/app/models/order';
-import { SearchModel } from 'src/app/services/search.service';
+import { SearchModel, SearchService } from 'src/app/services/search.service';
 import { ApiService } from 'src/app/services/api.service';
 import { takeWhile } from 'rxjs/internal/operators';
 
@@ -143,19 +143,10 @@ export class OrderComponent implements OnInit {
     })
   }
 
-  private setOrderSum({ period: { fromDate, toDate } }: SearchModel) {
-    // console.log([fromDate, toDate])
-    if (!toDate) {
-      this.order.orderSum = this.order.car.price;
-      return;
-    }
+  private setOrderSum(model: SearchModel) {
+    const periodDays = SearchService.setPeriodDays(model);
 
-    const periodDays =
-      (new Date(toDate.year, toDate.month, toDate.day).getTime() - new Date(fromDate.year, fromDate.month, fromDate.day).getTime()) /
-        (24 * 3600000) +
-      1;
-
-      this.order.orderSum = this.order.car.price * periodDays;
+    this.order.orderSum = this.order.car.price * periodDays;
   }
 
   ngOnInit(): void {

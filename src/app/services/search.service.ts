@@ -50,6 +50,24 @@ export class SearchService {
   public initUpdate() {
     this.$filtersUpdate.next(this._model);
   }
+
+  public static setPeriodDays(model: SearchModel) {
+  
+    if(!model){
+      return 1;
+    }
+    let {period: {fromDate, toDate}} = model;
+    
+    if (!toDate) {
+      return 1;
+    }
+
+    return (
+      (new Date(toDate.year, toDate.month, toDate.day).getTime() - new Date(fromDate.year, fromDate.month, fromDate.day).getTime()) /
+        (24 * 3600000) +
+      1
+    );
+  }
 }
 
 export interface SearchModel {
