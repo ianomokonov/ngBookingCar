@@ -50,7 +50,6 @@
             if(isset($query['limit']) && $limit = $query['limit']){
                 $queryText = $queryText."LIMIT $limit";
             }
-            // return $queryText;
             $query = $this->database->db->query($queryText);
             $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
             

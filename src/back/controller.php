@@ -9,7 +9,6 @@ include_once './utils/token.php';
 
 $repository = new BookingRepository();
 $token = new Token();
-// http://localhost/controller.php?key=get-cars&id=3&name=John
 if(isset($_GET['key'])){
     switch($_GET['key']){
         case 'check-admin':
@@ -21,6 +20,7 @@ if(isset($_GET['key'])){
                 }
                 
             }
+            echo json_encode(false);
             return;
         case 'get-cars':
             echo json_encode($repository->GetCars($_GET));

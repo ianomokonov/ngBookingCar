@@ -20,8 +20,8 @@ const routes: Routes = [
   { path: 'catalog', component: CatalogComponent },
   { path: 'details/:id', component: DetailsComponent },
   { path: 'booking/:id', component: BookingFormComponent },
-  { path: 'edit-car/:id', component: EditCarComponent },
-  { path: 'add-car', component: EditCarComponent },
+  { path: 'edit-car/:id', component: EditCarComponent, canActivate: [AdminGuard] },
+  { path: 'add-car', component: EditCarComponent, canActivate: [AdminGuard] },
   { path: 'enter', component: EnterComponent },
   { path: 'sign-up', component: SignUpComponent },
   {
