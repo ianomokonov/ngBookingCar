@@ -22,7 +22,7 @@
       <div>
         <div class="row mb-3">
           <div class="col">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0" *ngIf="priceRange && filterForm.get('price').value">
               <label>Цена</label>
               <div class="my-1">
                 <bk-double-slider formControlName="price" [range]="priceRange" [formatValue]="priceFormatValue"></bk-double-slider>

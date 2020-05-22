@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 @Injectable()
 export class LoadingService {
   /** отображать возможность отмены */
-  public hasCancelBtn: boolean = true;
+  public hasCancelBtn = true;
   /** срабатывает при отмене загрузки */
   public onCancel: EventEmitter<boolean> = new EventEmitter();
   /** cdRef */

@@ -25,7 +25,13 @@ export class SearchService {
 
   public set model(model: SearchModel) {
     this._model = model;
-    if(model && (!model.period || !model.period.fromDate) && !model.time && !model.place && (!model.price || !model.price.from && !model.price.to)){
+    if (
+      model &&
+      (!model.period || !model.period.fromDate) &&
+      !model.time &&
+      !model.place &&
+      (!model.price || (!model.price.from && !model.price.to))
+    ) {
       this._model = null;
     }
     sessionStorage.setItem('bookingSearchModel', JSON.stringify(this._model));
@@ -42,7 +48,7 @@ export class SearchService {
       },
       place: null,
       time: this.time,
-      price: { from: this.priceRange.min, to: this.priceRange.max },
+      price: null,
     };
     this.$filtersUpdate = new BehaviorSubject(this._model);
   }
@@ -52,12 +58,13 @@ export class SearchService {
   }
 
   public static setPeriodDays(model: SearchModel) {
-  
-    if(!model){
+    if (!model) {
       return 1;
     }
-    let {period: {fromDate, toDate}} = model;
-    
+    let {
+      period: { fromDate, toDate },
+    } = model;
+
     if (!toDate) {
       return 1;
     }

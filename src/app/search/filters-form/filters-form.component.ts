@@ -8,6 +8,7 @@ import { debounceTime } from 'rxjs/internal/operators';
 import { Router } from '@angular/router';
 import { Place } from 'src/app/models/place';
 import { LoadingService } from 'src/app/services/loading.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'bk-filters-form',
@@ -49,8 +50,13 @@ export class FiltersFormComponent implements OnInit {
     });
   }
 
-  constructor(private fb: FormBuilder, private router: Router, private api: ApiService, private loadingService: LoadingService, public searchService: SearchService) {
-    this.priceRange = this.searchService.priceRange;
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private api: ApiService,
+    private loadingService: LoadingService,
+    public searchService: SearchService
+  ) {
     this.filterForm = this.fb.group({
       period: null,
       place: null,
@@ -60,11 +66,18 @@ export class FiltersFormComponent implements OnInit {
     this.period = this.filterForm.get('period') as FormControl;
 
     this.period.valueChanges.pipe(debounceTime(300)).subscribe(() => {
-      this.saveFilters();
+      if (this.places) {
+        this.saveFilters();
+      }
     });
-    this.filterForm.get('price').valueChanges.pipe(debounceTime(300)).subscribe(() => {
-      this.saveFilters();
-    });
+    this.filterForm
+      .get('price')
+      .valueChanges.pipe(debounceTime(300))
+      .subscribe(() => {
+        if (this.places) {
+          this.saveFilters();
+        }
+      });
   }
 
   ngOnInit() {
@@ -72,7 +85,7 @@ export class FiltersFormComponent implements OnInit {
       this.filterForm.patchValue({
         ...this.searchService.model,
         place: this.searchService.model.place ? this.searchService.model.place.id : null,
-        price: this.searchService.model.price ? this.searchService.model.price : { from: this.priceRange.min, to: this.priceRange.max }
+        price: this.searchService.model.price ? this.searchService.model.price : { from: this.priceRange.min, to: this.priceRange.max },
       });
     } else {
       this.filterForm.patchValue(
@@ -84,8 +97,14 @@ export class FiltersFormComponent implements OnInit {
       );
     }
 
-    const subscription = this.api.getPlaces().subscribe((places) => {
+    const subscription = forkJoin([this.api.getPlaces(), this.api.getPriceRange()]).subscribe(([places, range]) => {
       this.places = places;
+      this.priceRange = range;
+      this.searchService.priceRange = range;
+      const control = this.filterForm.get('price');
+      if (!control.value) {
+        control.setValue({ from: this.priceRange.min, to: this.priceRange.max }, { emiteEvent: false });
+      }
       this.loadingService.removeSubscription(subscription);
     });
     this.loadingService.addSubscription(subscription);

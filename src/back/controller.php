@@ -20,7 +20,6 @@ if(isset($_GET['key'])){
                 }
                 
             }
-            echo json_encode(false);
             return;
         case 'get-cars':
             echo json_encode($repository->GetCars($_GET));
@@ -50,6 +49,9 @@ if(isset($_GET['key'])){
             return;
         case 'get-car-dates':
             echo json_encode($repository->GetCarDates($_GET['carId']));
+            return;
+        case 'get-price-range':
+            echo json_encode($repository->GetPriceRange());
             return;
         case 'add-order':
             if($decodeToken = checkToken($token)){

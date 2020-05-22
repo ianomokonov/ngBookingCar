@@ -52,4 +52,9 @@
         public $dateFrom;
         public $dateTo;
     }
+    
+    class PriceRange {
+        public $min;
+        public $max;
+    }
 ?>

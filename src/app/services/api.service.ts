@@ -8,6 +8,7 @@ import { Order, UpdateOrder, DateRange } from '../models/order';
 import { tap } from 'rxjs/internal/operators';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment.prod';
+import { SliderRange } from '../utils/double-slider/double-slider.component';
 // import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -32,6 +33,10 @@ export class ApiService {
     return this.http.get<any>(`${this.baseUrl}?key=get-user-info`);
   }
 
+  public getPriceRange(): Observable<SliderRange> {
+    return this.http.get<SliderRange>(`${this.baseUrl}?key=get-price-range`);
+  }
+
   public editUser(user: User): Observable<boolean> {
     return this.http.post<boolean>(`${this.baseUrl}?key=update-user-info`, user);
   }
@@ -47,10 +52,10 @@ export class ApiService {
         }
       }
       if (model.price) {
-        if(model.price.from != 1500){
+        if (model.price.from != 1500) {
           url.searchParams.set('priceFrom', model.price.from.toString());
         }
-        if(model.price.to != 8000){
+        if (model.price.to != 8000) {
           url.searchParams.set('priceTo', model.price.to.toString());
         }
       }
@@ -139,7 +144,7 @@ export class ApiService {
   }
 
   private ngbDateToString(date: NgbDate): string {
-    if(!date){
+    if (!date) {
       return null;
     }
     const newDate = new Date(date.year, date.month - 1, date.day);
@@ -148,7 +153,7 @@ export class ApiService {
   }
 
   private stringToNgbDate(date: string): NgbDate {
-    if(!date){
+    if (!date) {
       return null;
     }
     const newDate = date.split('-');
