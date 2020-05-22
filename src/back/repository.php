@@ -47,6 +47,7 @@
                 }
                 $queryText = $queryText."(0 = (SELECT COUNT(*) FROM carOrder co WHERE co.carId = car.id ) OR 0 = (SELECT COUNT(*) FROM carOrder co WHERE co.status IN (1,2) AND co.dateFrom = '$dateFrom' OR co.dateTo = '$dateFrom' OR co.dateFrom < '$dateFrom' AND co.dateTo > '$dateFrom')) ";
             }
+            $queryText = $queryText."ORDER BY price ASC ";
             if(isset($query['limit']) && $limit = $query['limit']){
                 $queryText = $queryText."LIMIT $limit";
             }
