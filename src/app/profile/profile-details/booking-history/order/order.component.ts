@@ -51,7 +51,10 @@ export class OrderComponent implements OnInit {
 
   @Input() public disabled;
   @Input() public set isAdmin(isAdmin: boolean) {
-    this.disabled = !isAdmin;
+    if (isAdmin) {
+      this.disabled = false;
+    }
+
     this._isAdmin = isAdmin;
   }
   public get isAdmin() {
@@ -121,7 +124,7 @@ export class OrderComponent implements OnInit {
   public changeStatus(statuss: OrderStatus) {
     if (this.isAdmin) {
       const subscription = this.api
-        .updateOrder({id: this.order.id, status: statuss})
+        .updateOrder({ id: this.order.id, status: statuss })
         .pipe(takeWhile(() => this.rxAlive))
         .subscribe(() => {
           this.orderUpdated.emit(this.order.id);
