@@ -14,15 +14,24 @@ export class BookingHistoryComponent implements OnInit {
   public orders: Order[];
   public places: Place[];
   private rxAlive: boolean = true;
+  public isAdmin: boolean;
 
-  constructor(private api: ApiService, private loadingService: LoadingService,) {}
+  constructor(private api: ApiService, private loadingService: LoadingService) {}
 
   ngOnInit(): void {
     this.getOrders();
-    this.api.getPlaces().pipe(takeWhile(() => this.rxAlive))
-    .subscribe((places) => {
-      this.places = places;
-    });
+    this.api
+      .getPlaces()
+      .pipe(takeWhile(() => this.rxAlive))
+      .subscribe((places) => {
+        this.places = places;
+      });
+    this.api
+      .checkAccess()
+      .pipe(takeWhile(() => this.rxAlive))
+      .subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      });
   }
 
   getOrders() {

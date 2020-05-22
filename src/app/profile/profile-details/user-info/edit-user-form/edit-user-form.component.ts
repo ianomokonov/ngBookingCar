@@ -25,6 +25,14 @@ export class EditUserFormComponent implements OnInit {
   ngOnInit(): void {}
 
   save() {
+    if (this.userForm.invalid) {
+      for (const value of Object.values(this.userForm.controls)) {
+        if (value.invalid) {
+          value.markAsDirty();
+        }
+      }
+      return;
+    }
     this.modal.close(this.userForm.getRawValue());
   }
 }

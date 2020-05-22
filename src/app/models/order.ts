@@ -5,11 +5,12 @@ import { User } from './user';
 
 export interface UpdateOrder {
   id?: number;
-  placeId: number;
-  dateFrom: string | NgbDate;
-  dateTo: string | NgbDate;
-  orderSum: number;
-  time: string | NgbTimeStruct;
+  placeId?: number;
+  dateFrom?: string | NgbDate;
+  dateTo?: string | NgbDate;
+  orderSum?: number;
+  time?: string | NgbTimeStruct;
+  status?: OrderStatus;
 }
 
 export interface Order extends UpdateOrder {
@@ -26,8 +27,8 @@ export interface Order extends UpdateOrder {
 export enum OrderStatus {
   Planned = 1,
   Active = 2,
-  Canceled = 3,
-  Ready = 4,
+  Ready = 3,
+  Canceled = 4,
 }
 export interface DateRange {
   dateFrom: NgbDate;

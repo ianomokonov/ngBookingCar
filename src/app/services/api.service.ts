@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { SearchModel } from './search.service';
 import { NgbDate, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Place } from '../models/place';
-import { Order, UpdateOrder, DateRange } from '../models/order';
+import { Order, UpdateOrder, DateRange, OrderStatus } from '../models/order';
 import { tap } from 'rxjs/internal/operators';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment.prod';
@@ -106,9 +106,15 @@ export class ApiService {
   }
 
   public updateOrder(order: UpdateOrder): Observable<any> {
-    order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
-    order.dateTo = order.dateTo ? this.ngbDateToString(order.dateTo as NgbDate) : null;
-    order.time = this.ngbTimeToString(order.time as NgbTimeStruct);
+    if (order.dateFrom) {
+      order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
+    }
+    if (order.dateTo) {
+      order.dateTo = order.dateTo ? this.ngbDateToString(order.dateTo as NgbDate) : null;
+    }
+    if (order.time) {
+      order.time = this.ngbTimeToString(order.time as NgbTimeStruct);
+    }
     return this.http.post<any>(`${this.baseUrl}?key=update-order`, order);
   }
 

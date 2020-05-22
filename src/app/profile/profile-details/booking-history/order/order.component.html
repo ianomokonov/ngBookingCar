@@ -28,7 +28,7 @@
   </div>
   <span class="status" [ngClass]="[order.statusClass]"></span>
   <div class="row py-3 border-bottom mx-0 px-0" *ngIf="isEditing && order?.user">
-    <div class="col-sm-5">
+    <div class="col-sm-5 p-0 px-sm-3">
       <div class="form-group">
         <label>ФИО</label>
         <h6>{{ order?.user?.surname }} {{ order?.user?.name }} {{ order?.user?.middlename }}</h6>
@@ -38,10 +38,23 @@
         <h6>{{ order?.user?.email || '–' }}</h6>
       </div>
     </div>
-    <div class="col-sm">
+    <div class="col-sm p-0 px-sm-3">
       <div class="form-group">
         <label>Телефон</label>
         <h6>{{ order?.user?.phone || '–' }}</h6>
+      </div>
+    </div>
+    <div class="col-sm p-0 px-sm-3" *ngIf="isAdmin">
+      <div class="text-right">
+        <button *ngIf="order.status != orderStatus.Planned" class="btn btn-outline-info ml-1" title="Запланирован" (click)="changeStatus(orderStatus.Planned)">
+          <i class="far fa-clock"></i>
+        </button>
+        <button *ngIf="order.status != orderStatus.Active" class="btn btn-outline-primary ml-1" title="Активный" (click)="changeStatus(orderStatus.Active)">
+          <i class="fas fa-user-clock"></i>
+        </button>
+        <button *ngIf="order.status != orderStatus.Ready" class="btn btn-outline-success ml-1" title="Выполнен" (click)="changeStatus(orderStatus.Ready)">
+          <i class="fas fa-check"></i>
+        </button>
       </div>
     </div>
   </div>

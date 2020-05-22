@@ -16,7 +16,13 @@ import { LoadingService } from 'src/app/services/loading.service';
 export class UserInfoComponent implements OnInit {
   public userInfo: User;
   private rxAlive: boolean = true;
-  constructor(private modalService: NgbModal, private auth: AuthService, private router: Router, private api: ApiService, private loadingService: LoadingService,) {}
+  constructor(
+    private modalService: NgbModal,
+    private auth: AuthService,
+    private router: Router,
+    private api: ApiService,
+    private loadingService: LoadingService
+  ) {}
 
   public ngOnInit(): void {
     this.getUser();
@@ -27,12 +33,14 @@ export class UserInfoComponent implements OnInit {
     modal.componentInstance.user = this.userInfo;
     modal.result
       .then((user) => {
-        this.api
+        const subscription = this.api
           .editUser(user)
           .pipe(takeWhile(() => this.rxAlive))
           .subscribe(() => {
             this.getUser();
+            this.loadingService.removeSubscription(subscription);
           });
+        this.loadingService.addSubscription(subscription);
       })
       .catch(() => {});
   }

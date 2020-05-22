@@ -35,19 +35,28 @@ export class OrderComponent implements OnInit {
       };
 
       const fromDateNgb = this.order.dateFrom as NgbDate;
-      
+
       this.minDate = this.calendar.getNext(this.today, 'd', 5);
-      if(this.order.status != OrderStatus.Planned || fromDateNgb.before(this.minDate)){
+      if (this.order.status != OrderStatus.Planned || fromDateNgb.before(this.minDate)) {
         this.disabled = true;
       }
       this.orderForm.patchValue(formValue);
-      if(this.fromDate && !this.toDate){
+      if (this.fromDate && !this.toDate) {
         this.setMaxDate(this.fromDate);
       }
     }
   }
 
+  private _isAdmin: boolean;
+
   @Input() public disabled;
+  @Input() public set isAdmin(isAdmin: boolean) {
+    this.disabled = !isAdmin;
+    this._isAdmin = isAdmin;
+  }
+  public get isAdmin() {
+    return this._isAdmin;
+  }
   @Output() public orderUpdated: EventEmitter<number> = new EventEmitter();
   public order: Order;
 
@@ -88,6 +97,7 @@ export class OrderComponent implements OnInit {
   }
 
   private rxAlive: boolean = true;
+  public orderStatus = OrderStatus;
   constructor(private fb: FormBuilder, private calendar: NgbCalendar, public api: ApiService, private loadingService: LoadingService) {
     this.orderForm = this.fb.group({
       period: [null, Validators.required],
@@ -108,7 +118,20 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  public onSaveClick(){
+  public changeStatus(statuss: OrderStatus) {
+    if (this.isAdmin) {
+      const subscription = this.api
+        .updateOrder({id: this.order.id, status: statuss})
+        .pipe(takeWhile(() => this.rxAlive))
+        .subscribe(() => {
+          this.orderUpdated.emit(this.order.id);
+          this.loadingService.removeSubscription(subscription);
+        });
+      this.loadingService.addSubscription(subscription);
+    }
+  }
+
+  public onSaveClick() {
     if (this.orderForm.invalid) {
       for (const control of Object.values(this.orderForm.controls)) {
         if (control.invalid) {
@@ -125,25 +148,31 @@ export class OrderComponent implements OnInit {
       dateFrom: orderFormValue.period.fromDate,
       dateTo: orderFormValue.period.toDate,
       time: orderFormValue.time,
-      orderSum: this.order.orderSum
-    }
+      orderSum: this.order.orderSum,
+    };
 
-
-    const subscription = this.api.updateOrder(order).pipe(takeWhile(() => this.rxAlive)).subscribe(() => {
-      this.orderUpdated.emit(this.order.id);
-    })
+    const subscription = this.api
+      .updateOrder(order)
+      .pipe(takeWhile(() => this.rxAlive))
+      .subscribe(() => {
+        this.orderUpdated.emit(this.order.id);
+        this.loadingService.removeSubscription(subscription);
+      });
     this.loadingService.addSubscription(subscription);
   }
 
-  public cancel(){
-    if(this.disabled || !confirm('Вы уверены, что хотите отменить заказ?')){
+  public cancel() {
+    if (this.disabled || !confirm('Вы уверены, что хотите отменить заказ?')) {
       return;
     }
 
-    const subscription = this.api.cancelOrder(this.order.id).pipe(takeWhile(() => this.rxAlive)).subscribe(() => {
-      this.orderUpdated.emit(this.order.id);
-      this.loadingService.removeSubscription(subscription);
-    })
+    const subscription = this.api
+      .cancelOrder(this.order.id)
+      .pipe(takeWhile(() => this.rxAlive))
+      .subscribe(() => {
+        this.orderUpdated.emit(this.order.id);
+        this.loadingService.removeSubscription(subscription);
+      });
     this.loadingService.addSubscription(subscription);
   }
 
@@ -154,7 +183,7 @@ export class OrderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.places && this.places.length){
+    if (this.places && this.places.length) {
       this.orderForm.get('place').setValidators(Validators.required);
     }
   }
@@ -173,13 +202,13 @@ export class OrderComponent implements OnInit {
     }
   }
 
-  setMaxDate(fromDate: NgbDate){
-    if(!this.order.car.dates){
+  setMaxDate(fromDate: NgbDate) {
+    if (!this.order.car.dates) {
       this.maxDate = null;
       return;
     }
     const maxDate = this.order.car.dates.filter((range: DateRange) => range.dateFrom.after(fromDate))[0];
-    if(maxDate){
+    if (maxDate) {
       this.maxDate = maxDate.dateFrom;
     } else {
       this.maxDate = null;
@@ -205,25 +234,25 @@ export class OrderComponent implements OnInit {
     if (date.after(this.maxDate)) {
       return true;
     }
-    if(!this.order.car.dates){
+    if (!this.order.car.dates) {
       return false;
     }
-    
-    for(let range of this.order.car.dates){
-      if(date.equals(range.dateFrom) || date.equals(range.dateTo)){
+
+    for (let range of this.order.car.dates) {
+      if (date.equals(range.dateFrom) || date.equals(range.dateTo)) {
         return true;
       }
 
-      if(!range.dateTo){
+      if (!range.dateTo) {
         continue;
       }
 
-      if(date.after(range.dateFrom) && date.before(range.dateTo)){
+      if (date.after(range.dateFrom) && date.before(range.dateTo)) {
         return true;
       }
     }
     return false;
-  }
+  };
 
   private statuses: Status[] = [
     {
