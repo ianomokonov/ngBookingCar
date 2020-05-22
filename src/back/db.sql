@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS car(
     places int(2)  NOT NULL,
     backVolume float,
     license varchar(10),
-    createYear int(4)
+    createYear int(4),
+    class varchar(255)
 );
 
 CREATE TABLE IF NOT EXISTS place(

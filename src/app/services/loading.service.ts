@@ -43,12 +43,14 @@ export class LoadingService {
     this.subscriptionsCount++;
     this.subscriptions.add(subscription);
     this._isLoading = true;
+    console.log(`add ${this.subscriptionsCount}`);
     this.cdRef.detectChanges();
   }
   /** удаление подписки */
   public removeSubscription(subscription: Subscription): void {
     this.subscriptionsCount--;
     this.subscriptions.remove(subscription);
+    console.log(`remove ${this.subscriptionsCount}`);
     if (this.subscriptionsCount === 0) {
       this._isLoading = false;
       this.cdRef.detectChanges();

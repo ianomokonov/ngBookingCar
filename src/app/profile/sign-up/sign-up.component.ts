@@ -14,7 +14,13 @@ export class SignUpComponent implements OnInit {
   public userForm: FormGroup;
   public showError: boolean;
 
-  constructor(private fb: FormBuilder, private api: ApiService, private loadingService: LoadingService, private auth: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiService,
+    private loadingService: LoadingService,
+    private auth: AuthService,
+    private router: Router
+  ) {
     this.userForm = this.fb.group({
       name: [null, Validators.required],
       surname: [null, Validators.required],
@@ -30,7 +36,7 @@ export class SignUpComponent implements OnInit {
   public onSignUpClick() {
     this.showError = false;
     if (this.userForm.invalid) {
-      for (let value of Object.values(this.userForm.controls)) {
+      for (const value of Object.values(this.userForm.controls)) {
         if (value.invalid) {
           value.markAsDirty();
         }

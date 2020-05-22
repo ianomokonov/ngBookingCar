@@ -17,6 +17,7 @@
                 ><i class="fas fa-id-badge"></i>Категория <b>{{ car.license }}</b></span
               >
               <span class="car-kpp"><i class="fas fa-cogs"></i>{{ car.kpp }}</span>
+              <span class="car-kpp" *ngIf="car.class"><i class="fas fa-car"></i>{{ car.class }}</span>
             </div>
           </div>
         </div>

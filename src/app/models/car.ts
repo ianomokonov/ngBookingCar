@@ -19,4 +19,5 @@ export interface Car {
   license?: string;
   createYear?: number;
   dates?: DateRange[];
+  class?: string;
 }

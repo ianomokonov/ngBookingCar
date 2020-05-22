@@ -15,7 +15,13 @@ export class EditCarComponent {
 
   public carForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private api: ApiService, private loadingService: LoadingService, private router: Router, private route: ActivatedRoute) {
+  constructor(
+    private fb: FormBuilder,
+    private api: ApiService,
+    private loadingService: LoadingService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.carForm = this.fb.group({
       img: [null, Validators.required],
       name: [null, Validators.required],
@@ -33,6 +39,7 @@ export class EditCarComponent {
       backVolume: [null],
       license: [null],
       createYear: [null, Validators.required],
+      class: [null, Validators.required],
     });
 
     this.route.params.subscribe((params) => {
@@ -52,7 +59,10 @@ export class EditCarComponent {
       return;
     }
     const newCar = this.carForm.getRawValue();
-    const subs = this.uploadCarImg(newCar.img).subscribe((data) => {
+    const uploadSubscription = this.uploadCarImg(newCar.img).subscribe((data) => {
+      if (newCar.img instanceof File) {
+        this.loadingService.removeSubscription(uploadSubscription);
+      }
       newCar.img = data;
       if (this.car) {
         newCar.id = this.car.id;
@@ -69,9 +79,10 @@ export class EditCarComponent {
         });
         this.loadingService.addSubscription(subscription);
       }
-      this.loadingService.removeSubscription(subs);
     });
-    this.loadingService.addSubscription(subs);
+    if (newCar.img instanceof File) {
+      this.loadingService.addSubscription(uploadSubscription);
+    }
   }
 
   updateCar(id) {
