@@ -26,7 +26,7 @@ export class SignUpComponent implements OnInit {
       surname: [null, Validators.required],
       middlename: null,
       email: [null, [Validators.required, Validators.email]],
-      phone: null,
+      phone: [null, Validators.pattern(/^\d{11}$/)],
       password: [null, Validators.required],
     });
   }
