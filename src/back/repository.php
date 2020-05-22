@@ -51,7 +51,6 @@
             if(isset($query['limit']) && $limit = $query['limit']){
                 $queryText = $queryText."LIMIT $limit";
             }
-            // return $queryText;
             $query = $this->database->db->query($queryText);
             $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
             
@@ -165,9 +164,9 @@
             if($userId == null){
                 return array("message" => "Введите id пользователя", "method" => "GetHistory", "requestData" => $userId);
             }
-            $text = "SELECT * from carOrder WHERE userId = ? ORDER BY status ASC, dateFrom DESC";
+            $text = "SELECT * from carOrder WHERE userId = ? ORDER BY status ASC, dateFrom ASC";
             if($isAdmin){
-                $text = "SELECT * from carOrder ORDER BY status ASC, dateFrom DESC";
+                $text = "SELECT * from carOrder ORDER BY status ASC, dateFrom ASC";
             }
             $query = $this->database->db->prepare($text);
             $query->execute(array($userId));
