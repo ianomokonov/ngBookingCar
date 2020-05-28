@@ -1,1 +1,67 @@
 @import '../../utils/custom-date.scss';
+@import '../../../styles/colors';
+.search-form {
+  display: flex;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+
+  .step {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #fff;
+    min-width: 200px;
+    padding: 10px;
+    font-family: 'Open Sans', sans-serif;
+
+    .header-icon {
+      position: absolute;
+      font-size: 30px;
+      top: -15px;
+    }
+
+    button.header{
+        height: 100%;
+        width: 100%;
+        font-size: 25px !important;
+        color: white;
+        box-shadow: none !important;
+    }
+
+    &:nth-child(2n-1) {
+      background-color: $brand-red;
+      align-items: center;
+      &:hover{
+          background-color: $brand-red-hover;
+      }
+
+      &, * {
+        cursor: pointer;
+      }
+
+      color: white;
+
+      .header {
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      .week-day {
+        font-size: 12px;
+        font-weight: 400;
+      }
+
+      .day {
+        font-size: 70px;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      .month {
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
+  }
+}

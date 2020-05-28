@@ -1,10 +1,18 @@
 {
-    "MENU": {
-        "SEARCH": "Search",
-        "CARS": "Cars",
-        "PROFILE": "Profile"
-    },
-    "SEARCH": {
-        "HEADER": "Search for car in Crete"
-    }
+  "MENU": {
+    "SEARCH": "Search",
+    "CARS": "Cars",
+    "PROFILE": "Profile"
+  },
+  "SEARCH": {
+    "HEADER": "Search for car in Crete",
+    "BTN": "Search",
+    "SEARCH": "Search",
+    "SELECT_PICK_UP_DATE": "Select pick up date",
+    "SELECT_PICK_UP_PLACE": "Select pick up place",
+    "SELECT_PICK_UP_TIME": "Select pick up time",
+    "SELECT_DROP_OFF_DATE": "Select drop off date",
+    "SELECT_DROP_OFF_PLACE": "Select drop off place",
+    "SELECT_DROP_OFF_TIME": "Select drop off time"
+  }
 }

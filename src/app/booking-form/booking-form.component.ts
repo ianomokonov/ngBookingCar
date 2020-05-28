@@ -87,7 +87,7 @@ export class BookingFormComponent implements OnInit {
       }),
     });
     this.period = this.bookingForm.get('order').get('period') as FormControl;
-    this.bookingForm.get('order').get('time').setValue(this.searchService.defaultModel.time);
+    // this.bookingForm.get('order').get('time').setValue(this.searchService.defaultModel.time);
 
     this.bookingForm.get('order').valueChanges.subscribe((value) => {
       this.saveFilters(value);
@@ -141,7 +141,7 @@ export class BookingFormComponent implements OnInit {
       orderForm.patchValue(
         {
           ...this.searchService.model,
-          place: this.searchService.model.place ? this.searchService.model.place.id : null,
+          // place: this.searchService.model.place ? this.searchService.model.place.id : null,
         },
         { emitEvent: false }
       );

@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { SliderRange } from 'src/app/utils/double-slider/double-slider.component';
 import { ApiService } from 'src/app/services/api.service';
 import { SearchService } from 'src/app/services/search.service';
-import { debounceTime } from 'rxjs/internal/operators';
+import { debounceTime, takeWhile } from 'rxjs/internal/operators';
 import { Router } from '@angular/router';
 import { Place } from 'src/app/models/place';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -21,34 +21,13 @@ export class FiltersFormComponent implements OnInit {
   hourStep = 1;
   minuteStep = 30;
   priceRange: SliderRange;
+  minDateTo: NgbDate;
+  times: string[] = [];
+  dates: { fromDate?; toDate? } = {};
   priceFormatValue = (value) => `₽ ${value}`;
 
   filterForm: FormGroup;
   places: Place[];
-
-  period: FormControl;
-
-  public get fromDate(): NgbDate {
-    return this.period.value.fromDate;
-  }
-
-  public get toDate(): NgbDate | null {
-    return this.period.value.toDate;
-  }
-
-  public set fromDate(date: NgbDate) {
-    this.period.setValue({
-      fromDate: date,
-      toDate: this.toDate,
-    });
-  }
-
-  public set toDate(date: NgbDate) {
-    this.period.setValue({
-      fromDate: this.fromDate,
-      toDate: date,
-    });
-  }
 
   constructor(
     private fb: FormBuilder,
@@ -58,53 +37,51 @@ export class FiltersFormComponent implements OnInit {
     public searchService: SearchService
   ) {
     this.filterForm = this.fb.group({
-      period: null,
-      place: null,
-      time: null,
-      price: null,
+      dateFrom: null,
+      dateTo: null,
+      placeFrom: null,
+      placeTo: null,
+      timeFrom: null,
+      timeTo: null,
     });
-    this.period = this.filterForm.get('period') as FormControl;
 
-    this.period.valueChanges.pipe(debounceTime(300)).subscribe(() => {
-      if (this.places) {
-        this.saveFilters();
+    this.filterForm.get('dateFrom').valueChanges.subscribe((date: NgbDate) => {
+      date = NgbDate.from(date);
+      this.setDate(new Date(date.year, date.month - 1, date.day));
+      const dateTo = this.filterForm.get('dateTo');
+      this.minDateTo = date
+      if(date.after(dateTo.value)){
+        dateTo.setValue(date);
       }
+
     });
-    this.filterForm
-      .get('price')
-      .valueChanges.pipe(debounceTime(300))
-      .subscribe(() => {
-        if (this.places) {
-          this.saveFilters();
-        }
-      });
+
+    this.filterForm.get('dateTo').valueChanges.subscribe((date: NgbDate) => {
+      this.setDate(new Date(date.year, date.month - 1, date.day), true);
+    });
   }
 
   ngOnInit() {
+    this.genTimes();
+    
     if (this.searchService.model) {
       this.filterForm.patchValue({
         ...this.searchService.model,
-        place: this.searchService.model.place ? this.searchService.model.place.id : null,
-        price: this.searchService.model.price ? this.searchService.model.price : null,
+        placeFrom: this.searchService.model.placeFrom ? this.searchService.model.placeFrom.id : null,
+        placeTo: this.searchService.model.placeTo ? this.searchService.model.placeTo.id : null,
       });
     } else {
-      this.filterForm.patchValue(
-        {
-          ...this.searchService.defaultModel,
-          place: this.searchService.defaultModel.place ? this.searchService.defaultModel.place.id : null,
-        },
-        { emitEvent: false }
-      );
+      this.filterForm.patchValue({
+        ...this.searchService.defaultModel,
+        placeFrom: this.searchService.defaultModel.placeFrom ? this.searchService.defaultModel.placeFrom.id : null,
+        placeTo: this.searchService.defaultModel.placeTo ? this.searchService.defaultModel.placeTo.id : null,
+      });
     }
 
     const subscription = forkJoin([this.api.getPlaces(), this.api.getPriceRange()]).subscribe(([places, range]) => {
       this.places = places;
       this.priceRange = range;
       this.searchService.priceRange = range;
-      const control = this.filterForm.get('price');
-      if (!control.value) {
-        control.setValue({ from: this.priceRange.min, to: this.priceRange.max }, { emiteEvent: false });
-      }
       this.loadingService.removeSubscription(subscription);
     });
     this.loadingService.addSubscription(subscription);
@@ -117,31 +94,34 @@ export class FiltersFormComponent implements OnInit {
 
   private saveFilters() {
     const formValue = this.filterForm.getRawValue();
-    formValue.place = this.places.find((p) => p.id == formValue.place);
+    formValue.placeFrom = this.places.find((p) => p.id == formValue.placeFrom);
+    formValue.placeTo = this.places.find((p) => p.id == formValue.placeTo);
     this.searchService.model = formValue;
   }
 
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-      this.toDate = date;
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
+  private genTimes() {
+    for (let i = 0; i < 24; i++) {
+      this.times.push(`${i < 10 ? `0${i}` : i}:00`);
+      this.times.push(`${i < 10 ? `0${i}` : i}:30`);
     }
   }
 
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate) {
-    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  }
-
-  isRange(date: NgbDate) {
-    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
+  setDate(date: Date, toDate = false) {
+    if (!toDate) {
+      this.dates.fromDate = {
+        weekDay: this.searchService.weekDays[date.getDay()],
+        day: date.getDate(),
+        month: this.searchService.months[date.getMonth()],
+        year: date.getFullYear(),
+      };
+      return;
+    }
+    this.dates.toDate = {
+      weekDay: this.searchService.weekDays[date.getDay()],
+      day: date.getDate(),
+      month: this.searchService.months[date.getMonth() - 1],
+      year: date.getFullYear(),
+    };
   }
 
   isDisabled(date: NgbDate) {

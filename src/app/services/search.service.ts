@@ -11,6 +11,8 @@ export class SearchService {
   private time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
   public priceRange: SliderRange = { min: 1500, max: 8000 };
   public minDate: NgbDate;
+  public weekDays: string[] = ['SUN', 'MON', 'THU', 'WED', 'THI', 'FRI', 'SAT'];
+  public months: string[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
   public defaultModel: SearchModel;
 
@@ -25,30 +27,23 @@ export class SearchService {
 
   public set model(model: SearchModel) {
     this._model = model;
-    if (
-      model &&
-      (!model.period || !model.period.fromDate) &&
-      !model.time &&
-      !model.place &&
-      (!model.price || (!model.price.from && !model.price.to))
-    ) {
+    if (model && !model.dateFrom && !model.timeFrom && !model.timeTo && !model.placeFrom && !model.placeTo) {
       this._model = null;
     }
     sessionStorage.setItem('bookingSearchModel', JSON.stringify(this._model));
     this.$filtersUpdate.next(this._model);
   }
 
-  constructor(private calendar: NgbCalendar) {
+  constructor(public calendar: NgbCalendar) {
     this._model = this.model;
     this.minDate = this.calendar.getNext(this.calendar.getToday(), 'd', 5);
     this.defaultModel = {
-      period: {
-        fromDate: this.minDate,
-        toDate: this.calendar.getNext(this.minDate, 'd', 10),
-      },
-      place: null,
-      time: this.time,
-      price: null,
+      dateFrom: this.minDate,
+      dateTo: this.calendar.getNext(this.minDate, 'd', 10),
+      placeFrom: null,
+      placeTo: null,
+      timeFrom: '12:00',
+      timeTo: '12:00',
     };
     this.$filtersUpdate = new BehaviorSubject(this._model);
   }
@@ -61,16 +56,14 @@ export class SearchService {
     if (!model) {
       return 1;
     }
-    let {
-      period: { fromDate, toDate },
-    } = model;
+    let { dateFrom, dateTo } = model;
 
-    if (!toDate) {
+    if (!dateTo) {
       return 1;
     }
 
     return (
-      (new Date(toDate.year, toDate.month, toDate.day).getTime() - new Date(fromDate.year, fromDate.month, fromDate.day).getTime()) /
+      (new Date(dateTo.year, dateTo.month, dateTo.day).getTime() - new Date(dateFrom.year, dateFrom.month, dateFrom.day).getTime()) /
         (24 * 3600000) +
       1
     );
@@ -78,13 +71,10 @@ export class SearchService {
 }
 
 export interface SearchModel {
-  period: SearchPeriod;
-  time: NgbTimeStruct;
-  place: Place;
-  price?: SliderSelected;
-}
-
-export interface SearchPeriod {
-  fromDate: NgbDate;
-  toDate: NgbDate;
+  dateFrom: NgbDate;
+  dateTo: NgbDate;
+  timeFrom: string;
+  timeTo: string;
+  placeFrom: Place;
+  placeTo: Place;
 }

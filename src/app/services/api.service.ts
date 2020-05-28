@@ -45,19 +45,11 @@ export class ApiService {
     const url = new URL(this.baseUrl);
     url.searchParams.set('key', 'get-cars');
     if (model) {
-      if (model.period) {
-        url.searchParams.set('dateFrom', this.ngbDateToString(model.period.fromDate));
-        if (model.period.toDate) {
-          url.searchParams.set('dateTo', this.ngbDateToString(model.period.toDate));
-        }
+      if (model.dateFrom) {
+        url.searchParams.set('dateFrom', this.ngbDateToString(model.dateFrom));
       }
-      if (model.price) {
-        if (model.price.from != 1500) {
-          url.searchParams.set('priceFrom', model.price.from.toString());
-        }
-        if (model.price.to != 8000) {
-          url.searchParams.set('priceTo', model.price.to.toString());
-        }
+      if (model.dateTo) {
+        url.searchParams.set('dateTo', this.ngbDateToString(model.dateTo));
       }
     }
     if (limit) {

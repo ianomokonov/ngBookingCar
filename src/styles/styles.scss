@@ -2,8 +2,8 @@
 
 @import 'bootstrap';
 @import 'functions';
-@import 'variables';
 @import 'mixins';
+@import 'colors';
 
 html,
 body {
@@ -51,48 +51,58 @@ button {
   margin: 0;
 }
 
-
-.ng-dirty{
-  &.ng-invalid{
+.ng-dirty {
+  &.ng-invalid {
     border-color: $danger;
 
-    &.form-control-file{
+    &.form-control-file {
       border: 1px solid $danger;
       padding-left: 0.5rem;
     }
 
-    .validation-message{
+    .validation-message {
       color: $danger;
     }
   }
 }
 
-.validation-message{
+.validation-message {
   @extend .text-muted;
 }
-.ng-invalid{
-  .validation-message{
+.ng-invalid {
+  .validation-message {
     color: $danger !important;
   }
 }
 
-.form-control-file{
+.form-control-file {
   border-color: white;
   padding-left: 0;
   height: 100%;
 }
 
-.no-data{
+.no-data {
   @extend .text-muted;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-
+ngb-datepicker {
+  * {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  .bg-primary {
+    background-color: $brand-red !important;
+  }
+  .btn-link{
+    color: $brand-red !important;
+  }
+}
 
 @media (max-width: 576px) {
-  .ngb-dp-month:nth-child(2){
+  .ngb-dp-month:nth-child(2) {
     display: none;
   }
 }

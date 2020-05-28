@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { FiltersFormComponent } from './search/filters-form/filters-form.component';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SearchCarsComponent } from './search/search-cars/search-cars.component';
@@ -75,6 +75,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    NgbDatepickerModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,

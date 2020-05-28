@@ -1,67 +1,61 @@
-<form [formGroup]="filterForm">
-  <h2 class="mb-3 bk-header">{{ 'SEARCH.HEADER' | translate }}</h2>
-  <div class="row">
-    <div class="col-xl-6">
-      <ngbd-datepicker-i18n
-        #dp
-        (dateSelect)="onDateSelection($event)"
+<form class="search-form" [formGroup]="filterForm" (submit)="onSearchClick()">
+  <div class="step" (click)="!dateFrom.isOpen() && dateFrom.open()">
+    <i class="fas fa-calendar-alt header-icon"></i>
+    <h2 class="header">{{ 'SEARCH.SELECT_PICK_UP_DATE' | translate }}</h2>
+    <span class="week-day">{{ dates.fromDate.weekDay | translate }}</span>
+    <span class="day">{{ dates.fromDate.day }}</span>
+    <span class="month">{{ dates.fromDate.month | translate }} {{ dates.fromDate.year }}</span>
+    <div class="position-relative w-100">
+      <input
         [minDate]="searchService.minDate"
-        [dayTemplate]="t"
-        outsideDays="hidden"
-      >
-      </ngbd-datepicker-i18n>
+        autoClose="true"
+        formControlName="dateFrom"
+        class="d-none"
+        ngbDatepicker
+        #dateFrom="ngbDatepicker"
+      />
+    </div>
+  </div>
+  <div class="step">
+    <div class="form-group border-bottom pb-3 mb-3">
+      <label>{{ 'SEARCH.SELECT_PICK_UP_PLACE' | translate }}:</label
+      ><select formControlName="placeFrom" class="form-control">
+        <option [value]="place.id" *ngFor="let place of places">{{ place.name }}</option>
+      </select>
+    </div>
+    <div class="form-group mb-0">
+      <label>{{ 'SEARCH.SELECT_PICK_UP_TIME' | translate }}:</label
+      ><select formControlName="timeFrom" class="form-control">
+        <option [value]="time" *ngFor="let time of times">{{ time }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="step" (click)="dateTo.open()">
+    <i class="fas fa-calendar-alt header-icon"></i>
+    <h2 class="header">{{ 'SEARCH.SELECT_DROP_OFF_DATE' | translate }}</h2>
+    <span class="week-day">{{ dates.toDate.weekDay | translate }}</span>
+    <span class="day">{{ dates.toDate.day }}</span>
+    <span class="month">{{ dates.toDate.month | translate }} {{ dates.toDate.year }}</span>
 
-      <ng-template #t let-date let-focused="focused">
-        <span
-          class="custom-day"
-          [class.focused]="focused"
-          [class.range]="isRange(date)"
-          [class.disabled]="isDisabled(date)"
-          [class.faded]="isHovered(date) || isInside(date)"
-          (mouseenter)="hoveredDate = date"
-          (mouseleave)="hoveredDate = null"
-        >
-          {{ date.day }}
-        </span>
-      </ng-template>
+    <div class="position-relative w-100">
+      <input [autoClose]="true" [minDate]="minDateTo" formControlName="dateTo" class="d-none" ngbDatepicker #dateTo="ngbDatepicker" />
     </div>
-    <div class="pt-3 pt-xl-0 col-xl-6 d-flex flex-column justify-content-between">
-      <div>
-        <div class="row mb-3">
-          <div class="col">
-            <div class="form-group mb-0" *ngIf="priceRange && filterForm.get('price').value">
-              <label>Цена</label>
-              <div class="my-1">
-                <bk-double-slider formControlName="price" [range]="priceRange" [formatValue]="priceFormatValue"></bk-double-slider>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm">
-            <div class="form-group">
-              <label>Время</label>
-              <ngb-timepicker
-                [readonlyInputs]="true"
-                formControlName="time"
-                [hourStep]="hourStep"
-                [minuteStep]="minuteStep"
-              ></ngb-timepicker>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="form-group">
-              <label>Место</label>
-              <select formControlName="place" class="form-control">
-                <option *ngFor="let place of places" [value]="place.id">{{ place.name }}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="text-right">
-        <button (click)="onSearchClick()" class="btn btn-primary">Найти</button>
-      </div>
+  </div>
+  <div class="step">
+    <div class="form-group border-bottom pb-3 mb-3">
+      <label>{{ 'SEARCH.SELECT_DROP_OFF_PLACE' | translate }}:</label>
+      <select formControlName="placeTo" class="form-control">
+        <option [value]="place.id" *ngFor="let place of places">{{ place.name }}</option>
+      </select>
     </div>
+    <div class="form-group mb-0">
+      <label>{{ 'SEARCH.SELECT_DROP_OFF_TIME' | translate }}:</label>
+      <select formControlName="timeTo" class="form-control">
+        <option [value]="time" *ngFor="let time of times">{{ time }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="step">
+    <button type="submit" class="btn header">{{ 'SEARCH.BTN' | translate }}</button>
   </div>
 </form>
