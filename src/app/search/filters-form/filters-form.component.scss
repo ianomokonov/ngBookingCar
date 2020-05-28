@@ -10,14 +10,15 @@
     justify-content: center;
     flex-direction: column;
     background-color: #fff;
-    min-width: 200px;
+    min-width: 190px;
     padding: 10px;
     font-family: 'Open Sans', sans-serif;
+    
 
     .header-icon {
       position: absolute;
       font-size: 30px;
-      top: -15px;
+      top: -18px;
     }
 
     button.header{
@@ -42,9 +43,10 @@
       color: white;
 
       .header {
-        font-size: 14px;
+        font-size: 13px;
         text-transform: uppercase;
         font-weight: bold;
+        text-align: center;
       }
 
       .week-day {

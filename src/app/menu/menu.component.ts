@@ -4,6 +4,7 @@ import { ApiService } from '../services/api.service';
 import { AuthService } from '../services/auth.service';
 import { takeWhile } from 'rxjs/internal/operators';
 import { LoadingService } from '../services/loading.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'bk-menu',
@@ -13,7 +14,7 @@ import { LoadingService } from '../services/loading.service';
 export class MenuComponent implements OnInit, OnDestroy {
   public user: User;
   private rxAlive: boolean = true;
-  constructor(private api: ApiService, private loadingService: LoadingService, private auth: AuthService) {}
+  constructor(private api: ApiService, private loadingService: LoadingService, private auth: AuthService, private translate: TranslateService) {}
 
   ngOnInit(): void {
     this.getUser();
@@ -36,5 +37,9 @@ export class MenuComponent implements OnInit, OnDestroy {
       });
       this.loadingService.addSubscription(subscription);
     }
+  }
+
+  changeLang(lang: string){
+    this.translate.use(lang);
   }
 }

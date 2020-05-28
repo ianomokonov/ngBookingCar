@@ -1,19 +1,12 @@
 @import '../../styles/colors';
 .logo {
   font-size: 1.2rem;
-  height: 100%;
   text-transform: uppercase;
   font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2rem;
+  margin-right: 3rem;
   span {
-    font-size: 0.8rem;
-    line-height: 0.8rem;
+    color: $brand-red;
   }
-  background: no-repeat url(../../assets/logo-car.jpg) left 5rem bottom;
-  background-size: auto 1.5rem;
-  margin-right: 8rem;
 }
 a {
   padding-right: 0;
@@ -42,6 +35,12 @@ nav{
   flex-grow: 1;
   display: flex;
   justify-content: space-between;
+}
+
+.langs{
+  img{
+    cursor: pointer;
+  }
 }
 
 @media (max-width: 767px) {

@@ -1,13 +1,12 @@
 <div class="border-bottom">
   <div class="container d-flex">
     <div class="logo py-2">
-      Автомобили
-      <span class="text-primary">на прокат</span>
+      <h2 class="mb-0">car<span>4</span>crete</h2>
     </div>
-    <nav class="nav d-flex flex-nowrap">
+    <nav class="nav d-flex flex-nowrap mr-2">
       <div class="d-flex">
-        <a class="nav-link" routerLink="/search" routerLinkActive="active">{{'MENU.SEARCH' | translate}}</a>
-        <a class="nav-link" routerLink="/catalog" routerLinkActive="active">{{'MENU.CARS' | translate}}</a>
+        <a class="nav-link" routerLink="/search" routerLinkActive="active">{{ 'MENU.SEARCH' | translate }}</a>
+        <a class="nav-link" routerLink="/catalog" routerLinkActive="active">{{ 'MENU.CARS' | translate }}</a>
       </div>
 
       <a class="nav-link mr-0" routerLink="/profile" routerLinkActive="active"
@@ -15,5 +14,9 @@
         <i class="fas fa-user d-md-none"></i>
       </a>
     </nav>
+    <span class="d-inline-flex align-items-center langs">
+      <img class="mr-1" src="../../assets/images/flag-en.gif" (click)="changeLang('en')" alt="en" />
+      <img src="../../assets/images/flag-ru.gif" (click)="changeLang('ru')" alt="ru" />
+    </span>
   </div>
 </div>

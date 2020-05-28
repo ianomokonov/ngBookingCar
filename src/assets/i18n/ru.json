@@ -5,6 +5,12 @@
         "PROFILE": "Личный кабинет"
     },
     "SEARCH": {
-        "HEADER": "Найти автомобиль"
-    }
+        "BTN": "Найти",
+        "SELECT_PICK_UP_DATE": "Выберите дату подачи",
+        "SELECT_PICK_UP_PLACE": "Выберите место подачи",
+        "SELECT_PICK_UP_TIME": "Выберите время подачи",
+        "SELECT_DROP_OFF_DATE": "Выберите дату возврата",
+        "SELECT_DROP_OFF_PLACE": "Выберите место возврата",
+        "SELECT_DROP_OFF_TIME": "Выберите время возврата"
+      }
 }
