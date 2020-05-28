@@ -1,0 +1,10 @@
+{
+    "MENU": {
+        "SEARCH": "Search",
+        "CARS": "Cars",
+        "PROFILE": "Profile"
+    },
+    "SEARCH": {
+        "HEADER": "Search for car in Crete"
+    }
+}

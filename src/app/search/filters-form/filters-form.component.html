@@ -1,8 +1,15 @@
 <form [formGroup]="filterForm">
-  <h2 class="mb-3 bk-header">Подобрать по параметрам</h2>
+  <h2 class="mb-3 bk-header">{{ 'SEARCH.HEADER' | translate }}</h2>
   <div class="row">
     <div class="col-xl-6">
-      <ngbd-datepicker-i18n #dp (dateSelect)="onDateSelection($event)" [minDate]="searchService.minDate" [dayTemplate]="t" outsideDays="hidden"> </ngbd-datepicker-i18n>
+      <ngbd-datepicker-i18n
+        #dp
+        (dateSelect)="onDateSelection($event)"
+        [minDate]="searchService.minDate"
+        [dayTemplate]="t"
+        outsideDays="hidden"
+      >
+      </ngbd-datepicker-i18n>
 
       <ng-template #t let-date let-focused="focused">
         <span
@@ -34,7 +41,12 @@
           <div class="col-sm">
             <div class="form-group">
               <label>Время</label>
-              <ngb-timepicker  [readonlyInputs]="true" formControlName="time" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
+              <ngb-timepicker
+                [readonlyInputs]="true"
+                formControlName="time"
+                [hourStep]="hourStep"
+                [minuteStep]="minuteStep"
+              ></ngb-timepicker>
             </div>
           </div>
           <div class="col-sm">

@@ -30,7 +30,7 @@ import { EditCarComponent } from './profile/profile-details/cars/edit-car/edit-c
 import { DoubleSliderComponent } from './utils/double-slider/double-slider.component';
 import { FileUploaderComponent } from './utils/file-uploader/file-uploader.component';
 import { SignUpComponent } from './profile/sign-up/sign-up.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { PlacesComponent } from './profile/profile-details/places/places.component';
 import { PlaceComponent } from './profile/profile-details/places/place/place.component';
@@ -39,6 +39,8 @@ import { AdminGuard } from './guards/admin.guard';
 import { CarPlacesPipe } from './utils/pipes/car-places.pipe';
 import { LoaderComponent } from './utils/loader/loader.component';
 import { LoadingService } from './services/loading.service';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,23 @@ import { LoadingService } from './services/loading.service';
     PlaceComponent,
     LoaderComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, RouterModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    }),
+  ],
   providers: [
     LoadingService,
     FormBuilder,
@@ -83,3 +101,6 @@ import { LoadingService } from './services/loading.service';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}

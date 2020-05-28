@@ -6,12 +6,12 @@
     </div>
     <nav class="nav d-flex flex-nowrap">
       <div class="d-flex">
-        <a class="nav-link" routerLink="/search" routerLinkActive="active">Поиск</a>
-        <a class="nav-link" routerLink="/catalog" routerLinkActive="active">Каталог</a>
+        <a class="nav-link" routerLink="/search" routerLinkActive="active">{{'MENU.SEARCH' | translate}}</a>
+        <a class="nav-link" routerLink="/catalog" routerLinkActive="active">{{'MENU.CARS' | translate}}</a>
       </div>
 
       <a class="nav-link mr-0" routerLink="/profile" routerLinkActive="active"
-        ><span class="d-none d-md-inline">{{ user ? user.name + ' ' + user.surname : 'Личный кабинет' }}</span>
+        ><span class="d-none d-md-inline">{{ user ? user.name + ' ' + user.surname : ('MENU.PROFILE' | translate) }}</span>
         <i class="fas fa-user d-md-none"></i>
       </a>
     </nav>
