@@ -1,11 +1,13 @@
 @import '../../styles/colors';
 .logo {
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  font-weight: bold;
-  margin-right: 3rem;
-  span {
-    color: $brand-red;
+  h2 {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 3rem;
+    span {
+      color: $brand-red;
+    }
   }
 }
 a {
@@ -16,41 +18,44 @@ a {
   align-items: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  
+  color: rgb(187, 187, 187);
+
   &.active {
     position: relative;
+    color: $brand-red;
     &:after {
       content: '';
       display: block;
       position: absolute;
       top: calc(100% - 1px);
       height: 2px;
-      background-color: $blue;
+      background-color: $brand-red;
       width: 100%;
+      
     }
   }
 }
 
-nav{
+nav {
   flex-grow: 1;
   display: flex;
   justify-content: space-between;
 }
 
-.langs{
-  img{
+.langs {
+  img {
     cursor: pointer;
   }
 }
 
 @media (max-width: 767px) {
-  .logo{
+  .logo {
     margin-right: 3rem;
   }
 }
 
 @media (max-width: 576px) {
-  .container{
+  .container {
     flex-direction: column;
   }
 }

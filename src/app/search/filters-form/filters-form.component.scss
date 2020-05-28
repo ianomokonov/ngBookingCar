@@ -1,8 +1,11 @@
 @import '../../utils/custom-date.scss';
 @import '../../../styles/colors';
+.p-0{
+    padding: 0;
+}
 .search-form {
   display: flex;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+//   box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
 
   .step {
     position: relative;
@@ -13,12 +16,14 @@
     min-width: 190px;
     padding: 10px;
     font-family: 'Open Sans', sans-serif;
+    flex-grow: 1;
+    height: 190px;
     
 
     .header-icon {
       position: absolute;
       font-size: 30px;
-      top: -18px;
+      top: -15px;
     }
 
     button.header{
@@ -30,6 +35,7 @@
     }
 
     &:nth-child(2n-1) {
+        flex-grow: 0;
       background-color: $brand-red;
       align-items: center;
       &:hover{
@@ -66,4 +72,17 @@
       }
     }
   }
+}
+
+
+@media(max-width: 576px){
+    .search-form{
+        .col-md{
+            flex-wrap: wrap;
+
+            .step{
+                flex-grow: 1;
+            }
+        }
+    }
 }

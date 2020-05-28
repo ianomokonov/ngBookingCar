@@ -1,0 +1,31 @@
+@import '../../styles/colors';
+
+.logo {
+  h2 {
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 3rem;
+    span {
+      color: $brand-red;
+    }
+  }
+}
+.footer{
+    margin-top: 30px;
+    border-top: 10px solid $brand-red;
+
+    .icons{
+        display: flex;
+        img{
+            width: 30px;
+        }
+    }
+}
+
+.ARR{
+    text-align: center;
+    a{
+        color: $brand-red;
+    }
+}

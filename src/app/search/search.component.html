@@ -4,4 +4,166 @@
   </div>
 </div>
 
-<bk-search-cars [header]="'Обратите внимание'" [limit]="5"></bk-search-cars>
+<div class="bg-white">
+  <div class="advantages py-5">
+    <div class="container">
+      <div class="row mb-3">
+        <div class="mb-3 m-sm-0 col-sm-6 col-md-4">
+          <div class="rounded advantage">
+            <i class="fas fa-car"></i>
+            <h2>{{ 'SEARCH.BSC' | translate }}</h2>
+            <p>{{ 'SEARCH.BSC_TEXT' | translate }}</p>
+          </div>
+        </div>
+        <div class="mb-3 m-sm-0 col-sm-6 col-md-4">
+          <div class="rounded advantage">
+            <i class="fa fa-usd"></i>
+            <h2>{{ 'SEARCH.FINAL_PRICE' | translate }}</h2>
+            <p>
+              {{ 'SEARCH.FINAL_PRICE_TEXT' | translate }}
+            </p>
+          </div>
+        </div>
+        <div class="mb-3 m-sm-0 col-sm-6 col-md-4">
+          <div class="rounded advantage">
+            <i class="fas fa-user-md"></i>
+            <h2>{{ 'SEARCH.INSURANCE' | translate }}</h2>
+            <p>
+              {{ 'SEARCH.INSURANCE_TEXT' | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="advantage rounded position-relative mt-5" style="z-index: 1;">
+        <h2>{{ 'SEARCH.ATTENTION' | translate }}</h2>
+        <p>{{ 'SEARCH.ATTENTION_TEXT' | translate }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="carouselExampleControls" class="carousel slide py-5" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="row">
+          <div class="col-md img-side" style="background-image: url(../../assets/images/manual.jpg);"></div>
+          <div class="col-md">
+            <h3 class="p-3 p-md-0">{{ 'SEARCH.MANUAL' | translate }}</h3>
+            <p class="p-3 p-md-0">
+              <b>{{ 'SEARCH.FROM' | translate }} 25€ / {{ 'SEARCH.DAY' | translate }}</b>
+              {{ 'SEARCH.MANUAL_TEXT' | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="row">
+          <div class="col-md img-side" style="background-image: url(../../assets/images/automatic.jpg);"></div>
+          <div class="col-md">
+            <h3 class="p-3 p-md-0">{{ 'SEARCH.AUTOMATIC' | translate }}</h3>
+            <p class="p-3 p-md-0">
+              <b>{{ 'SEARCH.FROM' | translate }} 28€ / {{ 'SEARCH.DAY' | translate }}</b>
+              {{ 'SEARCH.AUTOMATIC_TEXT' | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="row">
+          <div class="col-md img-side" style="background-image: url(../../assets/images/golf_7_1.jpg);"></div>
+          <div class="col-md">
+            <h3 class="p-3 p-md-0">{{ 'SEARCH.HATCHBACK' | translate }}</h3>
+            <p class="p-3 p-md-0">
+              <b>{{ 'SEARCH.FROM' | translate }} 25€ / {{ 'SEARCH.DAY' | translate }}</b>
+              {{ 'SEARCH.MINIVAN_TEXT' | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="row">
+          <div class="col-md img-side" style="background-image: url(../../assets/images/minivan.jpg);"></div>
+          <div class="col-md">
+            <h3 class="p-3 p-md-0">{{ 'SEARCH.MINIVAN' | translate }}</h3>
+            <p class="p-3 p-md-0">
+              <b>{{ 'SEARCH.FROM' | translate }} 63€ / {{ 'SEARCH.DAY' | translate }}</b>
+              {{ 'SEARCH.HATCHBACK_TEXT' | translate }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+  <div class="arrow">
+    <div class="left"></div>
+    <div class="right"></div>
+  </div>
+
+  <div class="container py-4">
+    <h2 class="text-center mb-5">{{ 'SEARCH.RENT_CONDITIONS' | translate }}</h2>
+    <div class="conditions row">
+      <div class="condition col-sm-6 col-lg-4 d-flex">
+        <div class="img">
+          <img src="../../assets/conditions/diagnostic.svg" class="w-100" />
+        </div>
+        <div class="content pl-3">
+          <h3>{{ 'SEARCH.ACCURATY' | translate }}</h3>
+          <p>{{ 'SEARCH.ACCURATY_TEXT' | translate }}</p>
+        </div>
+      </div>
+      <div class="condition col-sm-6 col-lg-4 d-flex">
+        <div class="img">
+          <img src="../../assets/conditions/writing.svg" class="w-100" />
+        </div>
+        <div class="content pl-3">
+          <h3>{{ 'SEARCH.AGE' | translate }}</h3>
+          <p>{{ 'SEARCH.AGE_TEXT' | translate }}</p>
+        </div>
+      </div>
+      <div class="condition col-sm-6 col-lg-4 d-flex">
+        <div class="img">
+          <img src="../../assets/conditions/document.svg" class="w-100" />
+        </div>
+        <div class="content pl-3">
+          <h3>{{ 'SEARCH.LICENSE' | translate }}</h3>
+          <p>{{ 'SEARCH.LICENSE_TEXT' | translate }}</p>
+        </div>
+      </div>
+      <div class="condition col-sm-6 col-lg-4 d-flex">
+        <div class="img">
+          <img src="../../assets/conditions/car.svg" class="w-100" />
+        </div>
+        <div class="content pl-3">
+          <h3>{{ 'SEARCH.SOBRITY' | translate }}</h3>
+          <p>{{ 'SEARCH.SOBRITY_TEXT' | translate }}</p>
+        </div>
+      </div>
+      <div class="condition col-sm-6 col-lg-4 d-flex">
+        <div class="img">
+          <img src="../../assets/conditions/security.svg" class="w-100" />
+        </div>
+        <div class="content pl-3">
+          <h3>{{ 'SEARCH.SR' | translate }}</h3>
+          <p>{{ 'SEARCH.SR_TEXT' | translate }}</p>
+        </div>
+      </div>
+      <div class="condition col-sm-6 col-lg-4 d-flex">
+        <div class="img">
+          <img src="../../assets/conditions/24-hours.svg" class="w-100" />
+        </div>
+        <div class="content pl-3">
+          <h3>{{ 'SEARCH.CARE' | translate }}</h3>
+          <p>{{ 'SEARCH.CARE_TEXT' | translate }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

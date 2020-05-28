@@ -11,7 +11,7 @@ export class SearchService {
   private time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
   public priceRange: SliderRange = { min: 1500, max: 8000 };
   public minDate: NgbDate;
-  public weekDays: string[] = ['SUN', 'MON', 'THU', 'WED', 'THI', 'FRI', 'SAT'];
+  public weekDays: string[] = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   public months: string[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
   public defaultModel: SearchModel;

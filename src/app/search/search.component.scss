@@ -1,10 +1,135 @@
-.search-form{
-    background-image: url(../../assets/images/home_page_photo.jpg);
-    min-height: 590px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    padding: 30px 0;
+@import '../../styles/colors';
+.search-form {
+  background-image: url(../../assets/images/home_page_photo.jpg);
+  min-height: 590px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  padding: 30px 0;
+  display: flex;
+  align-items: center;
+
+  border-bottom: 10px solid $brand-red;
+}
+
+.advantages {
+  background-color: rgb(235, 233, 233);
+  position: relative;
+  margin-bottom: 80px;
+
+  &::after {
+    content: '';
+    background-color: rgb(235, 233, 233);
+    display: block;
+    height: 150px;
+    width: calc(100% + 10px);
+    bottom: -50px;
+
+    position: absolute;
+    transform: rotate(3deg);
+  }
+}
+.advantage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background-color: #fff;
+  box-shadow: 0 0 20px 0 rgba(94, 94, 94, 0.466);
+
+  i {
+    font-size: 40px;
+    border-radius: 50%;
+    border: 1px solid black;
+    height: 70px;
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 70px;
+  }
+
+  h2 {
+    margin-top: 1rem;
+    font-size: 24px;
+    text-align: center;
+  }
+  p {
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 14px;
+  }
+}
+
+.carousel-item {
+  .img-side {
+    height: 400px;
+    background-position: center;
+    background-size: cover;
+  }
+  h3 {
+    margin-top: 40px;
+    font-size: 36px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    position: relative;
+
+    &:after {
+      content: '';
+      display: block;
+      background-color: lightgray;
+      height: 2px;
+      width: 30px;
+      position: absolute;
+      bottom: 0;
+    }
+  }
+
+  b {
+    display: block;
+    margin-top: 1rem;
+  }
+
+  p {
+    max-width: 600px;
+  }
+}
+
+.arrow {
+  position: relative;
+  height: 40px;
+  margin-top: 60px;
+  div {
+    height: 10px;
+    background-color: $brand-red;
+    width: calc(50% + 1px);
+    position: absolute;
+
+    &.left {
+      transform: rotate(-3deg);
+      left: 0;
+    }
+    &.right {
+      right: 0;
+      transform: rotate(3deg);
+    }
+  }
+}
+
+.conditions {
+  .condition {
+    .img {
+      max-width: 100px;
+      min-width: 100px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .carousel-item {
+    .img-side {
+      height: 200px;
+      background-position: center;
+      background-size: cover;
+    }
+  }
 }

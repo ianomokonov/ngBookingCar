@@ -41,6 +41,7 @@ import { LoaderComponent } from './utils/loader/loader.component';
 import { LoadingService } from './services/loading.service';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
     PlacesComponent,
     PlaceComponent,
     LoaderComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
