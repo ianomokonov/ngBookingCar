@@ -4,11 +4,11 @@ import { ApiService } from 'src/app/services/api.service';
 import { Place } from 'src/app/models/place';
 import { LoadingService } from 'src/app/services/loading.service';
 
-@Component({
-  selector: 'bk-place',
-  templateUrl: './place.component.html',
-  styleUrls: ['./place.component.scss'],
-})
+// @Component({
+//   selector: 'bk-place',
+//   templateUrl: './place.component.html',
+//   styleUrls: ['./place.component.scss'],
+// })
 export class PlaceComponent implements OnInit {
   public placeInstanse: Place;
 

@@ -2,9 +2,7 @@
   <small
     ><a routerLink="/profile/cars"><i class="fas fa-arrow-left mr-1"></i>список автомобилей</a></small
   >
-  <h2 class="bk-header mt-3">
-    {{ car ? 'Редактирование' : 'Добавление' }} автомобиля
-  </h2>
+  <h2 class="bk-header mt-3">{{ car ? 'Редактирование' : 'Добавление' }} автомобиля</h2>
   <form class="mt-3" [formGroup]="carForm" (submit)="saveCar()">
     <div class="row">
       <div class="col-4">
@@ -12,65 +10,79 @@
           <label>Фотография</label>
           <div>
             <div *ngIf="!isUploadFileShown()" class="position-relative d-inline-block">
-              <img [src]="carForm.get('img').value">
+              <img [src]="carForm.get('img').value" />
               <span class="remove-img" (click)="removeImg()">&times;</span>
             </div>
             <bk-file-uploader *ngIf="isUploadFileShown()" formControlName="img"></bk-file-uploader>
           </div>
-          
         </div>
       </div>
       <div class="col">
         <div class="form-group">
           <label>Название</label>
-          <input formControlName="name" type="text" class="form-control">
+          <input formControlName="name" type="text" class="form-control" />
         </div>
-        <div class="form-group">
-          <label>Класс</label>
-          <select formControlName="class" class="form-control">
-            <option value="Эконом">Эконом</option>
-            <option value="Стандарт">Стандарт</option>
-            <option value="Бизнес">Бизнес</option>
-            <option value="Премиум">Премиум</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-6 col-md">
-        <div class="form-group">
-          <label>Год изготовления</label>
-          <input formControlName="createYear" type="number" class="form-control" />
-        </div>
-      </div>
-      <div class="col-sm-6 col-lg-3">
-        <div class="form-group">
-          <label>Цена</label>
-          <div class="input-group mb-3">
-            <input formControlName="price" type="number" class="form-control">
-            <div class="input-group-append">
-              <span class="input-group-text" id="basic-addon2">₽ / сутки</span>
+        <div class="row">
+          <div class="col-sm-6 col-md">
+            <div class="form-group">
+              <label>Класс</label>
+              <select formControlName="class" class="form-control">
+                <option value="Эконом">Эконом</option>
+                <option value="Стандарт">Стандарт</option>
+                <option value="Бизнес">Бизнес</option>
+                <option value="Премиум">Премиум</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md">
+            <div class="form-group">
+              <label>Год изготовления</label>
+              <input formControlName="createYear" type="number" class="form-control" />
             </div>
           </div>
         </div>
       </div>
-      <div class="col-sm-3 col-md">
+    </div>
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
         <div class="form-group">
-          <label>Категория прав</label>
-          <input formControlName="license" type="text" class="form-control">
-        </div>
-      </div>
-      <div class="col-sm-3 col-md-6 col-lg-2">
-        <div class="form-group">
-          <label>Количество мест</label>
-          <input formControlName="places" type="number" class="form-control">
+          <label>Летняя цена за 7+ дней аренды</label>
+          <div class="input-group mb-3">
+            <input formControlName="summerPrice" type="number" class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">€ / сутки</span>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-sm-6 col-lg-3">
         <div class="form-group">
+          <label>Зимняя цена за 7+ дней аренды</label>
+          <div class="input-group mb-3">
+            <input formControlName="winterPrice" type="number" class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">€ / сутки</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-4 col-md">
+        <div class="form-group">
+          <label>Категория прав</label>
+          <input formControlName="license" type="text" class="form-control" />
+        </div>
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-2">
+        <div class="form-group">
+          <label>Количество мест</label>
+          <input formControlName="places" type="number" class="form-control" />
+        </div>
+      </div>
+      <div class="col-sm-4 col-lg-2">
+        <div class="form-group">
           <label>Объем багажника</label>
           <div class="input-group mb-3">
-            <input formControlName="backVolume" type="number" class="form-control">
+            <input formControlName="backVolume" type="number" class="form-control" />
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon2">л</span>
             </div>
@@ -78,7 +90,7 @@
         </div>
       </div>
     </div>
-    <hr>
+    <hr />
     <div class="row">
       <div class="col-sm-6 col-md">
         <div class="form-group">
@@ -95,7 +107,7 @@
         <div class="form-group">
           <label>Объем двигателя</label>
           <div class="input-group mb-3">
-            <input formControlName="engineVolume" type="number" class="form-control">
+            <input formControlName="engineVolume" type="number" class="form-control" />
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon2">л</span>
             </div>
@@ -106,7 +118,7 @@
         <div class="form-group">
           <label>Мощность двигателя</label>
           <div class="input-group mb-3">
-            <input formControlName="enginePower" type="number" class="form-control">
+            <input formControlName="enginePower" type="number" class="form-control" />
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon2">л. с.</span>
             </div>
@@ -117,7 +129,7 @@
         <div class="form-group">
           <label>Расход топлива</label>
           <div class="input-group mb-3">
-            <input formControlName="volumePerHundred" type="number" class="form-control">
+            <input formControlName="consumption" type="number" class="form-control" />
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon2">л/100км</span>
             </div>
@@ -130,7 +142,7 @@
         <div class="form-group">
           <label>Разгон до 100 км/ч</label>
           <div class="input-group mb-3">
-            <input formControlName="time" type="number" class="form-control">
+            <input formControlName="time" type="number" class="form-control" />
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon2">с.</span>
             </div>
@@ -141,7 +153,7 @@
         <div class="form-group">
           <label>Максимальная скорость</label>
           <div class="input-group mb-3">
-            <input formControlName="speed" type="number" class="form-control">
+            <input formControlName="speed" type="number" class="form-control" />
             <div class="input-group-append">
               <span class="input-group-text" id="basic-addon2">км/ч</span>
             </div>
@@ -152,10 +164,10 @@
         <div class="form-group">
           <label>Тип КПП</label>
           <select formControlName="kpp" class="form-control">
-            <option value="Автомат">Автомат</option>
-            <option value="Механика">Механика</option>
-            <option value="Робот">Робот</option>
-            <option value="Вариатор">Вариатор</option>
+            <option value="AT">Автомат</option>
+            <option value="MT">Механика</option>
+            <option value="RT">Робот</option>
+            <option value="VT">Вариатор</option>
           </select>
         </div>
       </div>
@@ -170,9 +182,48 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-6 col-md">
+        <div class="form-group">
+          <label>Минимальный возраст</label>
+          <div class="input-group mb-3">
+            <input formControlName="minAge" type="number" class="form-control" />
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md">
+        <div class="form-group">
+          <label>Кол. дверей</label>
+          <div class="input-group mb-3">
+            <input formControlName="doors" type="number" class="form-control" />
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md">
+        <div class="form-group">
+          <label>Тип корпуса</label>
+          <select formControlName="bodyType" class="form-control">
+            <option value="Sedan">Седан</option
+            ><option value="Wagon">Универсал</option
+            ><option value="Hatchback">Хэтчбэк</option
+            ><option value="Compact">Компактные</option
+            ><option value="Minivan">Минивэн</option
+            ><option value="Van">Фургон</option
+            ><option value="Coupe">Купе</option
+            ><option value="Sport_Coupe">Спорт купе</option
+            ><option value="SUV">Кроссовер/внедорожник</option
+            ><option value="Pickup">Пикап</option>
+          </select>
+        </div>
+      </div>
+    </div>
     <div class="form-group">
       <label>Описание</label>
       <textarea formControlName="description" class="form-control" rows="4"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Английское описание</label>
+      <textarea formControlName="description_eng" class="form-control" rows="4"></textarea>
     </div>
     <div class="text-right">
       <button type="submit" class="btn btn-primary">Сохранить</button>

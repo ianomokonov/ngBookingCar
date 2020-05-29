@@ -13,19 +13,28 @@
         public $img;
         public $name;
         public $description;
+        public $description_eng;
         public $price;
         public $fuelType;
+        public $bodyType;
         public $engineVolume;
         public $enginePower;
         public $speed;
         public $time;
-        public $volumePerHundred;
+        public $consumption;
         public $kpp;
         public $driveUnit;
         public $places;
         public $backVolume;
         public $license;
         public $createYear;
+        public $minAge;
+        public $ac;
+        public $abs;
+        public $airBags;
+        public $winterPrice;
+        public $summerPrice;
+        public $doors;
     }
 
     class Place {
@@ -37,15 +46,18 @@
         public $id;
         public $userId;
         public $carId;
-        public $placeId;
+        public $placeFromId;
+        public $placeToId;
         public $dateFrom;
         public $dateTo;
         public $orderSum;
-        public $time;
+        public $timeFrom;
+        public $timeTo;
 
         public $user;
         public $car;
-        public $place;
+        public $placeFrom;
+        public $placeTo;
     }
 
     class DateRange {

@@ -10,11 +10,11 @@ import { Place } from '../models/place';
 import { Order, DateRange } from '../models/order';
 import { LoadingService } from '../services/loading.service';
 
-@Component({
-  selector: 'bk-booking-form',
-  templateUrl: './booking-form.component.html',
-  styleUrls: ['./booking-form.component.scss'],
-})
+// @Component({
+//   selector: 'bk-booking-form',
+//   templateUrl: './booking-form.component.html',
+//   styleUrls: ['./booking-form.component.scss'],
+// })
 export class BookingFormComponent implements OnInit {
   public car;
   public user;
@@ -172,18 +172,18 @@ export class BookingFormComponent implements OnInit {
     const orderFormValue = orderForm.getRawValue();
     const order: Order = {
       carId: this.car.id,
-      placeId: orderFormValue.place,
+      // placeId: orderFormValue.place,
       dateFrom: orderFormValue.period.fromDate,
       dateTo: orderFormValue.period.toDate,
-      time: orderFormValue.time,
+      // time: orderFormValue.time,
       orderSum: this.car.price * this.periodDays,
     };
 
-    const subscription = this.api.addOrder(order).subscribe((v) => {
-      this.loadingService.removeSubscription(subscription);
-      this.router.navigate(['/profile']);
-    });
-    this.loadingService.addSubscription(subscription);
+    // const subscription = this.api.addOrder(order).subscribe((v) => {
+    //   this.loadingService.removeSubscription(subscription);
+    //   this.router.navigate(['/profile']);
+    // });
+    // this.loadingService.addSubscription(subscription);
   }
 
   onDateSelection(date: NgbDate) {

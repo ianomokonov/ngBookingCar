@@ -90,45 +90,45 @@ export class ApiService {
     return this.http.get<any>(`${this.baseUrl}?key=delete-place&placeId=${id}`);
   }
 
-  public addOrder(order: Order): Observable<any> {
-    order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
-    order.dateTo = order.dateTo ? this.ngbDateToString(order.dateTo as NgbDate) : null;
-    order.time = this.ngbTimeToString(order.time as NgbTimeStruct);
-    return this.http.post<any>(`${this.baseUrl}?key=add-order`, order);
-  }
+  // public addOrder(order: Order): Observable<any> {
+  //   order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
+  //   order.dateTo = order.dateTo ? this.ngbDateToString(order.dateTo as NgbDate) : null;
+  //   order.time = this.ngbTimeToString(order.time as NgbTimeStruct);
+  //   return this.http.post<any>(`${this.baseUrl}?key=add-order`, order);
+  // }
 
-  public updateOrder(order: UpdateOrder): Observable<any> {
-    if (order.dateFrom) {
-      order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
-    }
-    if (order.dateTo) {
-      order.dateTo = order.dateTo ? this.ngbDateToString(order.dateTo as NgbDate) : null;
-    }
-    if (order.time) {
-      order.time = this.ngbTimeToString(order.time as NgbTimeStruct);
-    }
-    return this.http.post<any>(`${this.baseUrl}?key=update-order`, order);
-  }
+  // public updateOrder(order: UpdateOrder): Observable<any> {
+  //   if (order.dateFrom) {
+  //     order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
+  //   }
+  //   if (order.dateTo) {
+  //     order.dateTo = order.dateTo ? this.ngbDateToString(order.dateTo as NgbDate) : null;
+  //   }
+  //   if (order.time) {
+  //     order.time = this.ngbTimeToString(order.time as NgbTimeStruct);
+  //   }
+  //   return this.http.post<any>(`${this.baseUrl}?key=update-order`, order);
+  // }
 
   public cancelOrder(orderId: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}?key=cancel-order&orderId=${orderId}`);
   }
 
-  public getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(`${this.baseUrl}?key=get-history`).pipe(
-      tap((orders) => {
-        orders.forEach((order) => {
-          order.dateFrom = this.stringToNgbDate(order.dateFrom as string);
-          order.dateTo = order.dateTo ? this.stringToNgbDate(order.dateTo as string) : null;
-          order.time = this.stringToNgbTime(order.time as string);
-          order.car.dates.forEach((range) => {
-            range.dateFrom = this.stringToNgbDate(range.dateFrom as any);
-            range.dateTo = order.dateTo ? this.stringToNgbDate(range.dateTo as any) : null;
-          });
-        });
-      })
-    );
-  }
+  // public getOrders(): Observable<Order[]> {
+  //   return this.http.get<Order[]>(`${this.baseUrl}?key=get-history`).pipe(
+  //     tap((orders) => {
+  //       orders.forEach((order) => {
+  //         order.dateFrom = this.stringToNgbDate(order.dateFrom as string);
+  //         order.dateTo = order.dateTo ? this.stringToNgbDate(order.dateTo as string) : null;
+  //         order.time = this.stringToNgbTime(order.time as string);
+  //         order.car.dates.forEach((range) => {
+  //           range.dateFrom = this.stringToNgbDate(range.dateFrom as any);
+  //           range.dateTo = order.dateTo ? this.stringToNgbDate(range.dateTo as any) : null;
+  //         });
+  //       });
+  //     })
+  //   );
+  // }
 
   public getCarDates(carId: number): Observable<DateRange[]> {
     return this.http.get<DateRange[]>(`${this.baseUrl}?key=get-car-dates&carId=${carId}`).pipe(

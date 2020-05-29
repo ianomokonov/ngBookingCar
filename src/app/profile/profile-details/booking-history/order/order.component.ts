@@ -7,11 +7,11 @@ import { ApiService } from 'src/app/services/api.service';
 import { takeWhile } from 'rxjs/internal/operators';
 import { LoadingService } from 'src/app/services/loading.service';
 
-@Component({
-  selector: 'bk-order',
-  templateUrl: './order.component.html',
-  styleUrls: ['./order.component.scss'],
-})
+// @Component({
+//   selector: 'bk-order',
+//   templateUrl: './order.component.html',
+//   styleUrls: ['./order.component.scss'],
+// })
 export class OrderComponent implements OnInit {
   @Input() public set carOrder(order: Order) {
     this.order = order;
@@ -30,8 +30,8 @@ export class OrderComponent implements OnInit {
           fromDate: this.order.dateFrom as NgbDate,
           toDate: this.order.dateTo as NgbDate,
         },
-        time: this.order.time as NgbTimeStruct,
-        place: this.order.placeId,
+        // time: this.order.time as NgbTimeStruct,
+        // place: this.order.placeId,
       };
 
       const fromDateNgb = this.order.dateFrom as NgbDate;
@@ -123,14 +123,14 @@ export class OrderComponent implements OnInit {
 
   public changeStatus(statuss: OrderStatus) {
     if (this.isAdmin) {
-      const subscription = this.api
-        .updateOrder({ id: this.order.id, status: statuss })
-        .pipe(takeWhile(() => this.rxAlive))
-        .subscribe(() => {
-          this.orderUpdated.emit(this.order.id);
-          this.loadingService.removeSubscription(subscription);
-        });
-      this.loadingService.addSubscription(subscription);
+      // const subscription = this.api
+      //   .updateOrder({ id: this.order.id, status: statuss })
+      //   .pipe(takeWhile(() => this.rxAlive))
+      //   .subscribe(() => {
+      //     this.orderUpdated.emit(this.order.id);
+      //     this.loadingService.removeSubscription(subscription);
+      //   });
+      // this.loadingService.addSubscription(subscription);
     }
   }
 
@@ -147,21 +147,21 @@ export class OrderComponent implements OnInit {
     const orderFormValue = this.orderForm.getRawValue();
     const order: UpdateOrder = {
       id: this.order.id,
-      placeId: orderFormValue.place,
+      // placeId: orderFormValue.place,
       dateFrom: orderFormValue.period.fromDate,
       dateTo: orderFormValue.period.toDate,
-      time: orderFormValue.time,
+      // time: orderFormValue.time,
       orderSum: this.order.orderSum,
     };
 
-    const subscription = this.api
-      .updateOrder(order)
-      .pipe(takeWhile(() => this.rxAlive))
-      .subscribe(() => {
-        this.orderUpdated.emit(this.order.id);
-        this.loadingService.removeSubscription(subscription);
-      });
-    this.loadingService.addSubscription(subscription);
+    // const subscription = this.api
+    //   .updateOrder(order)
+    //   .pipe(takeWhile(() => this.rxAlive))
+    //   .subscribe(() => {
+    //     this.orderUpdated.emit(this.order.id);
+    //     this.loadingService.removeSubscription(subscription);
+    //   });
+    // this.loadingService.addSubscription(subscription);
   }
 
   public cancel() {
@@ -182,7 +182,7 @@ export class OrderComponent implements OnInit {
   private setOrderSum(model: SearchModel) {
     const periodDays = SearchService.setPeriodDays(model);
 
-    this.order.orderSum = this.order.car.price * periodDays;
+    // this.order.orderSum = this.order.car.price * periodDays;
   }
 
   ngOnInit(): void {
