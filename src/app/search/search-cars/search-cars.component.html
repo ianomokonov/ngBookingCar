@@ -1,6 +1,6 @@
 <div class="cars-back">
   <div class="container">
-    <h2 class="bk-header mt-5" *ngIf="header && cars?.length">{{ header }}</h2>
+    <h2 class="bk-header mt-5" *ngIf="header && cars?.length">{{ header | translate }}</h2>
     <div class="cars">
       <div class="row car mx-0" *ngFor="let car of cars">
         <div class="col-md-8 car-info-img row">
@@ -11,32 +11,36 @@
             <h2 class="car-title">{{ car.name }}</h2>
             <div class="car-details">
               <span class="car-places"
-                ><i class="fas fa-user"></i><b>{{ car.places | carPlaces }}</b></span
+                ><i class="fas fa-user"></i><b>{{ car.places }} {{ car.places | carPlaces | translate }}</b></span
               >
-              <span class="driver-license"
-                ><i class="fas fa-id-badge"></i>Категория <b>{{ car.license }}</b></span
+              <span *ngIf="car.license" class="driver-license"
+                ><i class="fas fa-id-badge"></i>{{ 'CATEGORY' | translate }} <b>{{ car.license }}</b></span
               >
-              <span class="car-kpp"><i class="fas fa-cogs"></i>{{ car.kpp }}</span>
-              <span class="car-kpp" *ngIf="car.class"><i class="fas fa-car"></i>{{ car.class }}</span>
+              <span class="car-kpp"><i class="fas fa-cogs"></i>{{ 'CARS.' + car.kpp | translate }}</span>
+              <span class="car-kpp" *ngIf="car.class"><i class="fas fa-car"></i>{{ 'CARS.' + car.class | translate }}</span>
             </div>
           </div>
         </div>
 
         <div class="car-actions p-0 px-sm-3 col-md-4 text-right">
           <div class="price">
-            <h2>{{ car.price }} ₽ <span>в сутки</span></h2>
+            <h2>
+              {{ 'SEARCH.FROM' | translate }} {{ car.winterPrices?.oneDayPrice }} € <span>/ {{ 'DAY' | translate }}</span>
+            </h2>
             <span class="text-muted"
-              >итого: {{ car.price * periodDays }} ₽ за {{ periodDays }} {{ periodDays % 10 === 1 ? 'сутки' : 'суток' }}</span
+              >{{ getCarPrice(car) }} € {{ 'FOR' | translate }} {{ periodDays }}
+              {{ periodDays % 10 === 1 ? ('DAY' | translate) : ('DAYS' | translate) }}</span
             >
           </div>
           <div class="btns d-flex justify-content-end">
             <!-- <a class="btn btn-primary mr-1" [routerLink]="['/booking', car.id]">Заказать</a> -->
-            <a class="btn btn-outline-primary" [routerLink]="['/details', car.id]">Подробнее</a>
+            <a class="btn btn-primary mr-1" [routerLink]="['/edit-car', car.id]">Редактировать</a>
+            <a class="btn btn-outline-primary" [routerLink]="['/details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>
           </div>
         </div>
       </div>
       <div *ngIf="!cars?.length" class="no-data">
-        Автомобили не найдены
+        {{ 'CARS.NOT_FOUND' | translate }}
       </div>
       <!-- /car -->
     </div>

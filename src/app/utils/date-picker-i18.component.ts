@@ -1,8 +1,9 @@
 import {Component,Injectable,EventEmitter,Input,Output} from '@angular/core';
 import {NgbDatepickerI18n, NgbDateStruct,NgbDate} from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 
 const I18N_VALUES = {
-  'fr': {
+  'en': {
     weekdays: ['Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa', 'Di'],
     months: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Déc'],
   },
@@ -24,15 +25,15 @@ export class I18n {
 @Injectable()
 export class CustomDatepickerI18n extends NgbDatepickerI18n {
 
-  constructor(private _i18n: I18n) {
+  constructor(private _i18n: TranslateService) {
     super();
   }
 
   getWeekdayShortName(weekday: number): string {
-    return I18N_VALUES[this._i18n.language].weekdays[weekday - 1];
+    return I18N_VALUES[this._i18n.currentLang].weekdays[weekday - 1];
   }
   getMonthShortName(month: number): string {
-    return I18N_VALUES[this._i18n.language].months[month - 1];
+    return I18N_VALUES[this._i18n.currentLang].months[month - 1];
   }
   getMonthFullName(month: number): string {
     return this.getMonthShortName(month);
@@ -61,7 +62,7 @@ export class CustomDatepickerI18n extends NgbDatepickerI18n {
 })
 export class NgbdDatepickerI18n {
   @Input() dayTemplate;
-  @Input() displayMonths = 2;
+  @Input() displayMonths = 1;
   @Input() minDate;
   @Input() maxDate;
   @Input() markDisabled;

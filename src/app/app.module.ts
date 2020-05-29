@@ -39,9 +39,10 @@ import { AdminGuard } from './guards/admin.guard';
 import { CarPlacesPipe } from './utils/pipes/car-places.pipe';
 import { LoaderComponent } from './utils/loader/loader.component';
 import { LoadingService } from './services/loading.service';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslatePipe } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FooterComponent } from './footer/footer.component';
+import { BkTranslatePipe } from './utils/pipes/translate.pipe';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { FooterComponent } from './footer/footer.component';
     CatalogComponent,
     FiltersComponent,
     NgbDatePipe,
+    BkTranslatePipe,
     CarPlacesPipe,
     DetailsComponent,
     // BookingFormComponent,
@@ -98,6 +100,7 @@ import { FooterComponent } from './footer/footer.component';
     ApiService,
     AuthService,
     SearchService,
+    TranslatePipe,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

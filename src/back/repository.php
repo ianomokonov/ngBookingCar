@@ -54,7 +54,11 @@
             //return $queryText;
             $query = $this->database->db->query($queryText);
             $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
-            
+            $cars = array();
+            while ($car = $query->fetch()) {
+                $car->description = array('en'=>$car->description_eng, 'ru'=>$car->description);
+                $cars[] = $car;
+            }
             return $query->fetchAll();
             
         }

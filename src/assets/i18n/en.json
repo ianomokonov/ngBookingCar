@@ -46,7 +46,7 @@
     "CARE": "Care",
     "CARE_TEXT": "Take care of the rented car as of your own!",
 
-    "FROM": "From",
+    "FROM": "from",
     "DAY": "day"
   },
   "CARS": {
@@ -55,7 +55,56 @@
     "DATE": "Date",
     "TIME": "Time",
     "PICK_UP_PLACE": "Pick up place",
-    "DROP_OFF_PLACE": "Drop off place"
+    "DROP_OFF_PLACE": "Drop off place",
+    "FUEL":"Fuel",
+    "TRANSMISSION":"Transmission",
+    "DOORS":"Doors",
+    "PASSENGERS":"Passengers",
+    "PASSENGERS_S":"Passengers",
+    "PETROL":"Petrol",
+    "DEISEL":"Deisel",
+    "DETAILS":"Details",
+    "CONSUMPTION":"Consumption",
+    "L":"l",
+    "KM":"km",
+    "CROSSOVER":"SUV",
+    "CABRIOLET":"Cabrio",
+    "SEDAN":"Sedan",
+    "WAGON":"Wagon",
+    "VAN":"Van",
+    "SUV":"SUV/Crossover",
+    "PICKUP":"Pickup",
+    "COUPE":"Coupe",
+    "SPORT_COUPE":"Sport Coupe",
+    "MINIVAN":"Minivan",
+    "MANUAL":"Manual",
+    "AUTOMATIC":"Automatic",
+    "MT":"MT",
+    "AT":"AT",
+    "CLASS":"Class",
+    "ECONOMY":"Economy",
+    "STANDART":"Standart",
+    "BUSINESS":"Business",
+    "PREMIUM":"Premium",
+    "AC":"AC",
+    "ABS":"ABS",
+    "AIRBAGS":"Airbags",
+
+    "DRIVE_UNIT": "Drive unit",
+
+    "FRONTUNIT": "Front-wheel drive",
+    "BACKUNIT": "Back-wheel drive",
+    "FULLUNIT": "Four-wheel drive",
+
+    "PLACES_COUNT": "Places count",
+    "CREATION_YEAR": "Creation year",
+    "TRUNK_VOLUME": "Trank volume",
+    "FUEL_TYPE": "Fuel type",
+    "ENGINE_POWER": "Engine power",
+    "MAX_SPEED": "Max speed",
+    "ACCELERATION_TIME": "Acceleration 0 - 100 km / h",
+    "TECH_CHARACTERISTICS": "Technical specifications",
+    "NOT_FOUND": "Cars not found"
   },
   "NOV": "November",
   "DEC": "December",
@@ -78,5 +127,16 @@
   "SUT": "Saturday",
   "SUN": "Sunday",
 
-  "ADRESS_TEXT":"Ammudara, Andreas Papandreou, 247"
+  "ADRESS_TEXT":"Ammudara, Andreas Papandreou, 247",
+
+  "ONE_PLACE": "place",
+  "TWO_PLACES": "places",
+  "FIVE_PLACES": "places",
+
+  "DAY": "day",
+  "DAYS": "days",
+  "FOR": "for",
+
+  "KM_H": "km / h",
+  "S": "s"
 }

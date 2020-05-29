@@ -30,6 +30,7 @@ export class EditCarComponent {
       summerPrice: [null, Validators.required],
       winterPrice: [null, Validators.required],
       fuelType: [null, Validators.required],
+      bodyType: [null, Validators.required],
       engineVolume: [null],
       enginePower: [null, Validators.required],
       speed: [null],
@@ -42,6 +43,29 @@ export class EditCarComponent {
       license: [null],
       createYear: [null, Validators.required],
       class: [null, Validators.required],
+      minAge: [null],
+      doors: [null],
+      ac: [null],
+      abs: [null],
+      airBags: [null],
+      summerPrices: fb.group({
+        oneDayPrice: [null, Validators.required],
+        twoDaysPrice: [null, Validators.required],
+        threeDaysPrice: [null, Validators.required],
+        fourDaysPrice: [null, Validators.required],
+        fiveDaysPrice: [null, Validators.required],
+        sixDaysPrice: [null, Validators.required],
+        sevenDaysPrice: [null, Validators.required],
+      }),
+      winterPrices: fb.group({
+        oneDayPrice: [null, Validators.required],
+        twoDaysPrice: [null, Validators.required],
+        threeDaysPrice: [null, Validators.required],
+        fourDaysPrice: [null, Validators.required],
+        fiveDaysPrice: [null, Validators.required],
+        sixDaysPrice: [null, Validators.required],
+        sevenDaysPrice: [null, Validators.required],
+      }),
     });
 
     this.route.params.subscribe((params) => {
@@ -56,6 +80,13 @@ export class EditCarComponent {
       for (const control of Object.values(this.carForm.controls)) {
         if (control.invalid) {
           control.markAsDirty();
+        }
+        if(control instanceof FormGroup){
+          for (const ctrl of Object.values(control.controls)) {
+            if (ctrl.invalid) {
+              ctrl.markAsDirty();
+            }
+          }
         }
       }
       return;
@@ -90,7 +121,7 @@ export class EditCarComponent {
   updateCar(id) {
     const subscription = this.api.getCar(id).subscribe((car) => {
       this.car = car;
-      this.carForm.patchValue(car);
+      this.carForm.patchValue({...car, description: car.description.ru});
       this.loadingService.removeSubscription(subscription);
     });
     this.loadingService.addSubscription(subscription);

@@ -13,6 +13,7 @@ export class SearchService {
   public minDate: NgbDate;
   public weekDays: string[] = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   public months: string[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  public pricesNames: string[] = ['oneDayPrice', 'twoDaysPrice', 'threeDaysPrice', 'fourDaysPrice', 'fiveDaysPrice', 'sixDaysPrice', 'sevenDaysPrice'];
 
   public defaultModel: SearchModel;
 

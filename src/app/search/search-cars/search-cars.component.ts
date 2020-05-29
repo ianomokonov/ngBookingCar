@@ -38,4 +38,21 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
     });
     this.loadingService.addSubscription(subscription);
   }
+
+  getCarPrice({ summerPrice, winterPrice, summerPrices, winterPrices }) {
+    const month = new Date().getMonth();
+    let prices = null;
+    let price = null;
+    if (month > 2 && month < 9) {
+      prices = summerPrices;
+      price = summerPrice;
+    } else {
+      prices = winterPrices;
+      price = winterPrice;
+    }
+    if (this.periodDays > 0 && this.periodDays < 8) {
+      return prices[this.searchService.pricesNames[this.periodDays-1]];
+    }
+    return price * this.periodDays;
+  }
 }
