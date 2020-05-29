@@ -16,8 +16,28 @@ import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'search' },
-  { path: 'search', component: SearchComponent },
-  { path: 'catalog', component: CatalogComponent },
+  {
+    path: 'search',
+    component: SearchComponent,
+    data: {
+      title: 'Cheap Rent a car Crete / Car Hire in Crete with CAR4CRETE / Heraklion / Rethymnon / Chania ',
+      description:
+        'Rent a car in Crete /Full insurance against all risks 100% no excess/ Free delivery at airport Heraklion and oll ower Crete',
+      keywords:
+        'rent a car crete, rent a car heraklion, rent a car Rethymnon, rent a car Chania, crete car hire, rent a car heraklion crete, rent a car heraklion airport crete, rent a car heraklion port, rent a car heraklion greece, car rental in Crete Heraklion Airport ',
+    },
+  },
+  {
+    path: 'catalog',
+    component: CatalogComponent,
+    data: {
+      title: 'Car Hire in Heraklion airport Crete / Сhoose your car model with CAR4CRETE',
+      description:
+        'Crete: Rent cars of different brands, horsepower and configuration to adapt to your needs whether you are travelling as a couple, family or a group of friends',
+      keywords:
+        'Hire car heraklion airport, Hire cars crete - heraklion airport, Best car hire heraklion airport, Cheap car hire crete heraklion airport, Hire a car in Crete, Car hire in crete greece, Car hire in crete hersonissos, Car hire in crete airport',
+    },
+  },
   { path: 'details/:id', component: DetailsComponent },
   // { path: 'booking/:id', component: BookingFormComponent },
   { path: 'edit-car/:id', component: EditCarComponent, canActivate: [AdminGuard] },

@@ -14,7 +14,17 @@ import { TranslateService } from '@ngx-translate/core';
 export class MenuComponent implements OnInit, OnDestroy {
   public user: User;
   private rxAlive: boolean = true;
-  constructor(private api: ApiService, private loadingService: LoadingService, private auth: AuthService, private translate: TranslateService) {}
+  private readonly LANG = 'carLang';
+  constructor(
+    private api: ApiService,
+    private loadingService: LoadingService,
+    private auth: AuthService,
+    private translate: TranslateService
+  ) {
+    if (sessionStorage.getItem(this.LANG)) {
+      this.translate.use(sessionStorage.getItem(this.LANG));
+    }
+  }
 
   ngOnInit(): void {
     this.getUser();
@@ -39,7 +49,8 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeLang(lang: string){
+  changeLang(lang: string) {
+    sessionStorage.setItem(this.LANG, lang);
     this.translate.use(lang);
   }
 }
