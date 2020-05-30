@@ -22,7 +22,7 @@
         <div class="form-group border-bottom pb-3 mb-3">
           <label>{{ 'SEARCH.SELECT_PICK_UP_PLACE' | translate }}:</label
           ><select formControlName="placeFrom" class="form-control">
-            <option [value]="place.id" *ngFor="let place of places">{{ place.name }}</option>
+            <option [value]="place.id" *ngFor="let place of places">{{ place.name | bkTranslate }}</option>
           </select>
         </div>
         <div class="form-group mb-1">
@@ -49,7 +49,7 @@
         <div class="form-group border-bottom pb-3 mb-3">
           <label>{{ 'SEARCH.SELECT_DROP_OFF_PLACE' | translate }}:</label>
           <select formControlName="placeTo" class="form-control">
-            <option [value]="place.id" *ngFor="let place of places">{{ place.name }}</option>
+            <option [value]="place.id" *ngFor="let place of places">{{ place.name | bkTranslate }}</option>
           </select>
         </div>
         <div class="form-group mb-1">

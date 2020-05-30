@@ -48,7 +48,7 @@
     "DAY": "day"
   },
   "CARS": {
-    "TEXT": "<p>Hire a car in Crete</p><p> A car will become your best ally when exploring Crete. We keep our car fleet in impeccable condition, so your vehicle will be very clean, and will have passed a strict technical inspection. Our website allows you Hire a cars of different brands, horsepower and configuration to adapt to your needs whether you are travelling in Crete as a couple, family or a group of friends. The one thing they will all have in common is their reliability and comfort. Additionally, you will have access to continuous information and technical support during your journey.</p><p>To rent a car with us you can book it on this page www.car4crete.com or right us on chat/whats up directly. We are online 24/7.</p>",
+    "TEXT": "<p>Hire a car in Crete</p><p> A car will become your best ally when exploring Crete. We keep our car fleet in impeccable condition, so your vehicle will be very clean, and will have passed a strict technical inspection. Our website allows you Hire a cars of different brands, horsepower and configuration to adapt to your needs whether you are travelling in Crete as a couple, family or a group of friends. The one thing they will all have in common is their reliability and comfort. Additionally, you will have access to continuous information and technical support during your journey.</p><p>To rent a car with us you can book it on this page <a href='http://car4crete.com'>www.car4crete.com</a> or right us on chat/whats up directly. We are online 24/7.</p>",
     "CHANGE": "edit",
     "CLEAR_FILTERS": "clear filters",
     "DATE": "Date",
@@ -66,6 +66,8 @@
     "CONSUMPTION": "Consumption",
     "L": "l",
     "KM": "km",
+    "BODY_TYPE": "Body type",
+    "HATCHBACK": "Hatchback",
     "CROSSOVER": "SUV",
     "CABRIOLET": "Cabrio",
     "SEDAN": "Sedan",
@@ -100,7 +102,9 @@
     "MAX_SPEED": "Max speed",
     "ACCELERATION_TIME": "Acceleration 0 - 100 km / h",
     "TECH_CHARACTERISTICS": "Technical specifications",
-    "NOT_FOUND": "Cars not found"
+    "NOT_FOUND": "Cars not found",
+    "MIN_AGE": "Min age",
+    "CATEGORY": "License"
   },
   "NOV": "November",
   "DEC": "December",
@@ -129,5 +133,7 @@
   "DAYS": "days",
   "FOR": "for",
   "KM_H": "km / h",
-  "S": "s"
+  "S": "s",
+  "YES": "Yes",
+  "NO": "No"
 }

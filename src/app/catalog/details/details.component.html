@@ -20,7 +20,6 @@
           </p>
           <div class="price pb-3">
             <!-- <a [routerLink]="['/booking', car.id]" class="btn btn-primary mr-3">Заказать</a> -->
-            <b>{{ car.price }} €</b> / {{ 'DAY' | translate }}
           </div>
         </div>
       </div>
@@ -31,56 +30,79 @@
       </p>
       <div class="price pb-3">
         <!-- <a [routerLink]="['/booking', car.id]" class="btn btn-primary mr-3">Заказать</a> -->
-        <b>{{ car.price }} €</b> / {{ 'DAY' | translate }}
       </div>
     </div>
   </div>
   <div class="content pb-3">
     <ngb-tabset [destroyOnHide]="false">
-      <ngb-tab [title]="('CARS.TECH_CHARACTERISTICS' | translate)">
+      <ngb-tab [title]="'CARS.TECH_CHARACTERISTICS' | translate">
         <ng-template ngbTabContent>
           <div class="characteristic row">
             <div class="col-md-6" data-key="0">
               <ul>
-                <li>
+                <li *ngIf="car.fuelType">
                   <span>{{ 'CARS.FUEL_TYPE' | translate }}</span
-                  ><span>{{ ('CARS.'+car.fuelType) | translate }}, {{ car.engineVolume }}</span>
+                  ><span>{{ 'CARS.' + car.fuelType.toUpperCase() | translate }}, {{ car.engineVolume }}</span>
                 </li>
-                <li>
+                <li *ngIf="car.enginePower">
                   <span>{{ 'CARS.ENGINE_POWER' | translate }}</span
                   ><span>{{ car.enginePower }}</span>
                 </li>
-                <li>
+                <li *ngIf="car.speed">
                   <span>{{ 'CARS.MAX_SPEED' | translate }}</span
                   ><span>{{ car.speed }} {{ 'KM_H' | translate }}</span>
                 </li>
-                <li>
+                <li *ngIf="car.time">
                   <span>{{ 'CARS.MAX_SPEED' | translate }}</span
                   ><span>{{ car.time }} {{ 'S' | translate }}</span>
                 </li>
-                <li>
+                <li *ngIf="car.consumption">
                   <span>{{ 'CARS.CONSUMPTION' | translate }}</span
-                  ><span>{{ car.volumePerHundred }} {{ 'CARS.L' | translate }}/100 {{ 'KM' | translate }}</span>
+                  ><span>{{ car.consumption }} {{ 'CARS.L' | translate }}/100 {{ 'KM' | translate }}</span>
+                </li>
+                <li *ngIf="car.bodyType">
+                  <span>{{ 'CARS.BODY_TYPE' | translate }}</span
+                  ><span>{{ 'CARS.' + car.bodyType.toUpperCase() | translate }}</span>
+                </li>
+                <li *ngIf="car.doors">
+                  <span>{{ 'CARS.DOORS' | translate }}</span
+                  ><span>{{ car.doors }}</span>
+                </li>
+                <li *ngIf="car.minAge">
+                  <span>{{ 'CARS.MIN_AGE' | translate }}</span
+                  ><span>{{ car.minAge }}</span>
                 </li>
               </ul>
             </div>
             <div class="col-md-6" data-key="6">
               <ul>
-                <li>
+                <li *ngIf="car.driveUnit">
                   <span>{{ 'CARS.DRIVE_UNIT' | translate }}</span
-                  ><span>{{ ('CARS.'+car.driveUnit) | translate }}</span>
+                  ><span>{{ 'CARS.' + car.driveUnit.toUpperCase() | translate }}</span>
                 </li>
-                <li>
+                <li *ngIf="car.places">
                   <span>{{ 'CARS.PLACES_COUNT' | translate }}</span
                   ><span>{{ car.places }}</span>
                 </li>
-                <li>
+                <li *ngIf="car.backVolume">
                   <span>{{ 'CARS.TRUNK_VOLUME' | translate }}</span
                   ><span>{{ car.backVolume }} {{ 'CARS.L' | translate }}</span>
                 </li>
-                <li>
+                <li *ngIf="car.kpp">
                   <span>{{ 'CARS.TRANSMISSION' | translate }}</span
-                  ><span>{{ ('CARS.'+car.kpp) | translate }}</span>
+                  ><span>{{ 'CARS.' + car.kpp.toUpperCase() | translate }}</span>
+                </li>
+                <li>
+                  <span>{{ 'CARS.AC' | translate }}</span
+                  ><span>{{ car.ac ? ('YES' | translate) : ('NO' | translate) }}</span>
+                </li>
+                <li>
+                  <span>{{ 'CARS.ABS' | translate }}</span
+                  ><span>{{ car.abs ? ('YES' | translate) : ('NO' | translate) }}</span>
+                </li>
+                <li>
+                  <span>{{ 'CARS.AIRBAGS' | translate }}</span
+                  ><span>{{ car.airBags ? ('YES' | translate) : ('NO' | translate) }}</span>
                 </li>
               </ul>
             </div>
@@ -88,5 +110,63 @@
         </ng-template>
       </ngb-tab>
     </ngb-tabset>
+  </div>
+
+  <h2>{{ 'CARS.PRICES' | translate }}</h2>
+  <div class="prices">
+    <div class="price border rounded">
+      <div class="header">01.03 - 31.08</div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>1 {{ 'DAY' | translate }}</b> = {{ car.summerPrices.oneDayPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>2 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.twoDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>3 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.threeDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>4 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.fourDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>5 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.fiveDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>6 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.sixDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>7 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.sevenDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>>7 {{ 'DAYS' | translate }}</b> = {{ car.summerPrice }} € / {{ 'DAY' | translate }}
+      </div>
+    </div>
+    <div class="price border rounded">
+      <div class="header">01.09 - 28.02</div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>1 {{ 'DAY' | translate }}</b> = {{ car.winterPrices.oneDayPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>2 {{ 'DAYS' | translate }}</b> = {{ car.winterPrices.twoDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>3 {{ 'DAYS' | translate }}</b> = {{ car.winterPrices.threeDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>4 {{ 'DAYS' | translate }}</b> = {{ car.winterPrices.fourDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>5 {{ 'DAYS' | translate }}</b> = {{ car.winterPrices.fiveDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>6 {{ 'DAYS' | translate }}</b> = {{ car.winterPrices.sixDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>7 {{ 'DAYS' | translate }}</b> = {{ car.winterPrices.sevenDaysPrice }} €
+      </div>
+      <div class="price-value border p-1 px-2 rounded">
+        <b>>7 {{ 'DAYS' | translate }}</b> = {{ car.winterPrice }} € / {{ 'DAY' | translate }}
+      </div>
+    </div>
   </div>
 </div>

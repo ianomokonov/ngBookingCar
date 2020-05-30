@@ -14,7 +14,7 @@
                 ><i class="fas fa-user"></i><b>{{ car.places }} {{ car.places | carPlaces | translate }}</b></span
               >
               <span *ngIf="car.license" class="driver-license"
-                ><i class="fas fa-id-badge"></i>{{ 'CATEGORY' | translate }} <b>{{ car.license }}</b></span
+                ><i class="fas fa-id-badge"></i>{{ 'CARS.CATEGORY' | translate }} <b>{{ car.license }}</b></span
               >
               <span class="car-kpp"><i class="fas fa-cogs"></i>{{ 'CARS.' + car.kpp | translate }}</span>
               <span class="car-kpp" *ngIf="car.class"><i class="fas fa-car"></i>{{ 'CARS.' + car.class | translate }}</span>
@@ -34,7 +34,7 @@
           </div>
           <div class="btns d-flex justify-content-end">
             <!-- <a class="btn btn-primary mr-1" [routerLink]="['/booking', car.id]">Заказать</a> -->
-            <a class="btn btn-primary mr-1" [routerLink]="['/edit-car', car.id]">Редактировать</a>
+            <button class="btn btn-primary mr-1" (click)="enter(car.id)">Редактировать</button>
             <a class="btn btn-outline-primary" [routerLink]="['/details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>
           </div>
         </div>

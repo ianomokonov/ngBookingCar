@@ -28,4 +28,7 @@ export interface Car {
   abs: boolean;
   airBags: boolean;
   doors: number;
+
+  summerPrices: any;
+  winterPrices: any;
 }

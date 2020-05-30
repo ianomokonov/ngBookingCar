@@ -32,6 +32,35 @@
     }
 }
 
+.prices{
+    .price{
+        position: relative;
+        margin-top: 2rem;
+        
+        display: flex;
+        flex-wrap: wrap;
+        padding: 1rem;
+        padding-top: 2rem;
+        .header{
+            background-color: $brand-red;
+            color: white;
+            display: inline;
+            position: absolute;
+            top: -0.8rem;
+            left: 1rem;
+            padding: 0.2rem 0.5rem;
+            padding-top: 0.3rem;
+            line-height: 1;
+        }
+        .price-value{
+            white-space: nowrap;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    }
+    
+}
+
 @media (max-width: 576px){
     .characteristic{
         li{
@@ -41,5 +70,9 @@
                 }
             }
         }
+    }
+
+    .price-value{
+        width: 100%;
     }
 }

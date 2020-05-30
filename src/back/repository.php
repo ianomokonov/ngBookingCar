@@ -56,17 +56,28 @@
             $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
             $cars = array();
             while ($car = $query->fetch()) {
-                $car->description = array('en'=>$car->description_eng, 'ru'=>$car->description);
+                $car->description = array('en' => $car->description_eng, 'ru' => $car->description);
+                $car->ac = $car->ac == '1';
+                $car->abs = $car->abs == '1';
+                $car->airBags = $car->airBags == '1';
+                $car->summerPrices = $this->getPrices($car->id, false);
+                $car->winterPrices = $this->getPrices($car->id, true);
                 $cars[] = $car;
             }
-            return $query->fetchAll();
+            return $cars;
             
         }
 
         public function GetPlaces(){
             $query = $this->database->db->query("SELECT * FROM place");
             $query->setFetchMode(PDO::FETCH_CLASS, 'Place');
-            return $query->fetchAll();
+            $places = array();
+            while ($place = $query->fetch()) {
+                $place->name = array('en' => $place->name_eng, 'ru' => $place->name);
+                
+                $places[] = $place;
+            }
+            return $places;
             
         }
 
@@ -117,9 +128,30 @@
             $query = $this->database->db->prepare("SELECT * from car WHERE id = ?");
             $query->execute(array($carId));
             $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
+            $car = $query->fetch();
+            $car->description = array('en' => $car->description_eng, 'ru' => $car->description);
+            $car->ac = $car->ac == '1';
+            $car->abs = $car->abs == '1';
+            $car->airBags = $car->airBags == '1';
+            $car->summerPrices = $this->getPrices($carId, false);
+            $car->winterPrices = $this->getPrices($carId, true);
+            return $car;
             
-            return $query->fetch();
-            
+        }
+        
+        public function getPrices($id, $t) {
+            if($t){
+                 $s = $this->database->db->prepare("SELECT * FROM winter_prices WHERE Id=?");
+                $s->execute(array($id));
+                $s->setFetchMode(PDO::FETCH_CLASS, 'Prices');
+                return $s->fetch();
+            }else{
+                 $s = $this->database->db->prepare("SELECT * FROM summer_prices WHERE Id=?");
+                $s->execute(array($id));
+                $s->setFetchMode(PDO::FETCH_CLASS, 'Prices');
+                return $s->fetch();
+            }
+           
         }
 
         public function GetPlace($id){
@@ -297,18 +329,34 @@
         public function AddCar($car = null){
             if($car != null){
                 try{
+                    $wPrices = $car->winterPrices;
+                    $sPrices = $car->summerPrices;
+                    unset($car->winterPrices);
+                    unset($car->summerPrices);
                     $insert = $this->database->genInsertQuery((array)$car, 'car');
                     $query = $this->database->db->prepare($insert[0]);
                     if ($insert[1][0]!=null) {
                         $query->execute($insert[1]);
                     }
-                    return $this->database->db->lastInsertId();
+                    $carId = $this->database->db->lastInsertId();
+                    $this->addPrices($carId, $wPrices, 'winter_prices');
+                    $this->addPrices($carId, $sPrices, 'summer_prices');
+                    return $carId;
                 } catch(Exception $e) {
                     return array("message" => "Ошибка добавления автомобиля", "error" => $e->getMessage());
                 }
                 
             } else {
                 return array("message" => "Введите данные автомобиля");
+            }
+        }
+        
+        private function addPrices($carId, $prices, $table){
+            $prices['Id'] = $carId; 
+            $q = $this->genInsertQuery((array)$prices,$table);
+            $s = $this->db->prepare($q[0]);
+            if ($q[1][0]!=null) {
+                $s->execute($q[1]);
             }
         }
 
@@ -335,14 +383,28 @@
 
             $carId = $car->id;
             unset($car->id);
+            $wPrices = $car->winterPrices;
+            $sPrices = $car->summerPrices;
+            unset($car->winterPrices);
+            unset($car->summerPrices);
             if($car->oldImg && $car->img != $car->oldImg){
                 $this->removeFile($car->oldImg);
             }
             unset($car->oldImg);
             $a = $this->database->genUpdateQuery(array_keys((array)$car), array_values((array)$car), "car", $carId);
+            
             $query = $this->database->db->prepare($a[0]);
             $query->execute($a[1]);
+               
+            $this->updatePrices($carId, $wPrices, 'winter_prices');
+            $this->updatePrices($carId, $sPrices, 'summer_prices');
             return array('message' => 'Автомобиль обновлен');
+        }
+        
+        public function updatePrices($id, $prices, $table){
+            $a=$this->database->genUpdateQuery(array_keys((array)$prices), array_values((array)$prices), $table, $id);
+            $s = $this->database->db->prepare($a[0]);
+            $s->execute($a[1]);
         }
 
         private function removeFile($filelink){
