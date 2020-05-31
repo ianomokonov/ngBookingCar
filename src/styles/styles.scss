@@ -75,7 +75,7 @@ button {
   margin: 0;
 }
 
-.ng-dirty {
+.ng-dirty, .ng-touched {
   &.ng-invalid {
     border-color: $danger;
 

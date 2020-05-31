@@ -5,11 +5,11 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/services/loading.service';
 
-// @Component({
-//   selector: 'bk-sign-up',
-//   templateUrl: './sign-up.component.html',
-//   styleUrls: ['./sign-up.component.scss'],
-// })
+@Component({
+  selector: 'bk-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss'],
+})
 export class SignUpComponent implements OnInit {
   public userForm: FormGroup;
   public showError: boolean;

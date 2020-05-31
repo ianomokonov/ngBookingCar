@@ -4,11 +4,11 @@ import { ApiService } from '../services/api.service';
 import { takeWhile } from 'rxjs/internal/operators';
 import { LoadingService } from '../services/loading.service';
 
-// @Component({
-//   selector: 'bk-profile',
-//   templateUrl: './profile.component.html',
-//   styleUrls: ['./profile.component.scss'],
-// })
+@Component({
+  selector: 'bk-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss'],
+})
 export class ProfileComponent implements OnInit, OnDestroy {
   public links = [{ title: 'История заказов', fragment: 'history', class: 'fas fa-history' }];
   rxAlive: boolean = true;

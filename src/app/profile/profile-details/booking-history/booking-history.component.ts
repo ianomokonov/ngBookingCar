@@ -5,11 +5,11 @@ import { takeWhile } from 'rxjs/internal/operators';
 import { Place } from 'src/app/models/place';
 import { LoadingService } from 'src/app/services/loading.service';
 
-// @Component({
-//   selector: 'bk-booking-history',
-//   templateUrl: './booking-history.component.html',
-//   styleUrls: ['./booking-history.component.scss'],
-// })
+@Component({
+  selector: 'bk-booking-history',
+  templateUrl: './booking-history.component.html',
+  styleUrls: ['./booking-history.component.scss'],
+})
 export class BookingHistoryComponent implements OnInit {
   public orders: Order[];
   public places: Place[];

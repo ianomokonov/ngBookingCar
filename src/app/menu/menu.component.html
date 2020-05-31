@@ -4,20 +4,20 @@
       <h2 class="mb-0">car<span>4</span>crete</h2>
     </div>
     <nav class="nav d-flex flex-nowrap">
-      <div class="d-flex mr-2">
+      <div class="d-flex">
         <a class="nav-link" routerLink="/search" routerLinkActive="active">{{ 'MENU.SEARCH' | translate }}</a>
         <a class="nav-link" routerLink="/catalog" routerLinkActive="active">{{ 'MENU.CARS' | translate }}</a>
       </div>
-
-      <!-- <a class="nav-link mr-0" routerLink="/profile" routerLinkActive="active"
-        ><span class="d-none d-md-inline">{{ user ? user.name + ' ' + user.surname : ('MENU.PROFILE' | translate) }}</span>
-        <i class="fas fa-user d-md-none"></i>
-      </a> -->
-      <span class="d-inline-flex align-items-center langs">
-        <img class="mr-1" src="../../assets/images/flag-en.gif" (click)="changeLang('en')" alt="en" />
-        <img src="../../assets/images/flag-ru.gif" (click)="changeLang('ru')" alt="ru" />
-      </span>
+      <div class="d-flex"> 
+        <a class="nav-link mr-2" routerLink="/profile" routerLinkActive="active"
+          ><span class="d-none d-md-inline">{{ user ? user.name + ' ' + user.surname : ('MENU.PROFILE' | translate) }}</span>
+          <i class="fas fa-user d-md-none"></i>
+        </a>
+        <span class="d-inline-flex align-items-center langs">
+          <img class="mr-1" src="../../assets/images/flag-en.gif" (click)="changeLang('en')" alt="en" />
+          <img src="../../assets/images/flag-ru.gif" (click)="changeLang('ru')" alt="ru" />
+        </span>
+      </div>
     </nav>
-    
   </div>
 </div>

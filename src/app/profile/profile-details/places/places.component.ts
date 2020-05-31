@@ -3,11 +3,11 @@ import { ApiService } from 'src/app/services/api.service';
 import { Place } from 'src/app/models/place';
 import { LoadingService } from 'src/app/services/loading.service';
 
-// @Component({
-//   selector: 'bk-places',
-//   templateUrl: './places.component.html',
-//   styleUrls: ['./places.component.scss']
-// })
+@Component({
+  selector: 'bk-places',
+  templateUrl: './places.component.html',
+  styleUrls: ['./places.component.scss']
+})
 export class PlacesComponent implements OnInit {
 
   places: Place[];

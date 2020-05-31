@@ -41,20 +41,20 @@ const routes: Routes = [
   { path: 'details/:id', component: DetailsComponent },
   // { path: 'booking/:id', component: BookingFormComponent },
   { path: 'edit-car/:id', component: EditCarComponent, canActivate: [AdminGuard] },
-  // { path: 'add-car', component: EditCarComponent, canActivate: [AdminGuard] },
+  { path: 'add-car', component: EditCarComponent, canActivate: [AdminGuard] },
   { path: 'enter', component: EnterComponent },
-  // { path: 'sign-up', component: SignUpComponent },
-  // {
-  //   path: 'profile',
-  //   component: ProfileComponent,
-  //   canActivate: [ProfileGuard],
-  //   children: [
-  //     { path: '', pathMatch: 'full', redirectTo: 'history' },
-  //     { path: 'history', component: BookingHistoryComponent },
-  //     { path: 'cars', component: CarsComponent, canActivate: [AdminGuard] },
-  //     { path: 'places', component: PlacesComponent, canActivate: [AdminGuard] },
-  //   ],
-  // },
+  { path: 'sign-up', component: SignUpComponent },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [ProfileGuard],
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'history' },
+      { path: 'history', component: BookingHistoryComponent },
+      { path: 'cars', component: CarsComponent, canActivate: [AdminGuard] },
+      { path: 'places', component: PlacesComponent, canActivate: [AdminGuard] },
+    ],
+  },
 ];
 
 @NgModule({

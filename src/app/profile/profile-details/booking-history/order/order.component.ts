@@ -7,11 +7,11 @@ import { ApiService } from 'src/app/services/api.service';
 import { takeWhile } from 'rxjs/internal/operators';
 import { LoadingService } from 'src/app/services/loading.service';
 
-// @Component({
-//   selector: 'bk-order',
-//   templateUrl: './order.component.html',
-//   styleUrls: ['./order.component.scss'],
-// })
+@Component({
+  selector: 'bk-order',
+  templateUrl: './order.component.html',
+  styleUrls: ['./order.component.scss'],
+})
 export class OrderComponent implements OnInit {
   @Input() public set carOrder(order: Order) {
     this.order = order;

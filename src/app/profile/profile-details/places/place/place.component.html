@@ -1,8 +1,11 @@
-<div class="row">
-  <div class="col-sm-9">
-    <input [formControl]="placeControl" type="text" class="form-control mr-1" />
+<div [formGroup]="placeForm" class="row">
+  <div class="col-md-5 pb-1 pb-md-0" >
+    <input formControlName="name" type="text" class="form-control" placeholder="Русское название"/>
   </div>
-  <div class="col-sm btns py-1 py-sm-0 text-right text-sm-left pl-0">
+  <div class="col-md-5" >
+    <input formControlName="name_eng" type="text" class="form-control" placeholder="Английское название"/>
+  </div>
+  <div class="col-md btns py-1 py-md-0 text-right text-md-left pl-0">
     <button class="btn btn-outline-success" *ngIf="!placeInstanse?.id" (click)="addPlace()" title="Добавить">
       <i class="fas fa-plus"></i>
     </button>
@@ -11,7 +14,7 @@
         class="far fa-save btn btn-outline-primary mr-1"
         (click)="updatePlace()"
         title="Сохранить"
-        [disabled]="placeControl.pristine"
+        [disabled]="placeForm.pristine"
       ></button>
       <button class="btn btn-outline-danger" (click)="deletePlace()"><i class="fas fa-times" title="Удалить"></i></button>
     </ng-container>
