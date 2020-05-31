@@ -12,6 +12,7 @@ export class SearchService {
   private time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
   public priceRange: SliderRange = { min: 1500, max: 8000 };
   public minDate: NgbDate;
+  public times: string[] = [];
   public weekDays: string[] = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   public months: string[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
   public pricesNames: string[] = ['oneDayPrice', 'twoDaysPrice', 'threeDaysPrice', 'fourDaysPrice', 'fiveDaysPrice', 'sixDaysPrice', 'sevenDaysPrice'];
@@ -37,6 +38,7 @@ export class SearchService {
   }
 
   constructor(public calendar: NgbCalendar) {
+    this.genTimes();
     this._model = this.model;
     this.minDate = this.calendar.getNext(this.calendar.getToday(), 'd', 5);
     this.defaultModel = {
@@ -52,6 +54,13 @@ export class SearchService {
 
   public initUpdate() {
     this.$filtersUpdate.next(this._model);
+  }
+
+  private genTimes() {
+    for (let i = 0; i < 24; i++) {
+      this.times.push(`${i < 10 ? `0${i}` : i}:00`);
+      this.times.push(`${i < 10 ? `0${i}` : i}:30`);
+    }
   }
 
   public static setPeriodDays(model: SearchModel) {

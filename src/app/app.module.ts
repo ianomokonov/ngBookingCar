@@ -58,7 +58,7 @@ import { BkTranslatePipe } from './utils/pipes/translate.pipe';
     BkTranslatePipe,
     CarPlacesPipe,
     DetailsComponent,
-    // BookingFormComponent,
+    BookingFormComponent,
     ProfileComponent,
     EnterComponent,
     UserInfoComponent,

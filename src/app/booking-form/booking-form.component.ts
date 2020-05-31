@@ -10,11 +10,11 @@ import { Place } from '../models/place';
 import { Order, DateRange } from '../models/order';
 import { LoadingService } from '../services/loading.service';
 
-// @Component({
-//   selector: 'bk-booking-form',
-//   templateUrl: './booking-form.component.html',
-//   styleUrls: ['./booking-form.component.scss'],
-// })
+@Component({
+  selector: 'bk-booking-form',
+  templateUrl: './booking-form.component.html',
+  styleUrls: ['./booking-form.component.scss'],
+})
 export class BookingFormComponent implements OnInit {
   public car;
   public user;
@@ -31,28 +31,6 @@ export class BookingFormComponent implements OnInit {
   period: FormControl;
   places: Place[];
   carDates: DateRange[];
-
-  public get fromDate(): NgbDate {
-    return this.period.value.fromDate;
-  }
-
-  public get toDate(): NgbDate | null {
-    return this.period.value.toDate;
-  }
-
-  public set fromDate(date: NgbDate) {
-    this.period.setValue({
-      fromDate: date,
-      toDate: this.toDate,
-    });
-  }
-
-  public set toDate(date: NgbDate) {
-    this.period.setValue({
-      fromDate: this.fromDate,
-      toDate: date,
-    });
-  }
 
   maxDate: NgbDate;
 
@@ -73,15 +51,12 @@ export class BookingFormComponent implements OnInit {
         phone: null,
       }),
       order: this.fb.group({
-        period: [
-          {
-            fromDate: null,
-            toDate: null,
-          },
-          [Validators.required],
-        ],
-        place: [null],
-        time: null,
+        dateTo: [null, Validators.required],
+        dateFrom: [null, Validators.required],
+        placeTo: [null, Validators.required],
+        placeFrom: [null, Validators.required],
+        timeTo: [null, Validators.required],
+        timeFrom: [null, Validators.required],
         carId: null,
         sum: null,
       }),
@@ -91,12 +66,12 @@ export class BookingFormComponent implements OnInit {
 
     this.bookingForm.get('order').valueChanges.subscribe((value) => {
       this.saveFilters(value);
-      this.periodDays = SearchService.setPeriodDays(value);
     });
   }
 
   private saveFilters(formValue) {
-    formValue.place = this.places.find((p) => p.id == formValue.place);
+    formValue.placeTo = this.places.find((p) => p.id == formValue.placeTo);
+    formValue.placeFrom = this.places.find((p) => p.id == formValue.placeFrom);
     this.searchService.model = formValue;
   }
 
@@ -118,9 +93,6 @@ export class BookingFormComponent implements OnInit {
 
     const subscription = forkJoin(requests).subscribe(([places, car, carDates, userInfo]) => {
       this.places = places;
-      if (this.places && this.places.length) {
-        orderForm.get('place').setValidators(Validators.required);
-      }
       this.car = car;
       this.carDates = carDates;
       if (userInfo) {
@@ -128,9 +100,6 @@ export class BookingFormComponent implements OnInit {
         const userForm = this.bookingForm.get('user') as FormGroup;
         userForm.patchValue(this.user);
         userForm.disable();
-      }
-      if (this.fromDate && !this.toDate) {
-        this.setMaxDate(this.fromDate);
       }
       this.loadingService.removeSubscription(subscription);
     });
@@ -141,7 +110,8 @@ export class BookingFormComponent implements OnInit {
       orderForm.patchValue(
         {
           ...this.searchService.model,
-          // place: this.searchService.model.place ? this.searchService.model.place.id : null,
+          placeFrom: this.searchService.model.placeFrom ? this.searchService.model.placeFrom.id : null,
+          placeTo: this.searchService.model.placeTo ? this.searchService.model.placeTo.id : null
         },
         { emitEvent: false }
       );
@@ -184,45 +154,6 @@ export class BookingFormComponent implements OnInit {
     //   this.router.navigate(['/profile']);
     // });
     // this.loadingService.addSubscription(subscription);
-  }
-
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-      this.setMaxDate(date);
-    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-      this.toDate = date;
-      this.maxDate = null;
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-      this.setMaxDate(date);
-    }
-  }
-
-  setMaxDate(fromDate: NgbDate) {
-    if (!this.carDates) {
-      this.maxDate = null;
-      return;
-    }
-    const maxDate = this.carDates.filter((range: DateRange) => range.dateFrom.after(fromDate))[0];
-    if (maxDate) {
-      this.maxDate = maxDate.dateFrom;
-    } else {
-      this.maxDate = null;
-    }
-  }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate) {
-    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  }
-
-  isRange(date: NgbDate) {
-    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
   }
 
   isDisabled = (date: NgbDate) => {

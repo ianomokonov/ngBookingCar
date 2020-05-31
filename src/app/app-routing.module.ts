@@ -39,7 +39,7 @@ const routes: Routes = [
     },
   },
   { path: 'details/:id', component: DetailsComponent },
-  // { path: 'booking/:id', component: BookingFormComponent },
+  { path: 'booking/:id', component: BookingFormComponent },
   { path: 'edit-car/:id', component: EditCarComponent, canActivate: [AdminGuard] },
   { path: 'add-car', component: EditCarComponent, canActivate: [AdminGuard] },
   { path: 'enter', component: EnterComponent },

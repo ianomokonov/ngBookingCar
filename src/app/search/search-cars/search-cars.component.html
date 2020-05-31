@@ -3,15 +3,21 @@
     <div class="col-md-3 mb-3 mb-md-0">
       <div class="filters border rounded">
         <div [formGroup]="filter" class="filter" *ngFor="let filter of filterFormArray.controls; let i = index">
-          <div class="header p-2 d-flex justify-content-between align-items-center" [ngClass]="{'border-top' : i > 0}" (click)="toggleFilter(filter)">
+          <div
+            class="header p-2 d-flex justify-content-between align-items-center"
+            [ngClass]="{ 'border-top': i > 0 }"
+            (click)="toggleFilter(filter)"
+          >
             <span>{{ 'CARS.' + filter.value.name.toUpperCase() | translate }}</span
-            ><i class="fas" [ngClass]="{'fa-angle-down': !filter.value.isClosed, 'fa-angle-up': filter.value.isClosed}"></i>
+            ><i class="fas" [ngClass]="{ 'fa-angle-down': !filter.value.isClosed, 'fa-angle-up': filter.value.isClosed }"></i>
           </div>
           <div [formArrayName]="'options'" class="options p-2 border-top" *ngIf="!filter.value.isClosed">
             <div [formGroup]="option" class="option" *ngFor="let option of filter.get('options').controls">
               <div class="form-check">
                 <input type="checkbox" formControlName="isChecked" class="form-check-input" [id]="option.value.name" />
-                <label class="form-check-label" [for]="option.value.name">{{ filter.value.name == 'PLACES_COUNT' ? option.value.name : 'CARS.' + option.value.name.toUpperCase() | translate }}</label>
+                <label class="form-check-label" [for]="option.value.name">{{
+                  filter.value.name == 'PLACES_COUNT' ? option.value.name : ('CARS.' + option.value.name.toUpperCase() | translate)
+                }}</label>
               </div>
             </div>
           </div>
@@ -23,7 +29,7 @@
         <h2 class="bk-header mt-5" *ngIf="header && cars?.length">{{ header | translate }}</h2>
         <div class="cars">
           <div class="row car mx-0 p-0 p-sm-3" *ngFor="let car of cars">
-            <div class="col-lg-9 p-0 px-lg-3 car-info-img row m-0">
+            <div class="col-lg-9 p-0 pr-lg-3 car-info-img row m-0">
               <div class="car-img mb-3 mb-sm-0 col-sm-4 px-0 pr-sm-3">
                 <img [src]="car.img" />
               </div>
@@ -79,7 +85,7 @@
                 >
                 <div>
                   <a class="btn btn-outline-primary mb-1" [routerLink]="['/details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>
-                  <button class="btn btn-primary mb-1 ml-1 ml-lg-0" (click)="enter(car.id)">Редактировать</button>
+                  <a class="btn btn-primary mb-1 ml-1 ml-lg-0" [routerLink]="['/booking', car.id]">{{ 'CARS.BOOK' }}</a>
                 </div>
               </div>
             </div>

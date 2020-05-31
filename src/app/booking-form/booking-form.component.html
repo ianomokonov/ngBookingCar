@@ -22,7 +22,7 @@
       <button class="btn btn-outline-primary" (click)="enter()">Войти в личный кабнет</button>
       <small class="text-muted d-block mt-1">Необходимо войти в личный кабинет или зарегистрироваться</small>
     </div>
-    <h2 class="bk-header mt-3 mb-0">Данные заказа</h2>
+    <h2 class="bk-header my-3">Данные заказа</h2>
     <form formGroupName="order">
       <div class="row car" *ngIf="car">
         <div class="col-md-8 car-info-img row p-0 px-sm-3">
@@ -53,64 +53,52 @@
           </div>
         </div>
       </div>
-      <div class="row" *ngIf="carDates">
-        <div class="col-7 col-sm-9 col-md-9 col-xl-6">
-          <div class="form-group mb-0" [ngClass]="{ 'ng-invalid': submitted }">
-            <label class="d-block">Период аренды</label>
-            <ngbd-datepicker-i18n
-              #dp
-              (dateSelect)="onDateSelection($event)"
-              [dayTemplate]="t"
-              [minDate]="searchService.minDate"
-              [maxDate]="maxDate"
-              [markDisabled]="isDisabled"
-              outsideDays="hidden"
-            >
-            </ngbd-datepicker-i18n>
-
-            <ng-template #t let-date let-focused="focused">
-              <span
-                class="custom-day"
-                [class.focused]="focused"
-                [class.range]="isRange(date)"
-                [class.faded]="isHovered(date) || isInside(date)"
-                [class.disabled]="isDisabled(date)"
-                (mouseenter)="hoveredDate = date"
-                (mouseleave)="hoveredDate = null"
-              >
-                {{ date.day }}
-              </span>
-            </ng-template>
-            <small *ngIf="!this.period?.value?.fromDate" class="d-block mt-2 validation-message">Укажите период аренды</small>
-          </div>
-        </div>
-        <div class="pt-sm-3 pt-md-0 col-sm-4 col-md-3 col-xl-3">
-          <div class="form-group">
-            <label>Время подачи</label>
-            <ngb-timepicker [readonlyInputs]="true" formControlName="time" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
-          </div>
-        </div>
-        <div class="pt-3 pt-xl-0 col-sm-8 col-md-12 col-xl-3 d-flex flex-column justify-content-between">
-          <div>
-            <div class="form-group" *ngIf="this.places?.length">
-              <label>Место подачи</label>
-              <select formControlName="place" class="form-control">
-                <option *ngFor="let place of places" [value]="place.id">{{ place.name }}</option>
+      <div class="row prices" *ngIf="carDates">
+        <div class="col-sm-6">
+          <div class="price border rounded">
+            <div class="header">{{ 'CARS.PICK_UP' | translate }}</div>
+            <div class="form-group" (click)="dateFrom.open()">
+              <label>{{ 'SEARCH.SELECT_PICK_UP_DATE' | translate }}:</label>
+              <input formControlName="dateFrom" ngbDatepicker #dateFrom="ngbDatepicker" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>{{ 'SEARCH.SELECT_PICK_UP_PLACE' | translate }}:</label>
+              <select formControlName="placeFrom" class="form-control">
+                <option [value]="place.id" *ngFor="let place of places">{{ place.name | bkTranslate }}</option>
+              </select>
+            </div>
+            <div class="form-group mb-1">
+              <label>{{ 'SEARCH.SELECT_DROP_OFF_TIME' | translate }}:</label>
+              <select formControlName="timeFrom" class="form-control">
+                <option [value]="time" *ngFor="let time of searchService.times">{{ time }}</option>
               </select>
             </div>
           </div>
-          <div class="text-right">
-            <small class="text-muted mr-2"> К оплате {{ car?.price * periodDays }} ₽ </small>
-            <button
-              class="btn btn-primary"
-              [title]="!user ? 'Необходимо войти или зарегистрироваться' : ''"
-              [disabled]="!user"
-              (click)="addOrder()"
-            >
-              Оформить заказ
-            </button>
+        </div>
+        <div class="col-sm-6">
+          <div class="price border rounded">
+            <div class="header">{{ 'CARS.DROP_OFF' | translate }}</div>
+            <div class="form-group" (click)="dateTo.open()">
+              <label>{{ 'SEARCH.SELECT_DROP_OFF_DATE' | translate }}:</label>
+              <input formControlName="dateTo" ngbDatepicker #dateTo="ngbDatepicker" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>{{ 'SEARCH.SELECT_DROP_OFF_PLACE' | translate }}:</label>
+              <select formControlName="placeTo" class="form-control">
+                <option [value]="place.id" *ngFor="let place of places">{{ place.name | bkTranslate }}</option>
+              </select>
+            </div>
+            <div class="form-group mb-1">
+              <label>{{ 'SEARCH.SELECT_DROP_OFF_TIME' | translate }}:</label>
+              <select formControlName="timeTo" class="form-control">
+                <option [value]="time" *ngFor="let time of searchService.times">{{ time }}</option>
+              </select>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="text-right mt-3">
+        <div class="btn btn-primary">Оформить заказ</div>
       </div>
     </form>
   </form>

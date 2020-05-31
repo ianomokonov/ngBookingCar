@@ -61,7 +61,6 @@ export class FiltersFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.genTimes();
 
     if (this.searchService.model) {
       this.filterForm.patchValue({
@@ -105,13 +104,6 @@ export class FiltersFormComponent implements OnInit {
     formValue.placeFrom = this.places.find((p) => p.id == formValue.placeFrom);
     formValue.placeTo = this.places.find((p) => p.id == formValue.placeTo);
     this.searchService.model = formValue;
-  }
-
-  private genTimes() {
-    for (let i = 0; i < 24; i++) {
-      this.times.push(`${i < 10 ? `0${i}` : i}:00`);
-      this.times.push(`${i < 10 ? `0${i}` : i}:30`);
-    }
   }
 
   setDate(date: Date, toDate = false) {

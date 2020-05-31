@@ -1,2 +1,6 @@
 @import '../search/search-cars/search-cars.component.scss';
 @import '../utils/custom-date.scss';
+@import '../catalog/details/details.component.scss';
+.price{
+    flex-direction: column;
+}

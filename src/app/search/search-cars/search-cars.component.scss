@@ -1,5 +1,7 @@
 @import '../../../styles/colors';
 .filters {
+  position: sticky;
+  top: 56px;
     overflow: hidden;
   .filter {
     .header {
