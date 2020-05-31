@@ -72,7 +72,7 @@ export class SearchService {
   }
 }
 
-export interface SearchModel {
+export class SearchModel {
   dateFrom: NgbDate;
   dateTo: NgbDate;
   timeFrom: string;

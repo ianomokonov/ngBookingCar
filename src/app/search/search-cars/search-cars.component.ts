@@ -27,7 +27,7 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
   ) {
     this.filterFormArray = this.fb.array([]);
     this.filterFormArray.valueChanges.pipe(filter(() => this.isFiltersReady)).subscribe((value: Filter[]) => {
-      const model = this.searchService.model;
+      const model = this.searchService.model || new SearchModel();
       model.filters = value.map(f => {
         f.options = f.options.filter(o => o.isChecked);
         return f;
