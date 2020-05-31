@@ -1,48 +1,95 @@
-<div class="cars-back">
-  <div class="container">
-    <h2 class="bk-header mt-5" *ngIf="header && cars?.length">{{ header | translate }}</h2>
-    <div class="cars">
-      <div class="row car mx-0" *ngFor="let car of cars">
-        <div class="col-md-8 car-info-img row">
-          <div class="car-img mb-3 mb-sm-0 col-sm-4">
-            <img [src]="car.img" />
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="filters border rounded">
+        <div [formGroup]="filter" class="filter" *ngFor="let filter of filterFormArray.controls; let i = index">
+          <div class="header p-2 d-flex justify-content-between align-items-center" [ngClass]="{'border-top' : i > 0}" (click)="toggleFilter(filter)">
+            <span>{{ 'CARS.' + filter.value.name.toUpperCase() | translate }}</span
+            ><i class="fas" [ngClass]="{'fa-angle-down': !filter.value.isClosed, 'fa-angle-up': filter.value.isClosed}"></i>
           </div>
-          <div class="car-info p-0 px-sm-3 col-sm-8">
-            <h2 class="car-title">{{ car.name }}</h2>
-            <div class="car-details">
-              <span class="car-places"
-                ><i class="fas fa-user"></i><b>{{ car.places }} {{ car.places | carPlaces | translate }}</b></span
-              >
-              <span *ngIf="car.license" class="driver-license"
-                ><i class="fas fa-id-badge"></i>{{ 'CARS.CATEGORY' | translate }} <b>{{ car.license }}</b></span
-              >
-              <span class="car-kpp"><i class="fas fa-cogs"></i>{{ 'CARS.' + car.kpp | translate }}</span>
-              <span class="car-kpp" *ngIf="car.class"><i class="fas fa-car"></i>{{ 'CARS.' + car.class | translate }}</span>
+          <div [formArrayName]="'options'" class="options p-2 border-top" *ngIf="!filter.value.isClosed">
+            <div [formGroup]="option" class="option" *ngFor="let option of filter.get('options').controls">
+              <div class="form-check">
+                <input type="checkbox" formControlName="isChecked" class="form-check-input" [id]="option.value.name" />
+                <label class="form-check-label" [for]="option.value.name">{{ filter.value.name == 'PLACES_COUNT' ? option.value.name : 'CARS.' + option.value.name.toUpperCase() | translate }}</label>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <div class="cars-back">
+        <h2 class="bk-header mt-5" *ngIf="header && cars?.length">{{ header | translate }}</h2>
+        <div class="cars">
+          <div class="row car mx-0" *ngFor="let car of cars">
+            <div class="col-md-9 car-info-img row">
+              <div class="car-img mb-3 mb-sm-0 col-sm-4 pl-0">
+                <img [src]="car.img" />
+              </div>
+              <div class="car-info p-0 px-sm-3 col-sm-8">
+                <h2 class="car-title">{{ car.name }}</h2>
+                <div class="car-details">
+                  <span class="car-places"
+                    ><i class="fas fa-user"></i><b>{{ car.places }} {{ car.places | carPlaces | translate }}</b></span
+                  >
+                  <span *ngIf="car.license" class="driver-license"
+                    ><i class="fas fa-id-badge"></i>{{ 'CARS.CATEGORY' | translate }} <b>{{ car.license }}</b></span
+                  >
+                  <span class="car-kpp"><i class="fas fa-cogs"></i>{{ 'CARS.' + car.kpp | translate }}</span>
+                  <span class="car-kpp" *ngIf="car.class"><i class="fas fa-car"></i>{{ 'CARS.' + car.bodyType | translate }}</span>
+                </div>
+              </div>
+              <div class="price mt-3">
+                <div class="prices">
+                  <div class="price-value p-1 px-2 border rounded">
+                    <b>1 {{ 'DAY' | translate }}</b> = {{ car.summerPrices.oneDayPrice }} €
+                  </div>
+                  <div class="price-value p-1 px-2 border rounded">
+                    <b>2 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.twoDaysPrice }} €
+                  </div>
+                  <div class="price-value p-1 px-2 border rounded">
+                    <b>3 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.threeDaysPrice }} €
+                  </div>
+                  <div class="price-value p-1 px-2 border rounded">
+                    <b>4 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.fourDaysPrice }} €
+                  </div>
+                  <div class="price-value p-1 px-2 border rounded">
+                    <b>5 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.fiveDaysPrice }} €
+                  </div>
+                  <div class="price-value p-1 px-2 border rounded">
+                    <b>6 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.sixDaysPrice }} €
+                  </div>
+                  <div class="price-value p-1 px-2 border rounded">
+                    <b>7 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.sevenDaysPrice }} €
+                  </div>
+                  <div class="price-value p-1 px-2 border rounded">
+                    <b>>7 {{ 'DAYS' | translate }}</b> = {{ car.summerPrice }} € / {{ 'DAY' | translate }}
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <div class="car-actions p-0 px-sm-3 col-md-4 text-right">
-          <div class="price">
-            <h2>
-              {{ 'SEARCH.FROM' | translate }} {{ car.winterPrices?.oneDayPrice }} € <span>/ {{ 'DAY' | translate }}</span>
-            </h2>
-            <span class="text-muted"
-              >{{ getCarPrice(car) }} € {{ 'FOR' | translate }} {{ periodDays }}
-              {{ periodDays % 10 === 1 ? ('DAY' | translate) : ('DAYS' | translate) }}</span
-            >
+            <div class="car-actions p-0 px-sm-3 col-md-3 text-right border-left">
+              <div class="btns d-flex flex-column align-items-end justify-content-between h-100">
+                <!-- <a class="btn btn-primary mr-1" [routerLink]="['/booking', car.id]">Заказать</a> -->
+                <span class="text-muted"
+                  >{{ getCarPrice(car) }} € {{ 'FOR' | translate }} {{ periodDays }}
+                  {{ periodDays % 10 === 1 ? ('DAY' | translate) : ('DAYS' | translate) }}</span
+                >
+                <div>
+                  <a class="btn btn-outline-primary mb-1" [routerLink]="['/details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>
+                  <button class="btn btn-primary" (click)="enter(car.id)">Редактировать</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="btns d-flex justify-content-end">
-            <!-- <a class="btn btn-primary mr-1" [routerLink]="['/booking', car.id]">Заказать</a> -->
-            <button class="btn btn-primary mr-1" (click)="enter(car.id)">Редактировать</button>
-            <a class="btn btn-outline-primary" [routerLink]="['/details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>
+          <div *ngIf="!cars?.length" class="no-data">
+            {{ 'CARS.NOT_FOUND' | translate }}
           </div>
+          <!-- /car -->
         </div>
       </div>
-      <div *ngIf="!cars?.length" class="no-data">
-        {{ 'CARS.NOT_FOUND' | translate }}
-      </div>
-      <!-- /car -->
     </div>
   </div>
 </div>

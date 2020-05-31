@@ -3,6 +3,7 @@ import { SliderSelected, SliderRange } from '../utils/double-slider/double-slide
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Place } from '../models/place';
+import { Filter } from '../search/search-cars/search-cars.component';
 
 @Injectable()
 export class SearchService {
@@ -78,4 +79,5 @@ export interface SearchModel {
   timeTo: string;
   placeFrom: Place;
   placeTo: Place;
+  filters?: Filter[];
 }

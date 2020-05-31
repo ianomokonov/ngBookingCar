@@ -9,6 +9,7 @@ import { tap } from 'rxjs/internal/operators';
 import { User } from '../models/user';
 import { environment } from 'src/environments/environment.prod';
 import { SliderRange } from '../utils/double-slider/double-slider.component';
+import { Filter } from '../search/search-cars/search-cars.component';
 // import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -51,6 +52,12 @@ export class ApiService {
       if (model.dateTo) {
         url.searchParams.set('dateTo', this.ngbDateToString(model.dateTo));
       }
+      if(model.filters){
+        model.filters.forEach(f => {
+          const options = f.options.map(o => o.name).join(',');
+          url.searchParams.append(f.prop, options);
+        })
+      }
     }
     if (limit) {
       url.searchParams.set('limit', limit.toString());
@@ -76,6 +83,10 @@ export class ApiService {
 
   public getPlaces(): Observable<Place[]> {
     return this.http.get<Place[]>(`${this.baseUrl}?key=get-places`);
+  }
+
+  public getFilters(): Observable<Filter[]> {
+    return this.http.get<Filter[]>(`${this.baseUrl}?key=get-filters`);
   }
 
   public addPlace(data): Observable<number> {

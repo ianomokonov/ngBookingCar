@@ -33,6 +33,21 @@ button {
   }
 }
 
+.bk-card {
+  padding-left: 24px;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 8px;
+    background-color: $brand-red;
+    left: 0;
+    top: 0;
+  }
+}
+
 .bk-header {
   font-size: 1.2rem;
   line-height: 1.4rem;
@@ -98,8 +113,40 @@ ngb-datepicker {
   .bg-primary {
     background-color: $brand-red !important;
   }
-  .btn-link{
+  .btn-link {
     color: $brand-red !important;
+  }
+}
+
+.form-check {
+  position: relative;
+  padding-left: 25px;
+  vertical-align: baseline;
+
+  input[type='checkbox'] {
+    display: none;
+
+    &:checked + label:after {
+      outline: 1px solid $brand-red;
+      border: 2px solid #fff;
+      width: 0.8rem;
+      height: 0.8rem;
+      background-color: $brand-red;
+    }
+  }
+  label {
+    display: flex;
+    align-items: center;
+    &:after {
+      content: '';
+      display: block;
+      height: 0.8rem;
+      width: 0.8rem;
+      outline: 1px solid $brand-red;
+      position: absolute;
+      bottom: 0.5rem;
+      left: 0;
+    }
   }
 }
 

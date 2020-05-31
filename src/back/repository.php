@@ -18,39 +18,44 @@
         }
 
         public function GetCars($query){
+            unset($query['key']);
+            unset($query['token']);
             
             $queryText = "SELECT * FROM car ";
-            if(isset($query['priceFrom']) && $priceFrom = $query['priceFrom']){
-                $queryText = $queryText."WHERE price >= $priceFrom ";
-            }
-            if(isset($query['priceTo']) && $priceTo = $query['priceTo']){
-                if(isset($priceFrom)) {
-                    $queryText = $queryText."AND ";
-                } else {
-                    $queryText = $queryText."WHERE ";
-                }
-                $queryText = $queryText."price <= $priceTo ";
-            }
+            $hasCondition = false;
             if(isset($query['dateFrom']) && isset($query['dateTo']) && !!($dateFrom = $query['dateFrom']) && $dateTo = $query['dateTo']){
-                if(isset($priceFrom) || isset($priceTo)) {
-                    $queryText = $queryText."AND ";
-                } else {
-                    $queryText = $queryText."WHERE ";
-                }
-                $queryText = $queryText."0 = (SELECT COUNT(*) FROM carOrder co WHERE co.carId = car.id AND co.status IN (1,2) AND (co.dateFrom = '$dateFrom' OR co.dateFrom = '$dateTo' OR co.dateTo = '$dateTo' OR (co.dateFrom > '$dateFrom' AND co.dateTo < '$dateTo') OR (co.dateFrom < '$dateFrom' AND co.dateTo > '$dateTo') OR (co.dateFrom > '$dateFrom' AND co.dateFrom < '$dateTo' AND (co.dateTo IS NULL OR co.dateTo > '$dateTo')) OR (co.dateTo > '$dateFrom' AND co.dateTo < '$dateTo' AND co.dateFrom < '$dateFrom'))) ";
+                unset($query['dateFrom']);
+                unset($query['dateTo']);
+                $queryText = $queryText."WHERE 0 = (SELECT COUNT(*) FROM carOrder co WHERE co.carId = car.id AND co.status IN (1,2) AND (co.dateFrom = '$dateFrom' OR co.dateFrom = '$dateTo' OR co.dateTo = '$dateTo' OR (co.dateFrom > '$dateFrom' AND co.dateTo < '$dateTo') OR (co.dateFrom < '$dateFrom' AND co.dateTo > '$dateTo') OR (co.dateFrom > '$dateFrom' AND co.dateFrom < '$dateTo' AND (co.dateTo IS NULL OR co.dateTo > '$dateTo')) OR (co.dateTo > '$dateFrom' AND co.dateTo < '$dateTo' AND co.dateFrom < '$dateFrom'))) ";
+            
+                $hasCondition = true;
             }
             if(!isset($query['dateTo']) && isset($query['dateFrom']) && $dateFrom = $query['dateFrom']){
-                if(isset($priceFrom) || isset($priceTo)) {
-                    $queryText = $queryText."AND ";
+                unset($query['dateFrom']);
+                $queryText = $queryText."WHERE 0 = (SELECT COUNT(*) FROM carOrder co WHERE co.carId = car.id AND co.status IN (1,2) AND (co.dateFrom = '$dateFrom' OR co.dateTo = '$dateFrom' OR (co.dateFrom < '$dateFrom' AND co.dateTo > '$dateFrom'))) ";
+            
+                $hasCondition = true;
+            }
+            if(count(array_keys($query))>0){
+                if( $hasCondition){
+                     $queryText = $queryText."AND ";
                 } else {
                     $queryText = $queryText."WHERE ";
+                   
                 }
-                $queryText = $queryText."0 = (SELECT COUNT(*) FROM carOrder co WHERE co.carId = car.id AND co.status IN (1,2) AND (co.dateFrom = '$dateFrom' OR co.dateTo = '$dateFrom' OR (co.dateFrom < '$dateFrom' AND co.dateTo > '$dateFrom'))) ";
+                foreach(array_keys($query) as $key){
+                    $values = explode(',', $query[$key]);
+                    $value = '';
+                    if(count($values) > 1){
+                        $value = "'".implode("','", $values)."'";
+                    } else {
+                        $value = "'".$values[0]."'";
+                    }
+                    $queryText = $queryText."$key IN ($value) AND ";
+                }
             }
-            $queryText = $queryText."ORDER BY price ASC ";
-            if(isset($query['limit']) && $limit = $query['limit']){
-                $queryText = $queryText."LIMIT $limit";
-            }
+            $queryText = rtrim($queryText,'AND ');
+            $queryText = $queryText." ORDER BY price ASC ";
             //return $queryText;
             $query = $this->database->db->query($queryText);
             $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
@@ -78,6 +83,31 @@
                 $places[] = $place;
             }
             return $places;
+            
+        }
+        
+        public function GetFilters(){
+            
+            $filters = array(
+                 array('name' => 'BODY_TYPE', 'prop' => 'bodyType', 'options'=> $this->GetFilterOptions('bodyType')),
+                 array('name' => 'PLACES_COUNT', 'prop' => 'places', 'options'=> $this->GetFilterOptions('places')),
+                 array('name' => 'TRANSMISSION', 'prop' => 'kpp', 'options'=> $this->GetFilterOptions('kpp')),
+                 array('name' => 'FUEL_TYPE', 'prop' => 'fuelType', 'options'=> $this->GetFilterOptions('fuelType'))
+                );
+            return $filters;
+            
+        }
+        
+        public function GetFilterOptions($name){
+            $query = $this->database->db->query("SELECT DISTINCT $name FROM car");
+            
+             $options = array();
+            while ($option = $query->fetch()) {
+                
+                $options[] = array(name => $option[$name]);
+            }
+            
+            return $options;
             
         }
 

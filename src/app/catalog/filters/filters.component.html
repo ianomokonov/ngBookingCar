@@ -6,26 +6,17 @@
   <div class="row mt-2">
     <div class="col-sm-5 col-md-4 col-lg-3">
       <div class="form-group">
-        <label>{{ 'CARS.DATE' | translate }}</label>
-        <h6 *ngIf="filters.dateFrom">
-          {{ filters.dateFrom | ngbDate | date: 'dd.MM.yyyy' }} {{ filters.dateTo | ngbDate | date: '- dd.MM.yyyy' }}
-        </h6>
-        <h6 *ngIf="!filters.dateFrom">–</h6>
-      </div>
-      <div class="form-group">
-        <label>{{ 'CARS.TIME' | translate }}</label>
-        <h6 *ngIf="filters.timeFrom">{{ filters.timeFrom }} {{ filters.timeTo ? '-' + filters.timeTo : '' }}</h6>
-        <h6 *ngIf="!filters.timeFrom">–</h6>
+        <label>{{ 'CARS.PICK_UP_PLACE' | translate }}</label>
+        <h6>{{ (filters.placeFrom?.name | bkTranslate) || '–' }}</h6>
+        <h6>{{ filters.dateFrom | ngbDate | date: 'dd.MM.yyyy' }}, {{ filters.timeFrom }}</h6>
       </div>
     </div>
     <div class="col-sm">
-      <div class="form-group">
-        <label>{{ 'CARS.PICK_UP_PLACE' | translate }}</label>
-        <h6>{{ filters.placeFrom?.name || '–' }}</h6>
-      </div>
+      
       <div class="form-group">
         <label>{{ 'CARS.DROP_OFF_PLACE' | translate }}</label>
-        <h6>{{ filters.placeTo?.name || '–' }}</h6>
+        <h6>{{ (filters.placeTo?.name | bkTranslate) || '–' }}</h6>
+        <h6>{{ filters.dateTo | ngbDate | date: 'dd.MM.yyyy' }}, {{ filters.timeTo }}</h6>
       </div>
     </div>
   </div>

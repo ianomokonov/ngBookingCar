@@ -24,6 +24,9 @@ if(isset($_GET['key'])){
         case 'get-cars':
             echo json_encode($repository->GetCars($_GET));
             return;
+        case 'get-filters':
+            echo json_encode($repository->GetFilters());
+            return;
         case 'get-places':
             echo json_encode($repository->GetPlaces());
             return;

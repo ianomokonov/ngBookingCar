@@ -49,11 +49,10 @@ export class FiltersFormComponent implements OnInit {
       date = NgbDate.from(date);
       this.setDate(new Date(date.year, date.month - 1, date.day));
       const dateTo = this.filterForm.get('dateTo');
-      this.minDateTo = date
-      if(date.after(dateTo.value)){
+      this.minDateTo = date;
+      if (date.after(dateTo.value)) {
         dateTo.setValue(date);
       }
-
     });
 
     this.filterForm.get('dateTo').valueChanges.subscribe((date: NgbDate) => {
@@ -63,7 +62,7 @@ export class FiltersFormComponent implements OnInit {
 
   ngOnInit() {
     this.genTimes();
-    
+
     if (this.searchService.model) {
       this.filterForm.patchValue({
         ...this.searchService.model,
@@ -80,6 +79,15 @@ export class FiltersFormComponent implements OnInit {
 
     const subscription = forkJoin([this.api.getPlaces(), this.api.getPriceRange()]).subscribe(([places, range]) => {
       this.places = places;
+      if (places[0]) {
+        const value = this.filterForm.getRawValue();
+        if (!value.placeFrom) {
+          this.filterForm.patchValue({ placeFrom: places[0].id });
+        }
+        if (!value.placeTo) {
+          this.filterForm.patchValue({ placeTo: places[0].id });
+        }
+      }
       this.priceRange = range;
       this.searchService.priceRange = range;
       this.loadingService.removeSubscription(subscription);
