@@ -43,28 +43,28 @@
               <div class="price mt-3">
                 <div class="prices">
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>1 {{ 'DAY' | translate }}</b> = {{ car.summerPrices.oneDayPrice }} €
+                    <b>1 {{ 'DAY' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].oneDayPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>2 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.twoDaysPrice }} €
+                    <b>2 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].twoDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>3 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.threeDaysPrice }} €
+                    <b>3 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].threeDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>4 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.fourDaysPrice }} €
+                    <b>4 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].fourDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>5 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.fiveDaysPrice }} €
+                    <b>5 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].fiveDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>6 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.sixDaysPrice }} €
+                    <b>6 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].sixDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>7 {{ 'DAYS' | translate }}</b> = {{ car.summerPrices.sevenDaysPrice }} €
+                    <b>7 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].sevenDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>>7 {{ 'DAYS' | translate }}</b> = {{ car.summerPrice }} € / {{ 'DAY' | translate }}
+                    <b>>7 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrice' : 'winterPrice'] }} € / {{ 'DAY' | translate }}
                   </div>
                 </div>
               </div>

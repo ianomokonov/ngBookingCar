@@ -39,6 +39,7 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
   cars;
   periodDays: number = 1;
   isFiltersReady = false;
+  isSummer = true;
 
   private rxAlive: boolean = true;
 
@@ -52,6 +53,16 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
       });
     this.searchService.$filtersUpdate.pipe(takeWhile(() => this.rxAlive)).subscribe((model) => {
       this.updateCars(model);
+      let month = new Date().getMonth();
+      if(model){
+        month = this.searchService.model.dateFrom.month;
+      }
+      
+      if (month > 2 && month < 9) {
+        this.isSummer = true;
+      } else {
+        this.isSummer = false;
+      }
       this.periodDays = SearchService.setPeriodDays(model);
     });
   }
@@ -90,10 +101,9 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
     filter.get('isClosed').setValue(!filter.value.isClosed, { emitEvent: false });
   }
   getCarPrice({ summerPrice, winterPrice, summerPrices, winterPrices }) {
-    const month = new Date().getMonth();
     let prices = null;
     let price = null;
-    if (month > 2 && month < 9) {
+    if (this.isSummer) {
       prices = summerPrices;
       price = summerPrice;
     } else {
