@@ -49,28 +49,29 @@
               <div class="price mt-3">
                 <div class="prices">
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>1 {{ 'DAY' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].oneDayPrice }} €
+                    <b>1 {{ 'DAY' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].oneDayPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>2 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].twoDaysPrice }} €
+                    <b>2 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].twoDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>3 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].threeDaysPrice }} €
+                    <b>3 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].threeDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>4 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].fourDaysPrice }} €
+                    <b>4 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].fourDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>5 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].fiveDaysPrice }} €
+                    <b>5 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].fiveDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>6 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].sixDaysPrice }} €
+                    <b>6 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].sixDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>7 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrices' : 'winterPrices'].sevenDaysPrice }} €
+                    <b>7 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].sevenDaysPrice }} €
                   </div>
                   <div class="price-value p-1 px-2 border rounded">
-                    <b>>7 {{ 'DAYS' | translate }}</b> = {{ car[isSummer ? 'summerPrice' : 'winterPrice'] }} € / {{ 'DAY' | translate }}
+                    <b>>7 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrice' : 'winterPrice'] }} € /
+                    {{ 'DAY' | translate }}
                   </div>
                 </div>
               </div>
@@ -78,10 +79,9 @@
 
             <div class="car-actions p-3 p-sm-0 pl-lg-3 pr-0 col-lg-3 text-right border-left">
               <div class="btns d-flex flex-column align-items-end justify-content-between h-100">
-                <!-- <a class="btn btn-primary mr-1" [routerLink]="['/booking', car.id]">Заказать</a> -->
                 <span class="text-muted mb-1"
-                  >{{ getCarPrice(car) }} € {{ 'FOR' | translate }} {{ periodDays }}
-                  {{ periodDays % 10 === 1 ? ('DAY' | translate) : ('DAYS' | translate) }}</span
+                  >{{ searchService.getCarPrice(car) }} € {{ 'FOR' | translate }} {{ searchService.periodDays }}
+                  {{ searchService.periodDays % 10 === 1 ? ('DAY' | translate) : ('DAYS' | translate) }}</span
                 >
                 <div>
                   <a class="btn btn-outline-primary mb-1" [routerLink]="['/details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>

@@ -8,6 +8,8 @@ import { Filter } from '../search/search-cars/search-cars.component';
 @Injectable()
 export class SearchService {
   private _model: SearchModel;
+  public periodDays: number = 1;
+  public isSummer: boolean = true;
 
   private time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
   public priceRange: SliderRange = { min: 1500, max: 8000 };
@@ -15,7 +17,15 @@ export class SearchService {
   public times: string[] = [];
   public weekDays: string[] = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   public months: string[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-  public pricesNames: string[] = ['oneDayPrice', 'twoDaysPrice', 'threeDaysPrice', 'fourDaysPrice', 'fiveDaysPrice', 'sixDaysPrice', 'sevenDaysPrice'];
+  public pricesNames: string[] = [
+    'oneDayPrice',
+    'twoDaysPrice',
+    'threeDaysPrice',
+    'fourDaysPrice',
+    'fiveDaysPrice',
+    'sixDaysPrice',
+    'sevenDaysPrice',
+  ];
 
   public defaultModel: SearchModel;
 
@@ -23,18 +33,33 @@ export class SearchService {
 
   public get model(): SearchModel {
     if (!this._model && sessionStorage.getItem('bookingSearchModel')) {
-      this._model = JSON.parse(sessionStorage.getItem('bookingSearchModel'));
+      this.updateModel(JSON.parse(sessionStorage.getItem('bookingSearchModel')));
     }
     return this._model;
   }
 
   public set model(model: SearchModel) {
+    this.updateModel(model);
+    this.$filtersUpdate.next(this._model);
+  }
+
+  private updateModel(model: SearchModel) {
     this._model = model;
     if (model && !model.dateFrom && !model.timeFrom && !model.timeTo && !model.placeFrom && !model.placeTo) {
       this._model = null;
     }
     sessionStorage.setItem('bookingSearchModel', JSON.stringify(this._model));
-    this.$filtersUpdate.next(this._model);
+    let month = new Date().getMonth();
+    if (model) {
+      month = this.model.dateFrom.month;
+    }
+
+    if (month > 2 && month < 9) {
+      this.isSummer = true;
+    } else {
+      this.isSummer = false;
+    }
+    this.periodDays = SearchService.setPeriodDays(model);
   }
 
   constructor(public calendar: NgbCalendar) {
@@ -78,6 +103,22 @@ export class SearchService {
         (24 * 3600000) +
       1
     );
+  }
+
+  public getCarPrice({ summerPrice, winterPrice, summerPrices, winterPrices }) {
+    let prices = null;
+    let price = null;
+    if (this.isSummer) {
+      prices = summerPrices;
+      price = summerPrice;
+    } else {
+      prices = winterPrices;
+      price = winterPrice;
+    }
+    if (this.periodDays > 0 && this.periodDays < 8) {
+      return prices[this.pricesNames[this.periodDays - 1]];
+    }
+    return price * this.periodDays;
   }
 }
 

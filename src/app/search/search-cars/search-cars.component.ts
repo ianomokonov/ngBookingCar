@@ -20,7 +20,7 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
   constructor(
     private api: ApiService,
     private loadingService: LoadingService,
-    private searchService: SearchService,
+    public searchService: SearchService,
     private auth: AuthService,
     private router: Router,
     private fb: FormBuilder
@@ -37,9 +37,7 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
   }
 
   cars;
-  periodDays: number = 1;
   isFiltersReady = false;
-  isSummer = true;
 
   private rxAlive: boolean = true;
 
@@ -53,17 +51,6 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
       });
     this.searchService.$filtersUpdate.pipe(takeWhile(() => this.rxAlive)).subscribe((model) => {
       this.updateCars(model);
-      let month = new Date().getMonth();
-      if(model){
-        month = this.searchService.model.dateFrom.month;
-      }
-      
-      if (month > 2 && month < 9) {
-        this.isSummer = true;
-      } else {
-        this.isSummer = false;
-      }
-      this.periodDays = SearchService.setPeriodDays(model);
     });
   }
 
@@ -100,21 +87,7 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
   toggleFilter(filter: FormGroup) {
     filter.get('isClosed').setValue(!filter.value.isClosed, { emitEvent: false });
   }
-  getCarPrice({ summerPrice, winterPrice, summerPrices, winterPrices }) {
-    let prices = null;
-    let price = null;
-    if (this.isSummer) {
-      prices = summerPrices;
-      price = summerPrice;
-    } else {
-      prices = winterPrices;
-      price = winterPrice;
-    }
-    if (this.periodDays > 0 && this.periodDays < 8) {
-      return prices[this.searchService.pricesNames[this.periodDays - 1]];
-    }
-    return price * this.periodDays;
-  }
+  
 
   enter(carId) {
     // TODO убрать, когда сделаю личный кабинет

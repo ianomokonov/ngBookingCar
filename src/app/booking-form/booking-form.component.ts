@@ -18,7 +18,6 @@ import { LoadingService } from '../services/loading.service';
 export class BookingFormComponent implements OnInit {
   public car;
   public user;
-  public periodDays: number = 1;
   public submitted;
 
   hoveredDate: NgbDate | null = null;
@@ -28,7 +27,6 @@ export class BookingFormComponent implements OnInit {
   time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
 
   bookingForm: FormGroup;
-  period: FormControl;
   places: Place[];
   carDates: DateRange[];
 
@@ -61,8 +59,6 @@ export class BookingFormComponent implements OnInit {
         sum: null,
       }),
     });
-    this.period = this.bookingForm.get('order').get('period') as FormControl;
-    // this.bookingForm.get('order').get('time').setValue(this.searchService.defaultModel.time);
 
     this.bookingForm.get('order').valueChanges.subscribe((value) => {
       this.saveFilters(value);
@@ -115,7 +111,7 @@ export class BookingFormComponent implements OnInit {
         },
         { emitEvent: false }
       );
-      this.periodDays = SearchService.setPeriodDays(orderForm.getRawValue());
+      this.searchService.periodDays = SearchService.setPeriodDays(orderForm.getRawValue());
     }
   }
 
@@ -135,25 +131,23 @@ export class BookingFormComponent implements OnInit {
       }
       return;
     }
-    if (!this.period.value.fromDate) {
-      this.bookingForm.markAsDirty();
-      return;
-    }
     const orderFormValue = orderForm.getRawValue();
     const order: Order = {
       carId: this.car.id,
-      // placeId: orderFormValue.place,
-      dateFrom: orderFormValue.period.fromDate,
-      dateTo: orderFormValue.period.toDate,
-      // time: orderFormValue.time,
-      orderSum: this.car.price * this.periodDays,
+      placeFromId: orderFormValue.placeFrom,
+      placeToId: orderFormValue.placeTo,
+      dateFrom: orderFormValue.dateFrom,
+      dateTo: orderFormValue.dateTo,
+      timeFrom: orderFormValue.timeFrom,
+      timeTo: orderFormValue.timeTo,
+      orderSum: this.searchService.getCarPrice(this.car),
     };
 
-    // const subscription = this.api.addOrder(order).subscribe((v) => {
-    //   this.loadingService.removeSubscription(subscription);
-    //   this.router.navigate(['/profile']);
-    // });
-    // this.loadingService.addSubscription(subscription);
+    const subscription = this.api.addOrder(order).subscribe((v) => {
+      this.loadingService.removeSubscription(subscription);
+      this.router.navigate(['/profile']);
+    });
+    this.loadingService.addSubscription(subscription);
   }
 
   isDisabled = (date: NgbDate) => {
