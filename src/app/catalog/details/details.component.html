@@ -18,6 +18,17 @@
           <p>
             {{ car.description | bkTranslate }}
           </p>
+          <div class="conditions border-top pt-3 mt-3">
+            <ul>
+              <li><span class="important">{{'CONDITIONS.QUICK' | translate}}</span></li>
+              <li><span class="important">{{'CONDITIONS.FINAL' | translate}}</span></li>
+              <li><span>{{'CONDITIONS.NO_CREDIT' | translate}}</span></li>
+              <li><span>{{'CONDITIONS.COVERAGE' | translate}}</span></li>
+              <li><span>{{'CONDITIONS.WUG' | translate}}</span></li>
+              <li><span>{{'CONDITIONS.THEFT' | translate}}</span></li>
+              <li><span>{{'CONDITIONS.BOOK' | translate}}</span></li>
+            </ul>
+          </div>
           <div class="price pb-3">
             <!-- <a [routerLink]="['/booking', car.id]" class="btn btn-primary mr-3">Заказать</a> -->
           </div>
@@ -28,6 +39,17 @@
       <p>
         {{ car.description | bkTranslate }}
       </p>
+      <div class="conditions border-top pt-3 mt-3">
+        <ul>
+          <li><span class="important">{{'CONDITIONS.QUICK' | translate}}</span></li>
+          <li><span class="important">{{'CONDITIONS.FINAL' | translate}}</span></li>
+          <li><span>{{'CONDITIONS.NO_CREDIT' | translate}}</span></li>
+          <li><span>{{'CONDITIONS.COVERAGE' | translate}}</span></li>
+          <li><span>{{'CONDITIONS.WUG' | translate}}</span></li>
+          <li><span>{{'CONDITIONS.THEFT' | translate}}</span></li>
+          <li><span>{{'CONDITIONS.BOOK' | translate}}</span></li>
+        </ul>
+      </div>
       <div class="price pb-3">
         <!-- <a [routerLink]="['/booking', car.id]" class="btn btn-primary mr-3">Заказать</a> -->
       </div>

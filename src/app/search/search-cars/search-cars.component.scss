@@ -72,23 +72,22 @@
     flex-direction: column;
     justify-content: space-between;
   }
+  .conditions{
+    
+    ul{
+      padding-left: 20px;
 
-  .price {
-    .prices {
-      display: flex;
-      flex-wrap: wrap;
-      .price-value {
-        white-space: nowrap;
-        margin-right: 0.5rem;
-        margin-top: 0.5rem;
-      }
-    }
-    h2 {
-      margin-bottom: 0;
-      font-size: 1.5rem;
+      li{
+        color: $brand-red;
 
-      span {
-        font-weight: normal;
+        span{
+          color: black;
+
+          &.important{
+            font-weight: bold;
+            color: $brand-red;
+          }
+        }
       }
     }
   }

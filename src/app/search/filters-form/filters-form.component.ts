@@ -127,7 +127,7 @@ export class FiltersFormComponent implements OnInit {
     this.dates.toDate = {
       weekDay: this.searchService.weekDays[date.getDay()],
       day: date.getDate(),
-      month: this.searchService.months[date.getMonth() - 1],
+      month: this.searchService.months[date.getMonth()],
       year: date.getFullYear(),
     };
   }
