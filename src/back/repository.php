@@ -382,9 +382,9 @@
         }
         
         private function addPrices($carId, $prices, $table){
-            $prices['Id'] = $carId; 
-            $q = $this->genInsertQuery((array)$prices,$table);
-            $s = $this->db->prepare($q[0]);
+            $prices->Id = $carId;
+            $q = $this->database->genInsertQuery((array)$prices,$table);
+            $s = $this->database->db->prepare($q[0]);
             if ($q[1][0]!=null) {
                 $s->execute($q[1]);
             }
