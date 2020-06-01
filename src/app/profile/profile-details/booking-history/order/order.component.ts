@@ -25,22 +25,13 @@ export class OrderComponent implements OnInit {
         this.order.statusText = '';
       }
 
-      const formValue = {
-        period: {
-          fromDate: this.order.dateFrom as NgbDate,
-          toDate: this.order.dateTo as NgbDate,
-        },
-        // time: this.order.time as NgbTimeStruct,
-        // place: this.order.placeId,
-      };
-
       const fromDateNgb = this.order.dateFrom as NgbDate;
 
       this.minDate = this.calendar.getNext(this.today, 'd', 5);
       if (this.order.status != OrderStatus.Planned || fromDateNgb.before(this.minDate)) {
         this.disabled = true;
       }
-      this.orderForm.patchValue(formValue);
+      this.orderForm.patchValue(this.order);
       if (this.fromDate && !this.toDate) {
         this.setMaxDate(this.fromDate);
       }
@@ -78,38 +69,46 @@ export class OrderComponent implements OnInit {
   @Input() public places = [];
 
   public get fromDate(): NgbDate {
-    return this.orderForm.get('period').value.fromDate;
+    return this.orderForm.value.dateFrom;
   }
 
   public get toDate(): NgbDate | null {
-    return this.orderForm.get('period').value.toDate;
+    return this.orderForm.value.dateTo;
   }
 
   public set fromDate(date: NgbDate) {
-    this.orderForm.get('period').setValue({
-      fromDate: date,
-      toDate: this.toDate,
-    });
+    this.orderForm.get('dateFrom').setValue(date, {emitEvent: false});
   }
 
   public set toDate(date: NgbDate) {
-    this.orderForm.get('period').setValue({
-      fromDate: this.fromDate,
-      toDate: date,
-    });
+    this.orderForm.get('dateTo').setValue(date, {emitEvent: false});
   }
 
   private rxAlive: boolean = true;
   public orderStatus = OrderStatus;
-  constructor(private fb: FormBuilder, private calendar: NgbCalendar, public api: ApiService, private loadingService: LoadingService) {
+  constructor(
+    private fb: FormBuilder,
+    private calendar: NgbCalendar,
+    public api: ApiService,
+    private loadingService: LoadingService,
+    public searchService: SearchService
+  ) {
     this.orderForm = this.fb.group({
-      period: [null, Validators.required],
-      place: [null],
-      time: [null, Validators.required],
+      dateFrom: [null, Validators.required],
+      dateTo: [null, Validators.required],
+      placeFromId: [null, Validators.required],
+      placeToId: [null, Validators.required],
+      timeFrom: [null, Validators.required],
+      timeTo: [null, Validators.required],
     });
 
     this.orderForm.valueChanges.pipe(takeWhile(() => this.rxAlive)).subscribe((v) => {
-      this.setOrderSum(v);
+      this.setMaxDate(v.dateFrom);
+      const from = NgbDate.from(v.dateFrom);
+      if(from.after(this.toDate)){
+        this.toDate = from;
+      }
+      this.setOrderSum(this.orderForm.value);
     });
 
     this.today = this.calendar.getToday();
@@ -123,14 +122,14 @@ export class OrderComponent implements OnInit {
 
   public changeStatus(statuss: OrderStatus) {
     if (this.isAdmin) {
-      // const subscription = this.api
-      //   .updateOrder({ id: this.order.id, status: statuss })
-      //   .pipe(takeWhile(() => this.rxAlive))
-      //   .subscribe(() => {
-      //     this.orderUpdated.emit(this.order.id);
-      //     this.loadingService.removeSubscription(subscription);
-      //   });
-      // this.loadingService.addSubscription(subscription);
+      const subscription = this.api
+        .updateOrder({ id: this.order.id, status: statuss })
+        .pipe(takeWhile(() => this.rxAlive))
+        .subscribe(() => {
+          this.orderUpdated.emit(this.order.id);
+          this.loadingService.removeSubscription(subscription);
+        });
+      this.loadingService.addSubscription(subscription);
     }
   }
 
@@ -147,21 +146,23 @@ export class OrderComponent implements OnInit {
     const orderFormValue = this.orderForm.getRawValue();
     const order: UpdateOrder = {
       id: this.order.id,
-      // placeId: orderFormValue.place,
-      dateFrom: orderFormValue.period.fromDate,
-      dateTo: orderFormValue.period.toDate,
-      // time: orderFormValue.time,
+      placeFromId: orderFormValue.placeFromId,
+      placeToId: orderFormValue.placeToId,
+      dateFrom: orderFormValue.dateFrom,
+      dateTo: orderFormValue.dateTo,
+      timeFrom: orderFormValue.timeFrom,
+      timeTo: orderFormValue.timeTo,
       orderSum: this.order.orderSum,
     };
 
-    // const subscription = this.api
-    //   .updateOrder(order)
-    //   .pipe(takeWhile(() => this.rxAlive))
-    //   .subscribe(() => {
-    //     this.orderUpdated.emit(this.order.id);
-    //     this.loadingService.removeSubscription(subscription);
-    //   });
-    // this.loadingService.addSubscription(subscription);
+    const subscription = this.api
+      .updateOrder(order)
+      .pipe(takeWhile(() => this.rxAlive))
+      .subscribe(() => {
+        this.orderUpdated.emit(this.order.id);
+        this.loadingService.removeSubscription(subscription);
+      });
+    this.loadingService.addSubscription(subscription);
   }
 
   public cancel() {
@@ -182,28 +183,10 @@ export class OrderComponent implements OnInit {
   private setOrderSum(model: SearchModel) {
     const periodDays = SearchService.setPeriodDays(model);
 
-    // this.order.orderSum = this.order.car.price * periodDays;
+    this.order.orderSum = this.searchService.getCarPrice(this.order.car, periodDays);
   }
 
-  ngOnInit(): void {
-    if (this.places && this.places.length) {
-      this.orderForm.get('place').setValidators(Validators.required);
-    }
-  }
-
-  onDateSelection(date: NgbDate) {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-      this.setMaxDate(date);
-    } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
-      this.toDate = date;
-      this.maxDate = null;
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-      this.setMaxDate(date);
-    }
-  }
+  ngOnInit(): void {}
 
   setMaxDate(fromDate: NgbDate) {
     if (!this.order.car.dates) {
@@ -216,18 +199,6 @@ export class OrderComponent implements OnInit {
     } else {
       this.maxDate = null;
     }
-  }
-
-  isHovered(date: NgbDate) {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate) {
-    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  }
-
-  isRange(date: NgbDate) {
-    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
   }
 
   isDisabled = (date: NgbDate) => {
@@ -257,25 +228,49 @@ export class OrderComponent implements OnInit {
     return false;
   };
 
+  isFromDisabled = (date: NgbDate) => {
+    if (date.before(this.searchService.minDate)) {
+      return true;
+    }
+    if (!this.order.car.dates) {
+      return false;
+    }
+
+    for (let range of this.order.car.dates) {
+      if (date.equals(range.dateFrom) || date.equals(range.dateTo)) {
+        return true;
+      }
+
+      if (!range.dateTo) {
+        continue;
+      }
+
+      if (date.after(range.dateFrom) && date.before(range.dateTo)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   private statuses: Status[] = [
     {
       status: OrderStatus.Planned,
-      statusText: 'Запланирован',
+      statusText: 'USER.PLANNED',
       statusClass: 'bg-info',
     },
     {
       status: OrderStatus.Active,
-      statusText: 'Активен',
+      statusText: 'USER.ACTIVE',
       statusClass: 'bg-success',
     },
     {
       status: OrderStatus.Canceled,
-      statusText: 'Отменен',
+      statusText: 'USER.CANCELED',
       statusClass: 'bg-danger',
     },
     {
       status: OrderStatus.Ready,
-      statusText: 'Окончен',
+      statusText: 'USER.READY',
       statusClass: 'bg-purple',
     },
   ];

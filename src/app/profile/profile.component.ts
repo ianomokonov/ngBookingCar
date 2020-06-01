@@ -10,7 +10,7 @@ import { LoadingService } from '../services/loading.service';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-  public links = [{ title: 'История заказов', fragment: 'history', class: 'fas fa-history' }];
+  public links = [{ title: 'USER.ORDERS', fragment: 'history', class: 'fas fa-history' }];
   rxAlive: boolean = true;
   constructor(public route: ActivatedRoute, private api: ApiService, private loadingService: LoadingService,) {}
 
@@ -21,8 +21,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe((isAdmin) => {
         if (isAdmin) {
           this.links.push(
-            { title: 'Автомобили', fragment: 'cars', class: 'fas fa-car' },
-            { title: 'Места сдачи', fragment: 'places', class: 'fas fa-map-marker-alt' }
+            { title: 'MENU.CARS', fragment: 'cars', class: 'fas fa-car' },
+            { title: 'USER.PLACES', fragment: 'places', class: 'fas fa-map-marker-alt' }
           );
         }
       });

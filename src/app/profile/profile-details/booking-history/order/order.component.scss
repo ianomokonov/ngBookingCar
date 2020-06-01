@@ -1,6 +1,9 @@
 @import '../../../../search/search-cars/search-cars.component.scss';
 @import '../../../../../styles/colors';
-@import '../../../../utils/custom-date.scss';
+@import '../../../../catalog/details/details.component.scss';
+.price{
+  flex-direction: column;
+}
 .car {
   flex-direction: column;
   .car-header {
@@ -56,13 +59,14 @@
     }
   }
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   .status {
     content: '';
     position: absolute;
-    left: 0;
+    left: -2px;
     top: 0;
     height: 100%;
     width: 0.4rem;
+    border-radius: 100% 0 0 100%;
   }
 }

@@ -55,6 +55,6 @@ export class UserInfoComponent implements OnInit {
 
   public exit() {
     this.auth.exit();
-    this.router.navigate(['/enter']);
+    this.router.navigate(['/']);
   }
 }

@@ -107,18 +107,15 @@ export class ApiService {
     return this.http.post<any>(`${this.baseUrl}?key=add-order`, order);
   }
 
-  // public updateOrder(order: UpdateOrder): Observable<any> {
-  //   if (order.dateFrom) {
-  //     order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
-  //   }
-  //   if (order.dateTo) {
-  //     order.dateTo = order.dateTo ? this.ngbDateToString(order.dateTo as NgbDate) : null;
-  //   }
-  //   if (order.time) {
-  //     order.time = this.ngbTimeToString(order.time as NgbTimeStruct);
-  //   }
-  //   return this.http.post<any>(`${this.baseUrl}?key=update-order`, order);
-  // }
+  public updateOrder(order: UpdateOrder): Observable<any> {
+    if (order.dateFrom) {
+      order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
+    }
+    if (order.dateTo) {
+      order.dateTo = order.dateTo ? this.ngbDateToString(order.dateTo as NgbDate) : null;
+    }
+    return this.http.post<any>(`${this.baseUrl}?key=update-order`, order);
+  }
 
   public cancelOrder(orderId: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}?key=cancel-order&orderId=${orderId}`);

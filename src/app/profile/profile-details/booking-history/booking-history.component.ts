@@ -35,11 +35,11 @@ export class BookingHistoryComponent implements OnInit {
   }
 
   getOrders() {
-    // this.api
-    //   .getOrders()
-    //   .pipe(takeWhile(() => this.rxAlive))
-    //   .subscribe((orders) => {
-    //     this.orders = orders;
-    //   });
+    this.api
+      .getOrders()
+      .pipe(takeWhile(() => this.rxAlive))
+      .subscribe((orders) => {
+        this.orders = orders;
+      });
   }
 }

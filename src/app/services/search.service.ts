@@ -105,7 +105,7 @@ export class SearchService {
     );
   }
 
-  public getCarPrice({ summerPrice, winterPrice, summerPrices, winterPrices }) {
+  public getCarPrice({ summerPrice, winterPrice, summerPrices, winterPrices }, periodDays = this.periodDays) {
     let prices = null;
     let price = null;
     if (this.isSummer) {
@@ -115,10 +115,10 @@ export class SearchService {
       prices = winterPrices;
       price = winterPrice;
     }
-    if (this.periodDays > 0 && this.periodDays < 8) {
-      return prices[this.pricesNames[this.periodDays - 1]];
+    if (periodDays > 0 && periodDays < 8) {
+      return prices[this.pricesNames[periodDays - 1]];
     }
-    return price * this.periodDays;
+    return price * periodDays;
   }
 }
 
