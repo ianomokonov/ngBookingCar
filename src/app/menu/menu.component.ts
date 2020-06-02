@@ -5,6 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { takeWhile } from 'rxjs/internal/operators';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'bk-menu',
@@ -14,16 +15,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class MenuComponent implements OnInit, OnDestroy {
   public user: User;
   private rxAlive: boolean = true;
-  private readonly LANG = 'carLang';
   constructor(
     private api: ApiService,
     private loadingService: LoadingService,
     private auth: AuthService,
-    private translate: TranslateService
+    private router: Router,
+    public translate: TranslateService
   ) {
-    if (sessionStorage.getItem(this.LANG)) {
-      this.translate.use(sessionStorage.getItem(this.LANG));
-    }
   }
 
   ngOnInit(): void {
@@ -50,7 +48,6 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   changeLang(lang: string) {
-    sessionStorage.setItem(this.LANG, lang);
-    this.translate.use(lang);
+    this.router.navigate([lang, ...this.router.routerState.snapshot.url.slice(4, this.router.routerState.snapshot.url.length).split('/')]);
   }
 }

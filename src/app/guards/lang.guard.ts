@@ -7,21 +7,15 @@ import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
-export class AdminGuard implements CanActivate {
-  constructor(private router: Router, private api: ApiService, private translate: TranslateService) {}
+export class LangGuard implements CanActivate {
+  constructor(private router: Router, private translate: TranslateService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-    let token = sessionStorage.getItem('bookingUserToken');
-    if (token) {
-      return this.api.checkAccess().pipe(
-        tap((isAdmin) => {
-          if (!isAdmin) {
-            this.router.navigate([this.translate.currentLang, 'profile']);
-          }
-        })
-      );
+    const lang = state.url.indexOf('/en/') > -1 ? 'en' : 'ru';
+    if (this.translate.currentLang != lang) {
+      this.translate.use(lang);
     }
-    this.router.navigate([this.translate.currentLang, 'enter']);
-    return false;
+
+    return true;
   }
 }

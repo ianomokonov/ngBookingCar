@@ -4,6 +4,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { LoadingService } from 'src/app/services/loading.service';
+import { TranslateService } from '@ngx-translate/core';
 
 // @Component({
 //   selector: 'bk-sign-up',
@@ -19,7 +20,8 @@ export class SignUpComponent implements OnInit {
     private api: ApiService,
     private loadingService: LoadingService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    public translate: TranslateService
   ) {
     this.userForm = this.fb.group({
       name: [null, Validators.required],
@@ -47,7 +49,7 @@ export class SignUpComponent implements OnInit {
     const subscription = this.api.signUp(this.userForm.getRawValue()).subscribe((token) => {
       if (token) {
         this.auth.setToken(token);
-        this.router.navigate([this.auth.redirectUrl]);
+        this.router.navigate(['/' + this.translate.currentLang, ...this.auth.redirectUrl]);
       } else {
         this.showError = true;
       }

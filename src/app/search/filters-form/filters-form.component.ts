@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Place } from 'src/app/models/place';
 import { LoadingService } from 'src/app/services/loading.service';
 import { forkJoin } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'bk-filters-form',
@@ -34,7 +35,8 @@ export class FiltersFormComponent implements OnInit {
     private router: Router,
     private api: ApiService,
     private loadingService: LoadingService,
-    public searchService: SearchService
+    public searchService: SearchService,
+    private translate: TranslateService
   ) {
     this.filterForm = this.fb.group({
       dateFrom: null,
@@ -97,7 +99,7 @@ export class FiltersFormComponent implements OnInit {
 
   onSearchClick() {
     this.saveFilters();
-    this.router.navigate(['/catalog']);
+    this.router.navigate([this.translate.currentLang, 'catalog']);
   }
 
   private saveFilters() {

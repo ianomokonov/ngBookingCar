@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { ApiService } from 'src/app/services/api.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'bk-enter',
@@ -18,7 +19,8 @@ export class EnterComponent implements OnInit {
     private api: ApiService,
     private loadingService: LoadingService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public translate: TranslateService
   ) {
     this.enterForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
@@ -42,7 +44,7 @@ export class EnterComponent implements OnInit {
       (token) => {
         if (token) {
           this.auth.setToken(token);
-          this.router.navigate([this.auth.redirectUrl]);
+          this.router.navigate(['/' + this.translate.currentLang, ...this.auth.redirectUrl]);
         } else {
           this.showError = true;
         }

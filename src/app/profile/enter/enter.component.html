@@ -17,7 +17,7 @@
           Неверный email или пароль
         </div>
         <button type="submit" class="btn btn-primary">Вход</button>
-        <a class="btn btn-link" routerLink="/sign-up">Регистрация</a>
+        <a class="btn btn-link" [routerLink]="[translate.currentLang, 'sign-up']">Регистрация</a>
       </form>
     </div>
   </div>

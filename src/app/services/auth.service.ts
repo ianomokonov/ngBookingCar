@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 export class AuthService {
   private token: string;
   private readonly KEY = 'bookingUserToken';
-  public redirectUrl: string = '/profile';
+  public redirectUrl: string[] = ['profile'];
   public $userUpdate: Subject<boolean> = new Subject();
 
   constructor() {
@@ -32,6 +32,6 @@ export class AuthService {
   }
 
   public setDefaultUrl() {
-    this.redirectUrl = '/profile';
+    this.redirectUrl = ['profile'];
   }
 }

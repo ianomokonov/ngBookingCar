@@ -13,6 +13,8 @@ import { EditCarComponent } from './profile/profile-details/cars/edit-car/edit-c
 import { SignUpComponent } from './profile/sign-up/sign-up.component';
 import { PlacesComponent } from './profile/profile-details/places/places.component';
 import { AdminGuard } from './guards/admin.guard';
+import { LangGuard } from './guards/lang.guard';
+import { LangsComponent } from './langs/langs.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'search' },
@@ -58,7 +60,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot([
+    { path: '', pathMatch: 'full', redirectTo: 'en' },
+    { path: 'ru', component: LangsComponent, children: routes, canActivate: [LangGuard] },
+    { path: 'en', component: LangsComponent, children: routes, canActivate: [LangGuard] },
+  ])],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

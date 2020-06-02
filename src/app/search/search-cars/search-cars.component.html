@@ -61,7 +61,7 @@
                   {{ periodDays % 10 === 1 ? ('DAY' | translate) : ('DAYS' | translate) }}</span
                 >
                 <div>
-                  <a class="btn btn-outline-primary mb-1" [routerLink]="['/details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>
+                  <a class="btn btn-outline-primary mb-1" [routerLink]="['/' + translate.currentLang, 'details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>
                   <button class="btn btn-primary mb-1 ml-1 ml-lg-0" (click)="enter(car.id)">Редактировать</button>
                 </div>
               </div>
