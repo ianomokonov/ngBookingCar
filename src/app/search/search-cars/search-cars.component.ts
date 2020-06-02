@@ -62,7 +62,7 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
         month = this.searchService.model.dateFrom.month;
       }
 
-      if (month > 2 && month < 9) {
+      if (month > +this.searchService.summerMonths[0]-1 && month < +this.searchService.summerMonths[0]+1) {
         this.isSummer = true;
       } else {
         this.isSummer = false;

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LoadingService } from 'src/app/services/loading.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Car } from 'src/app/models/car';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'bk-details',
@@ -17,7 +18,8 @@ export class DetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private loadingService: LoadingService,
-    public translate: TranslatePipe
+    public searchService: SearchService
+
   ) {}
 
   ngOnInit(): void {

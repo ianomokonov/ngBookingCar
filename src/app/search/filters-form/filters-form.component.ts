@@ -90,8 +90,6 @@ export class FiltersFormComponent implements OnInit {
           this.filterForm.patchValue({ placeTo: places[0].id });
         }
       }
-      this.priceRange = range;
-      this.searchService.priceRange = range;
       this.loadingService.removeSubscription(subscription);
     });
     this.loadingService.addSubscription(subscription);
@@ -146,8 +144,6 @@ export class FiltersFormComponent implements OnInit {
     if (!dateTo) {
       return 1;
     }
-    console.log([new Date(dateTo.year, dateTo.month, dateTo.day, timeToArr[0], timeToArr[1]),
-    new Date(dateFrom.year, dateFrom.month, dateFrom.day, timeFromArr[0], timeFromArr[1])]);
     
     return (new Date(dateTo.year, dateTo.month, dateTo.day, timeToArr[0], timeToArr[1]).getTime() -
         new Date(dateFrom.year, dateFrom.month, dateFrom.day, timeFromArr[0], timeFromArr[1]).getTime()) <= 0;

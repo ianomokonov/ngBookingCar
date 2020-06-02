@@ -8,9 +8,8 @@ import { Filter } from '../search/search-cars/search-cars.component';
 @Injectable()
 export class SearchService {
   private _model: SearchModel;
-
-  private time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
-  public priceRange: SliderRange = { min: 1500, max: 8000 };
+  public summerMonths = ['05', '09'];
+  public winterMonths = ['10', '04'];
   public minDate: NgbDate;
   public weekDays: string[] = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   public months: string[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
