@@ -137,4 +137,19 @@ export class FiltersFormComponent implements OnInit {
   isDisabled(date: NgbDate) {
     return date.before(this.searchService.minDate);
   }
+
+  isTimeToDisabled(timeTo: string){
+    const {dateTo, dateFrom, timeFrom} = this.filterForm.value;
+    const timeFromArr = timeFrom.split(':').map((x) => +x);
+    const timeToArr = timeTo.split(':').map((x) => +x);
+
+    if (!dateTo) {
+      return 1;
+    }
+    console.log([new Date(dateTo.year, dateTo.month, dateTo.day, timeToArr[0], timeToArr[1]),
+    new Date(dateFrom.year, dateFrom.month, dateFrom.day, timeFromArr[0], timeFromArr[1])]);
+    
+    return (new Date(dateTo.year, dateTo.month, dateTo.day, timeToArr[0], timeToArr[1]).getTime() -
+        new Date(dateFrom.year, dateFrom.month, dateFrom.day, timeFromArr[0], timeFromArr[1]).getTime()) <= 0;
+  }
 }

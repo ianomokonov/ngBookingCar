@@ -55,7 +55,7 @@
         <div class="form-group mb-1">
           <label>{{ 'SEARCH.SELECT_DROP_OFF_TIME' | translate }}:</label>
           <select formControlName="timeTo" class="form-control">
-            <option [value]="time" *ngFor="let time of times">{{ time }}</option>
+            <option [value]="time" *ngFor="let time of times" [disabled]="isTimeToDisabled(time)">{{ time }}</option>
           </select>
         </div>
       </div>

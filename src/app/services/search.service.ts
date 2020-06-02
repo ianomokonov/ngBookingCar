@@ -14,7 +14,15 @@ export class SearchService {
   public minDate: NgbDate;
   public weekDays: string[] = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
   public months: string[] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-  public pricesNames: string[] = ['oneDayPrice', 'twoDaysPrice', 'threeDaysPrice', 'fourDaysPrice', 'fiveDaysPrice', 'sixDaysPrice', 'sevenDaysPrice'];
+  public pricesNames: string[] = [
+    'oneDayPrice',
+    'twoDaysPrice',
+    'threeDaysPrice',
+    'fourDaysPrice',
+    'fiveDaysPrice',
+    'sixDaysPrice',
+    'sevenDaysPrice',
+  ];
 
   public defaultModel: SearchModel;
 
@@ -45,7 +53,7 @@ export class SearchService {
       placeFrom: null,
       placeTo: null,
       timeFrom: '12:00',
-      timeTo: '12:00',
+      timeTo: '13:00',
     };
     this.$filtersUpdate = new BehaviorSubject(this._model);
   }
@@ -58,16 +66,17 @@ export class SearchService {
     if (!model) {
       return 1;
     }
-    let { dateFrom, dateTo } = model;
+    let { dateFrom, dateTo, timeFrom, timeTo } = model;
+    const timeFromArr = timeFrom.split(':').map((x) => +x);
+    const timeToArr = timeTo.split(':').map((x) => +x);
 
     if (!dateTo) {
       return 1;
     }
-
-    return (
-      (new Date(dateTo.year, dateTo.month, dateTo.day).getTime() - new Date(dateFrom.year, dateFrom.month, dateFrom.day).getTime()) /
-        (24 * 3600000) +
-      1
+    return Math.ceil(
+      (new Date(dateTo.year, dateTo.month, dateTo.day, timeToArr[0], timeToArr[1]).getTime() -
+        new Date(dateFrom.year, dateFrom.month, dateFrom.day, timeFromArr[0], timeFromArr[1]).getTime()) /
+        (24 * 3600000)
     );
   }
 }
