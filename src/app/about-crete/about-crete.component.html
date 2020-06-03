@@ -10,7 +10,7 @@
             <span class="star" [class.full]="fill === 100"> <span class="half" [style.width.%]="fill">&#9733;</span>&#9733; </span>
           </ng-template>
           <ngb-rating [(rate)]="item.rating" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
-          {{ rating }}
+          {{ item.rating | number:'1.1-2' }}
         </span>
       </h2>
       <p class="description" [innerHTML]="item.description | bkTranslate"></p>

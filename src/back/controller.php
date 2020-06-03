@@ -47,6 +47,27 @@ if(isset($_GET['key'])){
                 echo json_encode($repository->DeletePlace($_GET['placeId']));
             }
             return;
+        case 'get-places-of-interest':
+            echo json_encode($repository->GetPlacesOfInterest());
+            return;
+        case 'add-place-of-interest':
+            if($decodeToken = checkToken($token, true)){
+                $data = json_decode(file_get_contents("php://input"));
+                echo json_encode($repository->AddPlaceOfInterest($data));
+            }
+            return;
+        case 'update-place-of-interest':
+            if($decodeToken = checkToken($token, true)){
+                $data = json_decode(file_get_contents("php://input"));
+                echo json_encode($repository->UpdatePlaceOfInterest($data));
+            }
+            return;
+        case 'delete-place-of-interest':
+            if($decodeToken = checkToken($token, true)){
+                $data = json_decode(file_get_contents("php://input"));
+                echo json_encode($repository->DeletePlaceOfInterest($_GET['placeId'], $data->img));
+            }
+            return;
         case 'get-car':
             echo json_encode($repository->GetCarDetails($_GET['carId']));
             return;
@@ -60,6 +81,9 @@ if(isset($_GET['key'])){
             if($decodeToken = checkToken($token)){
                 $data = json_decode(file_get_contents("php://input"));
                 echo json_encode($repository->AddOrder($decodeToken->id, $data));
+            } else {
+                $data = json_decode(file_get_contents("php://input"));
+                echo json_encode($repository->AddOrder(false, $data));
             }
             return;
         case 'sign-in':
@@ -118,6 +142,13 @@ if(isset($_GET['key'])){
         case 'upload-car-img':
             if($decodeToken = checkToken($token, true)){
                 echo json_encode($repository->UploadCarImg($_FILES['CarImage']));
+            } else {
+                echo json_encode(array("message" => "В доступе отказано"));
+            }
+            return;
+        case 'upload-place-img':
+            if($decodeToken = checkToken($token, true)){
+                echo json_encode($repository->UploadPlaceOfInterestImg($_FILES['PlaceImage']));
             } else {
                 echo json_encode(array("message" => "В доступе отказано"));
             }

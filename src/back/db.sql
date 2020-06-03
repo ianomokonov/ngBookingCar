@@ -40,8 +40,20 @@ CREATE TABLE IF NOT EXISTS car(
 
 CREATE TABLE IF NOT EXISTS place(
     id int PRIMARY KEY AUTO_INCREMENT,
-    name varchar(255) NOT NULL
+    name varchar(255) NOT NULL,
     name_eng varchar(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS placeOfInterest(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    img varchar(255) NOT NULL,
+    name varchar(255) NOT NULL,
+    name_eng varchar(255) NOT NULL,
+    description text NOT NULL,
+    description_eng text NOT NULL,
+    road text NOT NULL,
+    road_eng text NOT NULL,
+    rating int(10) DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS carOrder(

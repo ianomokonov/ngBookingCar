@@ -72,19 +72,6 @@
             return $cars;
             
         }
-
-        public function GetPlaces(){
-            $query = $this->database->db->query("SELECT * FROM place");
-            $query->setFetchMode(PDO::FETCH_CLASS, 'Place');
-            $places = array();
-            while ($place = $query->fetch()) {
-                $place->name = array('en' => $place->name_eng, 'ru' => $place->name);
-                
-                $places[] = $place;
-            }
-            return $places;
-            
-        }
         
         public function GetFilters(){
             
@@ -108,6 +95,19 @@
             }
             
             return $options;
+            
+        }
+        
+        public function GetPlaces(){
+            $query = $this->database->db->query("SELECT * FROM place");
+            $query->setFetchMode(PDO::FETCH_CLASS, 'Place');
+            $places = array();
+            while ($place = $query->fetch()) {
+                $place->name = array('en' => $place->name_eng, 'ru' => $place->name);
+                
+                $places[] = $place;
+            }
+            return $places;
             
         }
 
@@ -148,6 +148,65 @@
         public function UploadCarImg($file){
             $newFileName = $this->filesUpload->upload($file, 'Files', uniqid());
             return $this->baseUrl.'/Files'.'/'.$newFileName;
+        }
+        
+        public function GetPlacesOfInterest(){
+            $query = $this->database->db->query("SELECT * FROM placeOfInterest");
+            $query->setFetchMode(PDO::FETCH_CLASS, 'PlaceOfInterest');
+            $places = array();
+            while ($place = $query->fetch()) {
+                $place->name = array('en' => $place->name_eng, 'ru' => $place->name);
+                $place->description = array('en' => $place->description_eng, 'ru' => $place->description);
+                $place->road = array('en' => $place->road_eng, 'ru' => $place->road);
+                
+                $places[] = $place;
+            }
+            return $places;
+            
+        }
+
+        public function AddPlaceOfInterest($place){
+            if(!isset($place->name) || !$place->name){
+                return array("message" => "Укажите название места сдачи", "method" => "AddPlace", "requestData" => $place);
+            }
+            $insert = $this->database->genInsertQuery((array)$place, 'placeOfInterest');
+            $query = $this->database->db->prepare($insert[0]);
+            if($insert[1][0]!=null){
+                $query->execute($insert[1]);
+            }
+            return $this->database->db->lastInsertId();
+        }
+
+        public function UpdatePlaceOfInterest($place){
+            if(!isset($place->id) || !$place->id){
+                return array("message" => "Укажите id места сдачи", "method" => "UpdatePlace", "requestData" => $place);
+            }
+            if(!isset($place->name) || !$place->name){
+                return array("message" => "Укажите название места сдачи", "method" => "UpdatePlace", "requestData" => $place);
+            }
+
+            $placeId = $place->id;
+            unset($place->id);
+            if($place->oldImg && $place->img != $place->oldImg){
+                $this->removeFile($place->oldImg);
+            }
+            unset($place->oldImg);
+            $a = $this->database->genUpdateQuery(array_keys((array)$place), array_values((array)$place), "placeOfInterest", $placeId);
+            $query = $this->database->db->prepare($a[0]);
+            $query->execute($a[1]);
+            return array('message' => 'Место обновлено');
+        }
+
+        public function DeletePlaceOfInterest($placeId, $img){
+            $query = $this->database->db->prepare("DELETE FROM placeOfInterest WHERE id = ?");
+            $this->removeFile($img);
+            $query->execute(array($placeId));
+            return array('message' => 'Место удалено');
+        }
+
+        public function UploadPlaceOfInterestImg($file){
+            $newFileName = $this->filesUpload->upload($file, 'PlaceImages', uniqid());
+            return $this->baseUrl.'/PlaceImages'.'/'.$newFileName;
         }
 
         public function GetCarDetails($carId){

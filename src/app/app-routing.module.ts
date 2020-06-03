@@ -18,6 +18,7 @@ import { LangsComponent } from './langs/langs.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { PolicyComponent } from './policy/policy.component';
 import { AboutCreteComponent } from './about-crete/about-crete.component';
+import { PlacesOfInterestComponent } from './profile/profile-details/places-of-interest/places-of-interest.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'search' },
@@ -89,6 +90,7 @@ const routes: Routes = [
       { path: 'history', component: BookingHistoryComponent },
       { path: 'cars', component: CarsComponent, canActivate: [AdminGuard] },
       { path: 'places', component: PlacesComponent, canActivate: [AdminGuard] },
+      { path: 'places-of-interest', component: PlacesOfInterestComponent, canActivate: [AdminGuard] },
     ],
   },
 ];

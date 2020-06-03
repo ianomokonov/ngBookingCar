@@ -22,7 +22,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         if (isAdmin) {
           this.links.push(
             { title: 'MENU.CARS', fragment: 'cars', class: 'fas fa-car' },
-            { title: 'USER.PLACES', fragment: 'places', class: 'fas fa-map-marker-alt' }
+            { title: 'USER.PLACES', fragment: 'places', class: 'fas fa-map-marker-alt' },
+            { title: 'USER.PLACES_OF_INTEREST', fragment: 'places-of-interest', class: 'fas fa-map-marked-alt' }
           );
         }
       });

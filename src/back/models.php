@@ -41,6 +41,18 @@
         public $id;
         public $name;
     }
+    
+    class PlaceOfInterest {
+        public $id;
+        public $name;
+        public $name_eng;
+        public $deacription_eng;
+        public $description;
+        public $road;
+        public $road_eng;
+        public $img;
+        public $rating;
+    }
 
     class Order {
         public $id;
@@ -65,8 +77,13 @@
         public $dateTo;
     }
     
-    class PriceRange {
-        public $min;
-        public $max;
+    class Prices{
+        public $oneDayPrice;
+        public $twoDaysPrice;
+        public $threeDaysPrice;
+        public $fourDaysPrice;
+        public $fiveDaysPrice;
+        public $sixDaysPrice;
+        public $sevenDaysPrice;
     }
 ?>

@@ -1,9 +1,9 @@
 <bk-user-info></bk-user-info>
-<div class="container pt-3">
+<div class="container pt-3 mb-3">
   <ul ngbNav [activeId]="getActive()" class="nav-tabs">
     <li [ngbNavItem]="link.fragment" *ngFor="let link of links">
       <a ngbNavLink [routerLink]="link.fragment" routerLinkActive="active"
-        ><span class="d-none d-sm-inline">{{ link.title | translate }}</span> <i class="{{link.class}} d-sm-none"></i
+        ><span class="d-none d-md-inline">{{ link.title | translate }}</span> <i class="{{link.class}} d-md-none"></i
       ></a>
     </li>
   </ul>

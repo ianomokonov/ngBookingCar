@@ -10,6 +10,7 @@ import { User } from '../models/user';
 import { environment } from 'src/environments/environment.prod';
 import { SliderRange } from '../utils/double-slider/double-slider.component';
 import { Filter } from '../search/search-cars/search-cars.component';
+import { PlaceOfInterest } from '../models/place-of-interest';
 // import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -52,11 +53,11 @@ export class ApiService {
       if (model.dateTo) {
         url.searchParams.set('dateTo', this.ngbDateToString(model.dateTo));
       }
-      if(model.filters){
-        model.filters.forEach(f => {
-          const options = f.options.map(o => o.name).join(',');
+      if (model.filters) {
+        model.filters.forEach((f) => {
+          const options = f.options.map((o) => o.name).join(',');
           url.searchParams.append(f.prop, options);
-        })
+        });
       }
     }
     if (limit) {
@@ -79,6 +80,26 @@ export class ApiService {
 
   public updateCar(data): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}?key=update-car`, data);
+  }
+
+  public addPlaceOfInterest(data): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}?key=add-place-of-interest`, data);
+  }
+
+  public updatePlaceOfInterest(data): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}?key=update-place-of-interest`, data);
+  }
+
+  public deletePlaceOfInterest(id, img): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}?key=delete-place-of-interest&placeId=${id}`, { img });
+  }
+
+  public getPlacesOfInterest(): Observable<PlaceOfInterest[]> {
+    return this.http.get<PlaceOfInterest[]>(`${this.baseUrl}?key=get-places-of-interest`);
+  }
+
+  public uploadPlaceImg(data): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}?key=upload-place-img`, data);
   }
 
   public getPlaces(): Observable<Place[]> {

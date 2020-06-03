@@ -48,6 +48,7 @@ import { LangsComponent } from './langs/langs.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { PolicyComponent } from './policy/policy.component';
 import { AboutCreteComponent } from './about-crete/about-crete.component';
+import { PlacesOfInterestComponent } from './profile/profile-details/places-of-interest/places-of-interest.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { AboutCreteComponent } from './about-crete/about-crete.component';
     ContactsComponent,
     PolicyComponent,
     AboutCreteComponent,
+    PlacesOfInterestComponent,
   ],
   imports: [
     BrowserModule,

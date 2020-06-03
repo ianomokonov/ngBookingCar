@@ -5,7 +5,7 @@
     "PROFILE": "Profile",
     "CONTACTS": "Contacts",
     "POLICY": "Policy",
-    "ABOUT_CRETE": "Aboute Crete"
+    "ABOUT_CRETE": "About Crete"
   },
   "SEARCH": {
     "BTN": "Search",
@@ -140,7 +140,8 @@
     "READY": "Ready",
     "CANCEL": "Cancel",
     "ENTER_PROFILE": "Enter your profile",
-    "SHOULD_ENTER_PROFILE": "You should sign in or sign up"
+    "SHOULD_ENTER_PROFILE": "You should sign in or sign up",
+    "PLACES_OF_INTEREST": "Places of interest"
   },
   "CONDITIONS": {
     "QUICK": "Quick pick-up / return directly at the Airport",
