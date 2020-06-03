@@ -137,6 +137,15 @@
     "READY": "Ready",
     "CANCEL": "Cancel"
   },
+  "CONDITIONS": {
+    "QUICK": "Quick pick-up / return directly at the Airport",
+    "FINAL": "Final price and No Extra payment",
+    "NO_CREDIT": "No credit card deposit",
+    "COVERAGE": "Coverage without Excess",
+    "WUG": "WUG insurance",
+    "THEFT": "Theft and Fire insurance",
+    "BOOK": "Book specific car, not category"
+  },
   "NOV": "November",
   "DEC": "December",
   "JAN": "January",

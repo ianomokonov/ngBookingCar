@@ -45,34 +45,16 @@
                   <span class="car-kpp"><i class="fas fa-cogs"></i>{{ 'CARS.' + car.kpp | translate }}</span>
                   <span class="car-kpp" *ngIf="car.class"><i class="fas fa-car"></i>{{ 'CARS.' + car.bodyType | translate }}</span>
                 </div>
-              </div>
-              <div class="price mt-3">
-                <div class="prices">
-                  <div class="price-value p-1 px-2 border rounded">
-                    <b>1 {{ 'DAY' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].oneDayPrice }} €
-                  </div>
-                  <div class="price-value p-1 px-2 border rounded">
-                    <b>2 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].twoDaysPrice }} €
-                  </div>
-                  <div class="price-value p-1 px-2 border rounded">
-                    <b>3 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].threeDaysPrice }} €
-                  </div>
-                  <div class="price-value p-1 px-2 border rounded">
-                    <b>4 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].fourDaysPrice }} €
-                  </div>
-                  <div class="price-value p-1 px-2 border rounded">
-                    <b>5 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].fiveDaysPrice }} €
-                  </div>
-                  <div class="price-value p-1 px-2 border rounded">
-                    <b>6 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].sixDaysPrice }} €
-                  </div>
-                  <div class="price-value p-1 px-2 border rounded">
-                    <b>7 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrices' : 'winterPrices'].sevenDaysPrice }} €
-                  </div>
-                  <div class="price-value p-1 px-2 border rounded">
-                    <b>>7 {{ 'DAYS' | translate }}</b> = {{ car[searchService.isSummer ? 'summerPrice' : 'winterPrice'] }} € /
-                    {{ 'DAY' | translate }}
-                  </div>
+                <div class="conditions border-top pt-3 mt-3">
+                  <ul>
+                    <li><span class="important">{{'CONDITIONS.QUICK' | translate}}</span></li>
+                    <li><span class="important">{{'CONDITIONS.FINAL' | translate}}</span></li>
+                    <li><span>{{'CONDITIONS.NO_CREDIT' | translate}}</span></li>
+                    <li><span>{{'CONDITIONS.COVERAGE' | translate}}</span></li>
+                    <li><span>{{'CONDITIONS.WUG' | translate}}</span></li>
+                    <li><span>{{'CONDITIONS.THEFT' | translate}}</span></li>
+                    <li><span>{{'CONDITIONS.BOOK' | translate}}</span></li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -84,7 +66,7 @@
                   {{ searchService.periodDays % 10 === 1 ? ('DAY' | translate) : ('DAYS' | translate) }}</span
                 >
                 <div>
-                  <a class="btn btn-outline-primary mb-1" [routerLink]="['/details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>
+                  <a class="btn btn-outline-primary mb-1" [routerLink]="['/' + translate.currentLang, 'details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>
                   <a class="btn btn-primary mb-1 ml-1" [routerLink]="['/booking', car.id]">{{ 'CARS.BOOK' | translate }}</a>
                 </div>
               </div>

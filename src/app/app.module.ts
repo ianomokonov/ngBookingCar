@@ -43,6 +43,8 @@ import { TranslateModule, TranslateLoader, TranslatePipe } from '@ngx-translate/
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { FooterComponent } from './footer/footer.component';
 import { BkTranslatePipe } from './utils/pipes/translate.pipe';
+import { LangGuard } from './guards/lang.guard';
+import { LangsComponent } from './langs/langs.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +75,7 @@ import { BkTranslatePipe } from './utils/pipes/translate.pipe';
     PlaceComponent,
     LoaderComponent,
     FooterComponent,
+    LangsComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,6 +100,7 @@ import { BkTranslatePipe } from './utils/pipes/translate.pipe';
     FormBuilder,
     ProfileGuard,
     AdminGuard,
+    LangGuard,
     ApiService,
     AuthService,
     SearchService,

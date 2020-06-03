@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Place } from 'src/app/models/place';
 import { LoadingService } from 'src/app/services/loading.service';
 import { forkJoin } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'bk-filters-form',
@@ -34,7 +35,8 @@ export class FiltersFormComponent implements OnInit {
     private router: Router,
     private api: ApiService,
     private loadingService: LoadingService,
-    public searchService: SearchService
+    public searchService: SearchService,
+    private translate: TranslateService
   ) {
     this.filterForm = this.fb.group({
       dateFrom: null,
@@ -87,8 +89,6 @@ export class FiltersFormComponent implements OnInit {
           this.filterForm.patchValue({ placeTo: places[0].id });
         }
       }
-      this.priceRange = range;
-      this.searchService.priceRange = range;
       this.loadingService.removeSubscription(subscription);
     });
     this.loadingService.addSubscription(subscription);
@@ -96,7 +96,7 @@ export class FiltersFormComponent implements OnInit {
 
   onSearchClick() {
     this.saveFilters();
-    this.router.navigate(['/catalog']);
+    this.router.navigate([this.translate.currentLang, 'catalog']);
   }
 
   private saveFilters() {
@@ -119,12 +119,25 @@ export class FiltersFormComponent implements OnInit {
     this.dates.toDate = {
       weekDay: this.searchService.weekDays[date.getDay()],
       day: date.getDate(),
-      month: this.searchService.months[date.getMonth() - 1],
+      month: this.searchService.months[date.getMonth()],
       year: date.getFullYear(),
     };
   }
 
   isDisabled(date: NgbDate) {
     return date.before(this.searchService.minDate);
+  }
+
+  isTimeToDisabled(timeTo: string){
+    const {dateTo, dateFrom, timeFrom} = this.filterForm.value;
+    const timeFromArr = timeFrom.split(':').map((x) => +x);
+    const timeToArr = timeTo.split(':').map((x) => +x);
+
+    if (!dateTo) {
+      return 1;
+    }
+    
+    return (new Date(dateTo.year, dateTo.month, dateTo.day, timeToArr[0], timeToArr[1]).getTime() -
+        new Date(dateFrom.year, dateFrom.month, dateFrom.day, timeFromArr[0], timeFromArr[1]).getTime()) <= 0;
   }
 }

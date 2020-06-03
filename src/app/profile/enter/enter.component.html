@@ -17,7 +17,7 @@
           {{'USER.INVALID_LOGIN' | translate}}
         </div>
         <button type="submit" class="btn btn-primary">{{'USER.ENTER' | translate}}</button>
-        <a class="btn btn-link" routerLink="/sign-up">{{'USER.REGISTRATE' | translate}}</a>
+        <a class="btn btn-link" [routerLink]="[translate.currentLang, 'sign-up']">{{'USER.REGISTRATE' | translate}}</a>
       </form>
     </div>
   </div>

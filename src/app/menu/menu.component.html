@@ -5,8 +5,8 @@
     </div>
     <nav class="nav d-flex flex-nowrap">
       <div class="d-flex">
-        <a class="nav-link" routerLink="/search" routerLinkActive="active">{{ 'MENU.SEARCH' | translate }}</a>
-        <a class="nav-link" routerLink="/catalog" routerLinkActive="active">{{ 'MENU.CARS' | translate }}</a>
+        <a class="nav-link" [routerLink]="['search']" routerLinkActive="active">{{ 'MENU.SEARCH' | translate }}</a>
+        <a class="nav-link" [routerLink]="['catalog']" routerLinkActive="active">{{ 'MENU.CARS' | translate }}</a>
       </div>
       <div class="d-flex"> 
         <a class="nav-link mr-2" routerLink="/profile" routerLinkActive="active"

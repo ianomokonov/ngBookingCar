@@ -18,6 +18,17 @@
           <p>
             {{ car.description | bkTranslate }}
           </p>
+          <div class="conditions border-top pt-3 mt-3">
+            <ul>
+              <li><span class="important">{{'CONDITIONS.QUICK' | translate}}</span></li>
+              <li><span class="important">{{'CONDITIONS.FINAL' | translate}}</span></li>
+              <li><span>{{'CONDITIONS.NO_CREDIT' | translate}}</span></li>
+              <li><span>{{'CONDITIONS.COVERAGE' | translate}}</span></li>
+              <li><span>{{'CONDITIONS.WUG' | translate}}</span></li>
+              <li><span>{{'CONDITIONS.THEFT' | translate}}</span></li>
+              <li><span>{{'CONDITIONS.BOOK' | translate}}</span></li>
+            </ul>
+          </div>
           <div class="price pb-3">
             <a [routerLink]="['/booking', car.id]" class="btn btn-primary mr-3">Заказать</a>
           </div>
@@ -28,6 +39,17 @@
       <p>
         {{ car.description | bkTranslate }}
       </p>
+      <div class="conditions border-top pt-3 mt-3">
+        <ul>
+          <li><span class="important">{{'CONDITIONS.QUICK' | translate}}</span></li>
+          <li><span class="important">{{'CONDITIONS.FINAL' | translate}}</span></li>
+          <li><span>{{'CONDITIONS.NO_CREDIT' | translate}}</span></li>
+          <li><span>{{'CONDITIONS.COVERAGE' | translate}}</span></li>
+          <li><span>{{'CONDITIONS.WUG' | translate}}</span></li>
+          <li><span>{{'CONDITIONS.THEFT' | translate}}</span></li>
+          <li><span>{{'CONDITIONS.BOOK' | translate}}</span></li>
+        </ul>
+      </div>
       <div class="price pb-3">
         <a [routerLink]="['/booking', car.id]" class="btn btn-primary mr-3">Заказать</a>
       </div>
@@ -115,7 +137,7 @@
   <h2>{{ 'CARS.PRICES' | translate }}</h2>
   <div class="prices">
     <div class="price border rounded">
-      <div class="header">01.03 - 31.08</div>
+      <div class="header">01.{{searchService.summerMonths[0]}} - 30.{{searchService.summerMonths[1]}}</div>
       <div class="price-value border p-1 px-2 rounded">
         <b>1 {{ 'DAY' | translate }}</b> = {{ car.summerPrices.oneDayPrice }} €
       </div>
@@ -142,7 +164,7 @@
       </div>
     </div>
     <div class="price border rounded">
-      <div class="header">01.09 - 28.02</div>
+      <div class="header">01.{{searchService.winterMonths[0]}} - 30.{{searchService.winterMonths[1]}}</div>
       <div class="price-value border p-1 px-2 rounded">
         <b>1 {{ 'DAY' | translate }}</b> = {{ car.winterPrices.oneDayPrice }} €
       </div>

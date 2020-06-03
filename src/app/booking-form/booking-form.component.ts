@@ -141,7 +141,7 @@ export class BookingFormComponent implements OnInit {
   }
 
   enter() {
-    this.auth.redirectUrl = `/booking/${this.car.id}`;
+    this.auth.redirectUrl = ['booking', this.car.id];
     this.router.navigate(['/enter']);
   }
 

@@ -3,6 +3,25 @@
     display: inline;
     margin-right: 1rem;
 }
+.conditions{
+    
+    ul{
+      padding-left: 20px;
+
+      li{
+        color: $brand-red;
+
+        span{
+          color: black;
+
+          &.important{
+            font-weight: bold;
+            color: $brand-red;
+          }
+        }
+      }
+    }
+  }
 .characteristic{
     
     ul{

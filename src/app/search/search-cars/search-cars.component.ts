@@ -6,6 +6,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'bk-search-cars',
@@ -23,17 +24,20 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
     public searchService: SearchService,
     private auth: AuthService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public translate: TranslateService
   ) {
     this.filterFormArray = this.fb.array([]);
     this.filterFormArray.valueChanges.pipe(filter(() => this.isFiltersReady)).subscribe((value: Filter[]) => {
       const model = this.searchService.model || new SearchModel();
-      model.filters = value.map(f => {
-        f.options = f.options.filter(o => o.isChecked);
-        return f;
-      }).filter(f => f.options.length);
+      model.filters = value
+        .map((f) => {
+          f.options = f.options.filter((o) => o.isChecked);
+          return f;
+        })
+        .filter((f) => f.options.length);
       this.updateCars(model);
-    })
+    });
   }
 
   cars;
@@ -92,11 +96,11 @@ export class SearchCarsComponent implements OnInit, OnDestroy {
   enter(carId) {
     // TODO убрать, когда сделаю личный кабинет
     if (this.auth.getToken()) {
-      this.router.navigate([`/edit-car/${carId}`]);
+      this.router.navigate([this.translate.currentLang, 'edit-car', carId]);
       return;
     }
-    this.auth.redirectUrl = `/edit-car/${carId}`;
-    this.router.navigate(['/enter']);
+    this.auth.redirectUrl = ['edit-car', carId];
+    this.router.navigate([this.translate.currentLang, 'enter']);
   }
 }
 

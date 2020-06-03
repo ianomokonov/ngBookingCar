@@ -10,9 +10,9 @@ export class SearchService {
   private _model: SearchModel;
   public periodDays: number = 1;
   public isSummer: boolean = true;
-
-  private time: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
   public priceRange: SliderRange = { min: 1500, max: 8000 };
+  public summerMonths = ['05', '09'];
+  public winterMonths = ['10', '04'];
   public minDate: NgbDate;
   public times: string[] = [];
   public weekDays: string[] = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -72,7 +72,7 @@ export class SearchService {
       placeFrom: null,
       placeTo: null,
       timeFrom: '12:00',
-      timeTo: '12:00',
+      timeTo: '13:00',
     };
     this.$filtersUpdate = new BehaviorSubject(this._model);
   }
@@ -92,16 +92,17 @@ export class SearchService {
     if (!model) {
       return 1;
     }
-    let { dateFrom, dateTo } = model;
+    let { dateFrom, dateTo, timeFrom, timeTo } = model;
+    const timeFromArr = timeFrom.split(':').map((x) => +x);
+    const timeToArr = timeTo.split(':').map((x) => +x);
 
     if (!dateTo) {
       return 1;
     }
-
-    return (
-      (new Date(dateTo.year, dateTo.month, dateTo.day).getTime() - new Date(dateFrom.year, dateFrom.month, dateFrom.day).getTime()) /
-        (24 * 3600000) +
-      1
+    return Math.ceil(
+      (new Date(dateTo.year, dateTo.month, dateTo.day, timeToArr[0], timeToArr[1]).getTime() -
+        new Date(dateFrom.year, dateFrom.month, dateFrom.day, timeFromArr[0], timeFromArr[1]).getTime()) /
+        (24 * 3600000)
     );
   }
 
