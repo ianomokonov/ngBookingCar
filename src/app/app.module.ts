@@ -46,6 +46,7 @@ import { BkTranslatePipe } from './utils/pipes/translate.pipe';
 import { LangGuard } from './guards/lang.guard';
 import { LangsComponent } from './langs/langs.component';
 import { ContactsComponent } from './contacts/contacts.component';
+import { PolicyComponent } from './policy/policy.component';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { ContactsComponent } from './contacts/contacts.component';
     FooterComponent,
     LangsComponent,
     ContactsComponent,
+    PolicyComponent,
   ],
   imports: [
     BrowserModule,

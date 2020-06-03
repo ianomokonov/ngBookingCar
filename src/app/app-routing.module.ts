@@ -16,6 +16,7 @@ import { AdminGuard } from './guards/admin.guard';
 import { LangGuard } from './guards/lang.guard';
 import { LangsComponent } from './langs/langs.component';
 import { ContactsComponent } from './contacts/contacts.component';
+import { PolicyComponent } from './policy/policy.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'search' },
@@ -44,6 +45,17 @@ const routes: Routes = [
   {
     path: 'contacts',
     component: ContactsComponent,
+    data: {
+      title: 'Car rental company in Crete - CAR4CRETE',
+      description:
+        'Booking a car in Crete with CAR4CRETE is very easy. Write online chat, call on telephone or Whats up, mail us. Rent a car Heraklion airport Crete, rent a car Heraklion port Crete. We are in touch 24/7.+30 69 4936 7278 info@carcrete24.com ',
+      keywords:
+        'Rent a car heraklion crete, rent a car heraklion airport crete, rent a car heraklion port, rent a car heraklion greece, car rental in Crete Heraklion Airport / rent a car deals with CAR4CRETE',
+    },
+  },
+  {
+    path: 'policy',
+    component: PolicyComponent,
     data: {
       title: 'Car rental company in Crete - CAR4CRETE',
       description:

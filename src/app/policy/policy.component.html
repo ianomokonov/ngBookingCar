@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="bk-card my-3">
+    <p [innerHTML]="'POLICY.HEADER' | translate"></p>
+    <p [innerHTML]="'POLICY.TEXT' | translate"></p>
+  </div>
+  <div class="conditions pt-5">
+    <div class="item row m-0 pb-3 mb-3" *ngFor="let item of items">
+      <div class="d-none d-sm-block col-1 pl-0"><i class="fas fa-shield-alt"></i></div>
+      <div class="col-11 pl-0 pl-sm-3">
+        <h4 class="title">{{ item.name | bkTranslate }}</h4>
+        <p class="mb-0" [innerHTML]="item.description | bkTranslate"></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="arrow">
+  <div class="left"></div>
+  <div class="right"></div>
+</div>
+<div class="container py-4">
+  <h2 class="text-center mb-5">{{ 'POLICY.CONDITIONS' | translate }}</h2>
+  <div class="conditions row">
+    <div class="condition col-md-6 col-lg-4 d-flex mb-3" *ngFor="let item of conditions">
+      <div class="img">
+        <img [src]="item.img" class="w-100" />
+      </div>
+      <div class="content pl-3">
+        <h4>{{ item.name | bkTranslate }}</h4>
+        <small class="text-muted">{{ item.description | bkTranslate }}</small>
+      </div>
+    </div>
+  </div>
+</div>

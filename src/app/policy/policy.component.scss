@@ -1,0 +1,56 @@
+@import '../../styles/colors';
+
+.item {
+  .col-1 {
+    i {
+      font-size: 52px;
+      color: rgb(7, 102, 7);
+    }
+  }
+}
+
+.arrow {
+  position: relative;
+  height: 40px;
+  margin-top: 60px;
+  div {
+    height: 10px;
+    background-color: $brand-red;
+    width: calc(50% + 1px);
+    position: absolute;
+
+    &.left {
+      transform: rotate(-3deg);
+      left: 0;
+    }
+    &.right {
+      right: 0;
+      transform: rotate(3deg);
+    }
+  }
+}
+
+.conditions {
+  .condition {
+    .img {
+      max-width: 100px;
+      min-width: 100px;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .item:not(:last-child) {
+    border-bottom: 1px solid #dee2e6;
+  }
+  .conditions {
+    .condition {
+      .img {
+        display: none;
+      }
+      small{
+          font-size: 16px;
+      }
+    }
+  }
+}
