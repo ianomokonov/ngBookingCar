@@ -183,7 +183,7 @@ export class OrderComponent implements OnInit {
   private setOrderSum(model: SearchModel) {
     const periodDays = SearchService.setPeriodDays(model);
 
-    this.order.orderSum = this.searchService.getCarPrice(this.order.car, periodDays);
+    this.order.orderSum = this.searchService.getCarPrice(this.order.car, periodDays, false);
   }
 
   ngOnInit(): void {}

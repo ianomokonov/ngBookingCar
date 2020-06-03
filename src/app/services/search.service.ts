@@ -106,7 +106,10 @@ export class SearchService {
     );
   }
 
-  public getCarPrice({ summerPrice, winterPrice, summerPrices, winterPrices }, periodDays = this.periodDays) {
+  public getCarPrice({ summerPrice, winterPrice, summerPrices, winterPrices }, periodDays = this.periodDays, getCheapest = true) {
+    if(getCheapest && (!this.model || !this.model.dateFrom)){
+      return Math.min(winterPrice, winterPrices.oneDayPrice);
+    }
     let prices = null;
     let price = null;
     if (this.isSummer) {
