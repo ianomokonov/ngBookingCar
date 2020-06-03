@@ -55,7 +55,7 @@
                 }
             }
             $queryText = rtrim($queryText,'AND ');
-            $queryText = $queryText." ORDER BY price ASC ";
+            $queryText = $queryText." ORDER BY summerPrice ASC ";
             //return $queryText;
             $query = $this->database->db->query($queryText);
             $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
@@ -104,7 +104,7 @@
              $options = array();
             while ($option = $query->fetch()) {
                 
-                $options[] = array(name => $option[$name]);
+                $options[] = array('name' => $option[$name]);
             }
             
             return $options;
@@ -359,6 +359,7 @@
         public function AddCar($car = null){
             if($car != null){
                 try{
+                    
                     $wPrices = $car->winterPrices;
                     $sPrices = $car->summerPrices;
                     unset($car->winterPrices);
@@ -369,6 +370,7 @@
                         $query->execute($insert[1]);
                     }
                     $carId = $this->database->db->lastInsertId();
+                   
                     $this->addPrices($carId, $wPrices, 'winter_prices');
                     $this->addPrices($carId, $sPrices, 'summer_prices');
                     return $carId;
@@ -382,9 +384,11 @@
         }
         
         private function addPrices($carId, $prices, $table){
-            $prices['Id'] = $carId; 
-            $q = $this->genInsertQuery((array)$prices,$table);
-            $s = $this->db->prepare($q[0]);
+            
+            $prices->Id = $carId;
+            $q = $this->database->genInsertQuery((array)$prices,$table);
+            
+            $s = $this->database->db->prepare($q[0]);
             if ($q[1][0]!=null) {
                 $s->execute($q[1]);
             }
