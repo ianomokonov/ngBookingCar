@@ -2,7 +2,8 @@
   "MENU": {
     "SEARCH": "Search",
     "CARS": "Cars",
-    "PROFILE": "Profile"
+    "PROFILE": "Profile",
+    "CONTACTS": "Contacts"
   },
   "SEARCH": {
     "BTN": "Search",
@@ -147,6 +148,9 @@
     "WUG": "WUG insurance",
     "THEFT": "Theft and Fire insurance",
     "BOOK": "Book specific car, not category"
+  },
+  "CONTACTS":{
+    "TEXT": "<p>Car Hire <strong>CAR4CRETE</strong> is here to welcome you! If you are going to visit Crete, you will definitely need a reliable rent a car company. Our goal is to help you feel at home on the island. Just get in a rented car and start exploring the sights of Crete with comfort, at your own pace and according to your own schedule.<p>Hire a car to be delivered <strong>to the airport of Heraklion, Port</strong> and our manager will be waiting for you at the arrivals exit of the airport/port with a welcome sign. If you wish to start your journey from a <strong>hotel</strong>, we will ensure your vehicle is there at the right time.<p>Booking a car in Crete with CAR4CRETE is very easy. Write to online chat, call on telephone or Whats up, mail us. We are in touch 24/7 - before you come and when you are in Crete."
   },
   "NOV": "November",
   "DEC": "December",

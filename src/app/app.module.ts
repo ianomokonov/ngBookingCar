@@ -45,6 +45,7 @@ import { FooterComponent } from './footer/footer.component';
 import { BkTranslatePipe } from './utils/pipes/translate.pipe';
 import { LangGuard } from './guards/lang.guard';
 import { LangsComponent } from './langs/langs.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { LangsComponent } from './langs/langs.component';
     LoaderComponent,
     FooterComponent,
     LangsComponent,
+    ContactsComponent,
   ],
   imports: [
     BrowserModule,

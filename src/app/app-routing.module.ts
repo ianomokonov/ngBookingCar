@@ -15,6 +15,7 @@ import { PlacesComponent } from './profile/profile-details/places/places.compone
 import { AdminGuard } from './guards/admin.guard';
 import { LangGuard } from './guards/lang.guard';
 import { LangsComponent } from './langs/langs.component';
+import { ContactsComponent } from './contacts/contacts.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'search' },
@@ -40,6 +41,17 @@ const routes: Routes = [
         'Hire car heraklion airport, Hire cars crete - heraklion airport, Best car hire heraklion airport, Cheap car hire crete heraklion airport, Hire a car in Crete, Car hire in crete greece, Car hire in crete hersonissos, Car hire in crete airport',
     },
   },
+  {
+    path: 'contacts',
+    component: ContactsComponent,
+    data: {
+      title: 'Car rental company in Crete - CAR4CRETE',
+      description:
+        'Booking a car in Crete with CAR4CRETE is very easy. Write online chat, call on telephone or Whats up, mail us. Rent a car Heraklion airport Crete, rent a car Heraklion port Crete. We are in touch 24/7.+30 69 4936 7278 info@carcrete24.com ',
+      keywords:
+        'Rent a car heraklion crete, rent a car heraklion airport crete, rent a car heraklion port, rent a car heraklion greece, car rental in Crete Heraklion Airport / rent a car deals with CAR4CRETE',
+    },
+  },
   { path: 'details/:id', component: DetailsComponent },
   { path: 'booking/:id', component: BookingFormComponent },
   { path: 'edit-car/:id', component: EditCarComponent, canActivate: [AdminGuard] },
@@ -60,11 +72,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot([
-    { path: '', pathMatch: 'full', redirectTo: 'en' },
-    { path: 'ru', component: LangsComponent, children: routes, canActivate: [LangGuard] },
-    { path: 'en', component: LangsComponent, children: routes, canActivate: [LangGuard] },
-  ])],
+  imports: [
+    RouterModule.forRoot([
+      { path: '', pathMatch: 'full', redirectTo: 'en' },
+      { path: 'ru', component: LangsComponent, children: routes, canActivate: [LangGuard] },
+      { path: 'en', component: LangsComponent, children: routes, canActivate: [LangGuard] },
+    ]),
+  ],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

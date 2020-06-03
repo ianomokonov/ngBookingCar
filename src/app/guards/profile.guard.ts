@@ -21,7 +21,6 @@ export class ProfileGuard implements CanActivate {
       //   })
       // );
     }
-    console.log(this.translate.currentLang)
     this.router.navigate([this.translate.currentLang, 'enter']);
     return false;
   }

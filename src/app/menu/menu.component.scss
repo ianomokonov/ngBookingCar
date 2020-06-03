@@ -50,7 +50,10 @@ nav {
 
 @media (max-width: 767px) {
   .logo {
-    margin-right: 3rem;
+    h2{
+      margin-right: 0;
+    }
+    margin-right: 1rem;
   }
 }
 

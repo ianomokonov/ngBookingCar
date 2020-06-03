@@ -1,0 +1,85 @@
+.info {
+  position: relative;
+  height: 400px;
+  margin: 100px 0;
+  .iframe {
+      width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .info-card {
+    padding-top: 35px;
+    background-color: #ffffff;
+    position: absolute;
+    z-index: 1;
+    top: -40px;
+    right: calc(((100% - 1140px) / 2) + 15px);
+    height: calc(100% + 80px);
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.349);
+
+    .item {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+
+      i {
+        font-size: 28px;
+        width: 40px;
+
+        &.fa-whatsapp {
+          font-size: 34px;
+        }
+      }
+
+      .text {
+        padding-left: 1rem;
+
+        a {
+          color: black;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1199px) {
+  .info-card {
+    right: calc(((100% - 960px) / 2) + 15px) !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .info-card {
+    right: calc(((100% - 720px) / 2) + 15px) !important;
+  }
+}
+@media (max-width: 767px) {
+  .info {
+      margin-top: 1rem;
+      height: unset;
+    .iframe {
+      position: unset;
+    }
+    .info-card {
+      right: unset !important;
+      position: unset !important;
+      max-width: 540px;
+      width: 100%;
+      margin: 20px auto;
+    }
+  }
+}
+@media (max-width: 575px) {
+  .info {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    .iframe {
+        width: 100%;
+    }
+  }
+}
