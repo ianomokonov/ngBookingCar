@@ -53,12 +53,22 @@ nav {
     h2{
       margin-right: 0;
     }
-    margin-right: 1rem;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 991px) {
   .container {
     flex-direction: column;
+  }
+
+  .logo{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .nav{
+    .nav-link{
+      padding-top: 0;
+    }
   }
 }
