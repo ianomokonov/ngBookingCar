@@ -4,6 +4,7 @@ import { Order } from 'src/app/models/order';
 import { takeWhile } from 'rxjs/internal/operators';
 import { Place } from 'src/app/models/place';
 import { LoadingService } from 'src/app/services/loading.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'bk-booking-history',
@@ -16,30 +17,36 @@ export class BookingHistoryComponent implements OnInit {
   private rxAlive: boolean = true;
   public isAdmin: boolean;
 
-  constructor(private api: ApiService, private loadingService: LoadingService) {}
+  constructor(private api: ApiService, private loadingService: LoadingService, public translate: TranslateService) {}
 
   ngOnInit(): void {
     this.getOrders();
-    this.api
+    const getPlaces = this.api
       .getPlaces()
       .pipe(takeWhile(() => this.rxAlive))
       .subscribe((places) => {
         this.places = places;
+        this.loadingService.removeSubscription(getPlaces);
       });
-    this.api
+    this.loadingService.addSubscription(getPlaces);
+    const checkAccess = this.api
       .checkAccess()
       .pipe(takeWhile(() => this.rxAlive))
       .subscribe((isAdmin) => {
         this.isAdmin = isAdmin;
+        this.loadingService.removeSubscription(checkAccess);
       });
+    this.loadingService.addSubscription(checkAccess);
   }
 
   getOrders() {
-    this.api
+    const getOrders = this.api
       .getOrders()
       .pipe(takeWhile(() => this.rxAlive))
       .subscribe((orders) => {
         this.orders = orders;
+        this.loadingService.removeSubscription(getOrders);
       });
+    this.loadingService.addSubscription(getOrders);
   }
 }

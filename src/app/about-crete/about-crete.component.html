@@ -1,0 +1,20 @@
+<div class="item" [ngStyle]="{ 'background-image': 'url(' + item.img + ')' }" *ngFor="let item of placesOfInterest">
+  <div class="shadow"></div>
+  <div class="container">
+    <img [src]="item.img" />
+    <div class="info">
+      <h2 class="header">
+        <span>{{ item.name | bkTranslate }}</span>
+        <span class="rating">
+          <ng-template #t let-fill="fill">
+            <span class="star" [class.full]="fill === 100"> <span class="half" [style.width.%]="fill">&#9733;</span>&#9733; </span>
+          </ng-template>
+          <ngb-rating [(rate)]="item.rating" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
+          {{ rating }}
+        </span>
+      </h2>
+      <p class="description" [innerHTML]="item.description | bkTranslate"></p>
+      <div class="road" [innerHTML]="item.road | bkTranslate"></div>
+    </div>
+  </div>
+</div>

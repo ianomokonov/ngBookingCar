@@ -47,6 +47,7 @@ import { LangGuard } from './guards/lang.guard';
 import { LangsComponent } from './langs/langs.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { PolicyComponent } from './policy/policy.component';
+import { AboutCreteComponent } from './about-crete/about-crete.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { PolicyComponent } from './policy/policy.component';
     LangsComponent,
     ContactsComponent,
     PolicyComponent,
+    AboutCreteComponent,
   ],
   imports: [
     BrowserModule,

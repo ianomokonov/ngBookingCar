@@ -1,11 +1,11 @@
 <div class="history">
   <div class="orders">
-    <bk-order [carOrder]="order" [places]="places" [isAdmin]="isAdmin" *ngFor="let order of orders;" (orderUpdated)="getOrders()"></bk-order>
-    <div class="text-center pt-1" *ngIf="!orders?.length" >
+    <bk-order [carOrder]="order" [places]="places" [isAdmin]="isAdmin" *ngFor="let order of orders" (orderUpdated)="getOrders()"></bk-order>
+    <div class="text-center pt-1" *ngIf="!orders?.length">
       <div class="no-data">
         {{ 'USER.NO_ORDERS' | translate }}
       </div>
-      <a class="btn btn-link" routerLink="/catalog">{{ 'USER.ADD_ORDER' | translate }}</a>
+      <a class="btn btn-link" [routerLink]="['/' + translate.currentLang, 'catalog']">{{ 'USER.ADD_ORDER' | translate }}</a>
     </div>
   </div>
 </div>
