@@ -104,7 +104,7 @@
              $options = array();
             while ($option = $query->fetch()) {
                 
-                $options[] = array('name' => $option[$name]);
+                $options[] = array(name => $option[$name]);
             }
             
             return $options;
@@ -165,6 +165,7 @@
             $car->airBags = $car->airBags == '1';
             $car->summerPrices = $this->getPrices($carId, false);
             $car->winterPrices = $this->getPrices($carId, true);
+            
             return $car;
             
         }
@@ -254,11 +255,17 @@
         }
 
         public function AddOrder($userId, $order){
-            if($userId == null){
-                return array("message" => "Вы не вошли", "method" => "AddOrder", "requestData" => array("userId" => $userId, "order" => $order));
-            }
             if($order == null){
                 return array("message" => "Заказ пуст", "method" => "AddOrder", "requestData" => array("userId" => $userId, "order" => $order));
+            }
+            $user = $order->user;
+            unset($order->user);
+            if(!$userId){
+                $id = $this->CreateUser($user);
+                if(!$id){
+                     return array("message" => "Не удалось создать пользователя", "method" => "AddOrder", "requestData" => array("userId" => $userId, "order" => $order));
+                }
+                $userId = $id;
             }
             $order->userId = $userId;
             $insert = $this->database->genInsertQuery((array)$order, 'carOrder');
@@ -334,18 +341,33 @@
             return array('message' => 'Пользователь обновлен');
         }
 
-        public function SignUp($user = null){
+        public function SignUp($user = null, $token = true){
             if($user != null){
                 try{
                     if($this->EmailExists($user->email)){
                         return false;
                     }
+                    $p = $user->password;
+                    $e = $user->email;
                     $user->password = password_hash($user->password, PASSWORD_BCRYPT);
                     $insert = $this->database->genInsertQuery((array)$user, 'user');
                     $query = $this->database->db->prepare($insert[0]);
                     if ($insert[1][0]!=null) {
                         $query->execute($insert[1]);
                     }
+                    
+                    
+                    
+                    $subject = "Регистрация на портале"; 
+                
+                    $message = "<h2>Вы зарегистрированы на сайте <a href='http://car4crete.com/'>www.car4crete.com</a>!</h2>
+                    </br> <p><b>Ваш логин: </b>".$user->email."<b></br></p><p>Ваш пароль: </b>$p</br></p></br>
+                    <p>В личном кабинете вы можете просмотреть, изменить и отменить текущие заявки на бронирование автомобилей.</p> </br>";
+                    
+                    $headers  = "Content-type: text/html; charset=utf-8 \r\n";
+                    
+                    mail($e, $subject, $message, $headers);
+                    
                     return $this->token->encode(array("id" => $this->database->db->lastInsertId()));
                 } catch(Exception $e) {
                     return false;
@@ -354,6 +376,49 @@
             } else {
                 return false;
             }
+        }
+        
+        private function CreateUser($user = null){
+            if($user != null){
+                try{
+                    if($userId = $this->EmailExists($user->email)){
+                        return $userId;
+                    }
+                    $user->password = $this->genPassword();
+                    return $this->token->decode($this->SignUp($user))->id;
+                } catch(Exception $e) {
+                    return false;
+                }
+                
+            } else {
+                return false;
+            }
+        }
+        
+        private function genPassword(){
+            // Символы, которые будут использоваться в пароле.
+
+            $chars="qazxswedcvfrtgbnhyujmkiolp1234567890QAZXSWEDCVFRTGBNHYUJMKIOLP";
+            
+            // Количество символов в пароле.
+            
+            $max=10;
+            
+            // Определяем количество символов в $chars
+            
+            $size=StrLen($chars)-1;
+            
+            // Определяем пустую переменную, в которую и будем записывать символы.
+            
+            $password=null;
+            
+            // Создаём пароль.
+            
+            while($max--){
+                $password.=$chars[rand(0,$size)];
+            }
+            
+            return $password;
         }
 
         public function AddCar($car = null){
@@ -384,8 +449,10 @@
         }
         
         private function addPrices($carId, $prices, $table){
+            
             $prices->Id = $carId;
             $q = $this->database->genInsertQuery((array)$prices,$table);
+            
             $s = $this->database->db->prepare($q[0]);
             if ($q[1][0]!=null) {
                 $s->execute($q[1]);
@@ -393,7 +460,7 @@
         }
 
         private function EmailExists(string $email){
-            $query = "SELECT id, email FROM user WHERE email = ?";
+            $query = "SELECT id FROM user WHERE email = ?";
  
             // подготовка запроса 
             $stmt = $this->database->db->prepare( $query );
@@ -404,6 +471,10 @@
         
             // получаем количество строк 
             $num = $stmt->rowCount();
+            
+            if($num > 0){
+                return $stmt->fetch()['id'];
+            }
 
             return $num > 0;
         }

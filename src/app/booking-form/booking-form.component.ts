@@ -60,10 +60,10 @@ export class BookingFormComponent implements OnInit {
   ) {
     this.bookingForm = this.fb.group({
       user: this.fb.group({
-        name: null,
-        surname: null,
+        name: [null, Validators.required],
+        surname: [null, Validators.required],
         middlename: null,
-        email: null,
+        email: [null, Validators.required],
         phone: null,
       }),
       order: this.fb.group({
@@ -150,16 +150,35 @@ export class BookingFormComponent implements OnInit {
   addOrder() {
     this.submitted = true;
     const orderForm = this.bookingForm.get('order') as FormGroup;
-    if (orderForm.invalid) {
-      for (const control of Object.values(orderForm.controls)) {
-        if (control.invalid) {
-          control.markAsDirty();
+    const userForm = this.bookingForm.get('user') as FormGroup;
+    if(this.bookingForm.invalid){
+      if (orderForm.invalid) {
+        for (const control of Object.values(orderForm.controls)) {
+          if (control.invalid) {
+            control.markAsDirty();
+          }
+        }
+      }
+      if (userForm.invalid) {
+        for (const control of Object.values(userForm.controls)) {
+          if (control.invalid) {
+            control.markAsDirty();
+          }
         }
       }
       return;
     }
-    const orderFormValue = orderForm.getRawValue();
+    
+    
+    const {order: orderFormValue, user} = this.bookingForm.getRawValue();
     const order: Order = {
+      user: {
+        name: user.name,
+        surname: user.surname,
+        middlename: user.middlename,
+        phone: user.phone,
+        email: user.email
+      },
       carId: this.car.id,
       placeFromId: orderFormValue.placeFrom,
       placeToId: orderFormValue.placeTo,

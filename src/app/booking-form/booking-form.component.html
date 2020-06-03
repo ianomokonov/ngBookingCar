@@ -1,16 +1,16 @@
 <div class="container py-5">
   <form [formGroup]="bookingForm">
     <h2 class="bk-header">{{ 'USER.YOUR_DATA' | translate }}</h2>
-    <form *ngIf="user" formGroupName="user" class="row px-0 mx-0 border-bottom pb-1">
+    <form formGroupName="user" class="row px-0 mx-0 border-bottom pb-1">
       <div class="col-sm-6 col-md-4 pl-0 pr-0 pr-sm-3">
         <div class="form-group">
-          <label>{{ 'USER.SURNAME' | translate }}</label
+          <label>{{ 'USER.SURNAME' | translate }}*</label
           ><input formControlName="surname" type="text" class="form-control" />
         </div>
       </div>
       <div class="col-sm-6 col-md-4 pl-0 pl-md-3 pr-0 pr-md-3">
         <div class="form-group">
-          <label>{{ 'USER.NAME' | translate }}</label
+          <label>{{ 'USER.NAME' | translate }}*</label
           ><input formControlName="name" type="text" class="form-control" />
         </div>
       </div>
@@ -28,15 +28,11 @@
       </div>
       <div class="col-sm-12 col-md-8 col-lg-4 pl-0 pr-0 pl-md-3 pr-md-0 pr-lg-3">
         <div class="form-group">
-          <label>{{ 'USER.EMAIL' | translate }}</label
+          <label>{{ 'USER.EMAIL' | translate }}*</label
           ><input formControlName="email" type="text" class="form-control" />
         </div>
       </div>
     </form>
-    <div *ngIf="!user" class="border-bottom pb-3">
-      <button class="btn btn-outline-primary" (click)="enter()">{{ 'USER.ENTER_PROFILE' | translate }}</button>
-      <small class="text-muted d-block mt-1">{{ 'USER.SHOULD_ENTER_PROFILE' | translate }}</small>
-    </div>
     <h2 class="bk-header my-3">{{ 'USER.ORDER_DATA' | translate }}</h2>
     <form formGroupName="order">
       <div class="row car" *ngIf="car">
