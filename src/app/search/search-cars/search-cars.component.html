@@ -67,7 +67,7 @@
                 >
                 <div>
                   <a class="btn btn-outline-primary mb-1" [routerLink]="['/' + translate.currentLang, 'details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>
-                  <a class="btn btn-primary mb-1 ml-1" [routerLink]="['/booking', car.id]">{{ 'CARS.BOOK' | translate }}</a>
+                  <a class="btn btn-primary mb-1 ml-1" [routerLink]="['/' + translate.currentLang, 'booking', car.id]">{{ 'CARS.BOOK' | translate }}</a>
                 </div>
               </div>
             </div>

@@ -122,7 +122,7 @@
     "ENTER_HEADER": "Enter profile",
     "PASSWORD": "Password",
     "ENTER": "Enter",
-    "REGISTRATE": "Register",
+    "REGISTRATE": "Sign up",
     "PHONE_FORMAT": "Format:",
     "FULL_NAME": "Full name",
     "EXIT": "Exit",
@@ -135,7 +135,9 @@
     "ACTIVE": "Active",
     "CANCELED": "Canceled",
     "READY": "Ready",
-    "CANCEL": "Cancel"
+    "CANCEL": "Cancel",
+    "ENTER_PROFILE": "Enter your profile",
+    "SHOULD_ENTER_PROFILE": "You should sign in or sign up"
   },
   "CONDITIONS": {
     "QUICK": "Quick pick-up / return directly at the Airport",

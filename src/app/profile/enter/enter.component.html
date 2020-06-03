@@ -2,22 +2,22 @@
   <div class="col-12 col-md-8 col-lg-6">
     <div class="card border-primary w-100">
       <div class="card-header text-primary bg-light">
-        <b>{{'USER.ENTER_HEADER' |translate}}</b>
+        <b>{{ 'USER.ENTER_HEADER' | translate }}</b>
       </div>
       <form class="card-body" [formGroup]="enterForm" (submit)="onEnterClick()">
         <div class="form-group">
-          <label for="login">{{'USER.EMAIL' | translate}}</label>
+          <label for="login">{{ 'USER.EMAIL' | translate }}</label>
           <input id="login" class="form-control" formControlName="email" />
         </div>
         <div class="form-group">
-          <label for="password">{{'USER.PASSWORD' | translate}}</label>
+          <label for="password">{{ 'USER.PASSWORD' | translate }}</label>
           <input id="password" type="password" class="form-control" formControlName="password" />
         </div>
         <div class="alert alert-danger" role="alert" *ngIf="showError">
-          {{'USER.INVALID_LOGIN' | translate}}
+          {{ 'USER.INVALID_LOGIN' | translate }}
         </div>
-        <button type="submit" class="btn btn-primary">{{'USER.ENTER' | translate}}</button>
-        <a class="btn btn-link" [routerLink]="[translate.currentLang, 'sign-up']">{{'USER.REGISTRATE' | translate}}</a>
+        <button type="submit" class="btn btn-primary">{{ 'USER.ENTER' | translate }}</button>
+        <a class="btn btn-link" [routerLink]="['/' + translate.currentLang, 'sign-up']">{{ 'USER.REGISTRATE' | translate }}</a>
       </form>
     </div>
   </div>

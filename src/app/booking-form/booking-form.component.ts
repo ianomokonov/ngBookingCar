@@ -9,6 +9,7 @@ import { SearchService, SearchModel } from '../services/search.service';
 import { Place } from '../models/place';
 import { Order, DateRange } from '../models/order';
 import { LoadingService } from '../services/loading.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'bk-booking-form',
@@ -54,7 +55,8 @@ export class BookingFormComponent implements OnInit {
     private api: ApiService, private loadingService: LoadingService,
     private auth: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.bookingForm = this.fb.group({
       user: this.fb.group({
@@ -142,7 +144,7 @@ export class BookingFormComponent implements OnInit {
 
   enter() {
     this.auth.redirectUrl = ['booking', this.car.id];
-    this.router.navigate(['/enter']);
+    this.router.navigate([this.translate.currentLang, 'enter']);
   }
 
   addOrder() {
@@ -170,7 +172,7 @@ export class BookingFormComponent implements OnInit {
 
     const subscription = this.api.addOrder(order).subscribe((v) => {
       this.loadingService.removeSubscription(subscription);
-      this.router.navigate(['/profile']);
+      this.router.navigate([this.translate.currentLang, 'profile']);
     });
     this.loadingService.addSubscription(subscription);
   }
