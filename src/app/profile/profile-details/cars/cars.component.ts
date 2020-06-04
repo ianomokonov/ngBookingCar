@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'bk-cars',
@@ -9,7 +10,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 })
 export class CarsComponent implements OnInit {
   cars;
-  constructor(private api: ApiService, private loadingService: LoadingService,) {}
+  constructor(private api: ApiService, private loadingService: LoadingService, public translate: TranslateService) {}
 
   ngOnInit(): void {
     const subscription = this.api.getCars().subscribe(cars => {

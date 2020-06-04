@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-end mb-3">
-    <button class="btn btn-outline-primary align-baseline" [routerLink]="['/add-car']">
-        <i class="fas fa-plus mt-1"></i>
-    </button>
+  <button class="btn btn-outline-primary align-baseline" [routerLink]="['/add-car']">
+    <i class="fas fa-plus mt-1"></i>
+  </button>
 </div>
 <div class="row car" *ngFor="let car of cars">
   <div class="col-md-8 car-info-img row m-0 p-0">
@@ -12,22 +12,22 @@
       <h2 class="car-title mt-3 mt-sm-0">{{ car.name }}</h2>
       <div class="car-details">
         <span class="car-places"
-          ><i class="fas fa-user"></i><b>{{car.places}} {{ car.places | carPlaces | translate }}</b></span
+          ><i class="fas fa-user"></i><b>{{ car.places }} {{ car.places | carPlaces | translate }}</b></span
         >
         <span class="driver-license"
           ><i class="fas fa-id-badge"></i>Категория <b>{{ car.license }}</b></span
         >
-        <span class="car-kpp"><i class="fas fa-cogs"></i>{{ 'CARS.'+car.kpp | translate }}</span>
-        <span class="car-kpp" *ngIf="car.class"><i class="fas fa-car"></i>{{ 'CARS.'+car.class | translate }}</span>
+        <span class="car-kpp"><i class="fas fa-cogs"></i>{{ 'CARS.' + car.kpp | translate }}</span>
+        <span class="car-kpp" *ngIf="car.class"><i class="fas fa-car"></i>{{ 'CARS.' + car.class | translate }}</span>
       </div>
     </div>
   </div>
 
   <div class="car-actions col-md-4 text-right p-0 px-sm-3">
-    <div class="w-100  d-md-block text-right">
+    <div class="w-100 d-md-block text-right">
       <small
-        ><a [routerLink]="['/edit-car', car.id]">изменить <i class="fas fa-arrow-right ml-1"></i></a></small
-      >
+        ><a [routerLink]="['/' + translate.currentLang, 'edit-car', car.id]">изменить <i class="fas fa-arrow-right ml-1"></i></a
+      ></small>
     </div>
   </div>
 </div>
