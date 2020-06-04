@@ -4,6 +4,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Place } from '../models/place';
 import { Filter } from '../search/search-cars/search-cars.component';
+import { SessionStorageService } from '../session-storage';
 
 @Injectable()
 export class SearchService {
@@ -32,8 +33,8 @@ export class SearchService {
   public $filtersUpdate: BehaviorSubject<SearchModel>;
 
   public get model(): SearchModel {
-    if (!this._model && sessionStorage.getItem('bookingSearchModel')) {
-      this.updateModel(JSON.parse(sessionStorage.getItem('bookingSearchModel')));
+    if (!this._model && this.ss.getItem('bookingSearchModel')) {
+      this.updateModel(JSON.parse(this.ss.getItem('bookingSearchModel')));
     }
     return this._model;
   }
@@ -48,7 +49,7 @@ export class SearchService {
     if (model && !model.dateFrom && !model.timeFrom && !model.timeTo && !model.placeFrom && !model.placeTo) {
       this._model = null;
     }
-    sessionStorage.setItem('bookingSearchModel', JSON.stringify(this._model));
+    this.ss.setItem('bookingSearchModel', JSON.stringify(this._model));
     let month = new Date().getMonth();
     if (model) {
       month = this.model.dateFrom.month;
@@ -62,7 +63,7 @@ export class SearchService {
     this.periodDays = SearchService.setPeriodDays(model);
   }
 
-  constructor(public calendar: NgbCalendar) {
+  constructor(public calendar: NgbCalendar, private ss: SessionStorageService) {
     this.genTimes();
     this._model = this.model;
     this.minDate = this.calendar.getNext(this.calendar.getToday(), 'd', 5);

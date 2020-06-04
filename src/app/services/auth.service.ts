@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { SessionStorageService } from '../session-storage';
 
 @Injectable()
 export class AuthService {
@@ -9,13 +10,13 @@ export class AuthService {
   public redirectUrl: string[] = ['profile'];
   public $userUpdate: Subject<boolean> = new Subject();
 
-  constructor() {
-    this.token = sessionStorage.getItem('bookingUserToken');
+  constructor(private ss: SessionStorageService) {
+    this.token = this.ss.getItem('bookingUserToken');
   }
 
   public setToken(token: string): void {
     this.token = token;
-    sessionStorage.setItem(this.KEY, token);
+    this.ss.setItem(this.KEY, token);
     if (token) {
       this.$userUpdate.next(true);
     }
@@ -27,7 +28,7 @@ export class AuthService {
 
   public exit() {
     this.token = null;
-    sessionStorage.removeItem(this.KEY);
+    this.ss.removeItem(this.KEY);
     this.$userUpdate.next(false);
   }
 

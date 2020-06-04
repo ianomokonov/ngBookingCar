@@ -3,6 +3,7 @@ import { LoadingService } from './services/loading.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/internal/operators';
 import { Title, Meta } from '@angular/platform-browser';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -16,9 +17,11 @@ export class AppComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private titleService: Title,
-    private meta: Meta
+    private meta: Meta,
+    private translation: TranslateService
   ) {
     loadingService.changeDetectorRef = cdRef;
+    translation.use('en');
   }
 
   ngOnInit() {

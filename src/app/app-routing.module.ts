@@ -98,10 +98,12 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot([
-      { path: '', pathMatch: 'full', redirectTo: 'en' },
-      { path: 'ru', component: LangsComponent, children: routes, canActivate: [LangGuard] },
-      { path: 'en', component: LangsComponent, children: routes, canActivate: [LangGuard] },
-    ]),
+    { path: '', pathMatch: 'full', redirectTo: 'en' },
+    { path: 'ru', component: LangsComponent, children: routes, canActivate: [LangGuard] },
+    { path: 'en', component: LangsComponent, children: routes, canActivate: [LangGuard] },
+], {
+    initialNavigation: 'enabled'
+}),
   ],
   exports: [RouterModule],
 })

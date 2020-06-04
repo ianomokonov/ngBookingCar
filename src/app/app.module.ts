@@ -86,7 +86,7 @@ import { PlacesOfInterestComponent } from './profile/profile-details/places-of-i
     PlacesOfInterestComponent,
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     NgbModule,
     NgbDatepickerModule,
@@ -102,6 +102,7 @@ import { PlacesOfInterestComponent } from './profile/profile-details/places-of-i
         deps: [HttpClient],
       },
     }),
+    BrowserModule.withServerTransition({ appId: 'ng-booking-car' })
   ],
   providers: [
     LoadingService,
