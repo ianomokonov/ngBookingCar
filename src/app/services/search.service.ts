@@ -49,6 +49,12 @@ export class SearchService {
     if (model && !model.dateFrom && !model.timeFrom && !model.timeTo && !model.placeFrom && !model.placeTo) {
       this._model = null;
     }
+    if(!model.dateFrom){
+      model.dateFrom = this.defaultModel.dateFrom;
+    }
+    if(!model.dateTo){
+      model.dateTo = model.dateFrom;
+    }
     this.ss.setItem('bookingSearchModel', JSON.stringify(this._model));
     let month = new Date().getMonth();
     if (model) {

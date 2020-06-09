@@ -4,7 +4,7 @@
     <img [src]="item.img" />
     <div class="info">
       <h2 class="header">
-        <span>{{ item.name | bkTranslate }}</span>
+        <span class="mr-3">{{ item.name | bkTranslate }}</span>
         <span class="rating">
           <ng-template #t let-fill="fill">
             <span class="star" [class.full]="fill === 100"> <span class="half" [style.width.%]="fill">&#9733;</span>&#9733; </span>

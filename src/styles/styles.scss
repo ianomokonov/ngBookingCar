@@ -18,6 +18,23 @@ body {
   outline: none !important;
 }
 
+ul, ol{
+  padding-left: 20px;
+
+  li{
+    color: $brand-red;
+
+    span{
+      color: black;
+
+      &.important{
+        font-weight: bold;
+        color: $brand-red;
+      }
+    }
+  }
+}
+
 // body {
 //   background: linear-gradient(180deg, rgba(245, 245, 245, 0) 1.04%, #F5F5F5 100%);
 // }

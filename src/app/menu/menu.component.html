@@ -1,7 +1,7 @@
 <div class="border-bottom">
   <div class="container d-flex">
     <div class="logo py-2">
-      <h2 class="mb-0">car<span>4</span>crete</h2>
+      <h2 class="mb-0" [routerLink]="['search']">car<span>4</span>crete</h2>
       <div class="d-flex d-lg-none"> 
         <a class="nav-link mr-2" [routerLink]="['profile']" routerLinkActive="active"
           ><span class="d-none d-md-inline">{{ user ? user.name + ' ' + user.surname : ('MENU.PROFILE' | translate) }}</span>

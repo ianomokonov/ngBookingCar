@@ -44,7 +44,7 @@
             </ul>
           </div>
           <div class="price pb-3">
-            <a [routerLink]="['/' + translate.currentLang, 'booking', car.id]" class="btn btn-primary mr-3">Заказать</a>
+            <a [routerLink]="['/' + translate.currentLang, 'booking', car.id]" class="btn btn-primary mr-3">{{ 'CARS.BOOK' | translate }}</a>
           </div>
         </div>
       </div>
@@ -163,7 +163,7 @@
   </div>
 
   <h2>{{ 'CARS.PRICES' | translate }}</h2>
-  <div class="prices">
+  <div class="prices mb-3">
     <div class="price border rounded">
       <div class="header">01.{{ searchService.summerMonths[0] }} - 30.{{ searchService.summerMonths[1] }}</div>
       <div class="price-value border p-1 px-2 rounded">

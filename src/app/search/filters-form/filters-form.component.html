@@ -1,7 +1,7 @@
 <form class="search-form" [formGroup]="filterForm" (submit)="onSearchClick()">
   <div class="row p-0 m-0">
     <div class="col-md p-0 d-flex">
-      <div class="step" (click)="!dateFrom.isOpen() && dateFrom.open()">
+      <div class="step" (click)="!dateFrom.isOpen() ? dateFrom.open() : dateFrom.close()">
         <i class="fas fa-calendar-alt header-icon"></i>
         <h2 class="header">{{ 'SEARCH.SELECT_PICK_UP_DATE' | translate }}</h2>
         <span class="week-day">{{ dates.fromDate.weekDay | translate }}</span>
@@ -10,8 +10,8 @@
         <div class="position-relative w-100">
           <input
             [minDate]="searchService.minDate"
-            autoClose="true"
             formControlName="dateFrom"
+            autoClose="outside"
             class="d-none"
             ngbDatepicker
             #dateFrom="ngbDatepicker"
@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="mt-4 mt-lg-0 col-md p-0 d-flex">
-      <div class="step" (click)="dateTo.open()">
+      <div class="step" (click)="!dateTo.isOpen() ? dateTo.open() : dateTo.close()">
         <i class="fas fa-calendar-alt header-icon"></i>
         <h2 class="header">{{ 'SEARCH.SELECT_DROP_OFF_DATE' | translate }}</h2>
         <span class="week-day">{{ dates.toDate.weekDay | translate }}</span>
@@ -42,7 +42,7 @@
         <span class="month">{{ dates.toDate.month | translate }} {{ dates.toDate.year }}</span>
 
         <div class="position-relative w-100">
-          <input [autoClose]="true" [minDate]="minDateTo" formControlName="dateTo" class="d-none" ngbDatepicker #dateTo="ngbDatepicker" />
+          <input autoClose="outside" [minDate]="minDateTo" formControlName="dateTo" class="d-none" ngbDatepicker #dateTo="ngbDatepicker" />
         </div>
       </div>
       <div class="step">

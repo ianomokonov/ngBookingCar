@@ -1,13 +1,13 @@
 <span #scroll></span>
 <form [formGroup]="placeForm" (submit)="savePlace()">
-  <h3>{{ place ? 'Изменение достопримечательности' : 'Добавление достопримечательности' }}</h3>
+  <h3 [innerHTML]="place ? 'Изменение досто<wbr>примечатель<wbr>ности' : 'Добавление досто<wbr>примечатель<wbr>ности'"></h3>
   <div class="row">
     <div class="col-md">
       <div class="form-group">
         <label>Фотография</label>
         <div>
           <div *ngIf="!isUploadFileShown()" class="position-relative d-flex align-items-start">
-            <img class="w-75"  [src]="placeForm.get('img').value" />
+            <img class="w-75" [src]="placeForm.get('img').value" />
             <span class="remove-img ml-1" (click)="removeImg()">&times;</span>
           </div>
           <bk-file-uploader *ngIf="isUploadFileShown()" formControlName="img"></bk-file-uploader>
@@ -63,9 +63,11 @@
   </div>
 </form>
 
-<div class="places mt-3 d-flex flex-wrap justify-content-between">
-  <div class="place" *ngFor="let place of places" (click)="update(place, scroll)">
-    <img [src]="place.img" />
-    <h3 class="my-3 ml-2">{{ place.name | bkTranslate }}</h3>
+<div class="places row mx-0 mt-3">
+  <div class=" mb-3 px-0 pr-sm-3 col-sm-6 col-md-4" *ngFor="let place of places" (click)="update(place, scroll)">
+    <div class="place">
+      <img [src]="place.img" />
+      <h3 class="my-3 ml-2">{{ place.name | bkTranslate }}</h3>
+    </div>
   </div>
 </div>
