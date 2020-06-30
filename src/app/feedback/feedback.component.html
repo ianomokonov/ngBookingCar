@@ -1,0 +1,43 @@
+<div class="container py-4">
+  <div class="item p-3" [formGroup]="feedbackForm">
+    <div class="row">
+      <div class="col">
+        <div class="form-group">
+          <label>{{ 'FEEDBACK.WHAT_CAR' | translate }}</label>
+          <div class ngbDropdown #myDrop="ngbDropdown">
+            <span class="form-control" id="dropdownManual" [ngClass]="{'border-danger': feedbackForm?.get('carId').invalid && feedbackForm?.get('carId').touched}" ngbDropdownToggle>
+              <img class="h-100 mr-1" [src]="choosedCar?.img" alt="" />
+              <span>{{ choosedCar?.name }}</span>
+            </span>
+            <div ngbDropdownMenu aria-labelledby="dropdownManual">
+              <div class="drop-item" ngbDropdownItem *ngFor="let car of cars" (click)="selectCar(car)">
+                <img class="h-100 mr-1" [src]="car.img" alt="" />
+                <span>{{ car.name }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <label>{{ 'FEEDBACK.RAITING' | translate }}</label>
+          <div>
+            <ng-template #t let-fill="fill">
+              <span class="star" [class.full]="fill === 100"> <span class="half" [style.width.%]="fill">&#9733;</span>&#9733; </span>
+            </ng-template>
+            <ngb-rating formControlName="raiting" class="mb-1" [starTemplate]="t" [max]="5"></ngb-rating>
+            <span class="rating-label">{{ feedbackForm?.get('raiting').value | number: '1.1-2' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>{{ 'FEEDBACK.MESSAGE' | translate }}</label>
+      <textarea formControlName="message" rows="4" class="form-control"></textarea>
+    </div>
+    <div class="text-right">
+        <button class="btn btn-primary" (click)="send()">{{ 'FEEDBACK.ADD_MESSAGE' | translate }}</button>
+    </div>
+  </div>
+  <bk-feedback-item></bk-feedback-item>
+</div>

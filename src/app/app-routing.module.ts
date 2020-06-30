@@ -19,6 +19,7 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { PolicyComponent } from './policy/policy.component';
 import { AboutCreteComponent } from './about-crete/about-crete.component';
 import { PlacesOfInterestComponent } from './profile/profile-details/places-of-interest/places-of-interest.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'search' },
@@ -69,6 +70,15 @@ const routes: Routes = [
   {
     path: 'about-crete',
     component: AboutCreteComponent,
+    data: {
+      title: 'What to see in Crete',
+      description: 'Holiday in Crete with car',
+      keywords: 'Crete car rental, Crete car hire',
+    },
+  },
+  {
+    path: 'feedback',
+    component: FeedbackComponent,
     data: {
       title: 'What to see in Crete',
       description: 'Holiday in Crete with car',

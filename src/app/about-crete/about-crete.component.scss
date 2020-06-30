@@ -45,20 +45,7 @@
   }
 }
 
-.star {
-  position: relative;
-  display: inline-block;
-  color: rgb(230, 230, 230);
-}
-.full {
-  color: #e6c408;
-}
-.half {
-  position: absolute;
-  display: inline-block;
-  overflow: hidden;
-  color: #e6c408;
-}
+
 
 @media (max-width: 575px) {
   .item {

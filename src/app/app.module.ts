@@ -49,6 +49,8 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { PolicyComponent } from './policy/policy.component';
 import { AboutCreteComponent } from './about-crete/about-crete.component';
 import { PlacesOfInterestComponent } from './profile/profile-details/places-of-interest/places-of-interest.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { FeedbackItemComponent } from './feedback/feedback-item/feedback-item.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +86,8 @@ import { PlacesOfInterestComponent } from './profile/profile-details/places-of-i
     PolicyComponent,
     AboutCreteComponent,
     PlacesOfInterestComponent,
+    FeedbackComponent,
+    FeedbackItemComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
