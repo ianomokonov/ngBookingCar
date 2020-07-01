@@ -44,6 +44,17 @@ CREATE TABLE IF NOT EXISTS place(
     name_eng varchar(255) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS feedback(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    userName varchar(255) NOT NULL,
+    carId int(10) NOT NULL,
+    raiting float DEFAULT 0,
+    date datetime DEFAULT CURRENT_TIMESTAMP,
+    message text NOT NULL,
+
+    FOREIGN KEY (carId) REFERENCES car(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS placeOfInterest(
     id int PRIMARY KEY AUTO_INCREMENT,
     img varchar(255) NOT NULL,

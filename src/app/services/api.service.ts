@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment.prod';
 import { SliderRange } from '../utils/double-slider/double-slider.component';
 import { Filter } from '../search/search-cars/search-cars.component';
 import { PlaceOfInterest } from '../models/place-of-interest';
+import { Feedback } from '../models/feedback';
 // import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -68,6 +69,18 @@ export class ApiService {
 
   public getCar(carId: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}?key=get-car&carId=${carId}`);
+  }
+
+  public getFeedbacks(): Observable<Feedback[]> {
+    return this.http.get<Feedback[]>(`${this.baseUrl}?key=get-feedbacks`);
+  }
+
+  public addFeedback(item): Observable<boolean> {
+    return this.http.post<boolean>(`${this.baseUrl}?key=add-feedback`, item);
+  }
+
+  public removeFeedback(id: number): Observable<boolean> {
+    return this.http.delete<boolean>(`${this.baseUrl}?key=remove-feedback&id=${id}`);
   }
 
   public uploadCarImg(data): Observable<string> {

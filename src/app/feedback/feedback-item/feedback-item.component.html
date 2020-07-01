@@ -1,8 +1,8 @@
-<div class="item p-3" *ngFor="let item of items">
-  <div class="header d-flex align-items-center justify-content-between">
-    <div class="d-flex  position-relative">
-      <div class="pr-3 mr-3 border-right">{{item.name}}</div>
-      <a href="javascript:;" class="car mr-4" [ngbPopover]="popContent" >Rent a car Crete - Hyundai i10</a>
+<div class="item p-3">
+  <div class="header d-flex align-items-center justify-content-between flex-wrap">
+    <div class="d-flex  position-relative flex-wrap">
+      <div class="pr-3 mr-3 border-right">{{item.userName}}</div>
+      <a href="javascript:;" class="car mr-4" [ngbPopover]="popContent" >{{item.car.name}}</a>
       <ng-template #popContent>
         <div class="d-flex drop-item">
           <img class="h-100 mr-1" [src]="item?.car?.img" alt="" />
@@ -17,20 +17,15 @@
       <ng-template #t let-fill="fill">
         <span class="star" [class.full]="fill === 100"> <span class="half" [style.width.%]="fill">&#9733;</span>&#9733; </span>
       </ng-template>
-      <ngb-rating class="mb-1" [rate]="item?.raiting" [starTemplate]="t" [readonly]="true" [max]="5"></ngb-rating>
+      <ngb-rating class="mb-1" [rate]="item?.raiting" [starTemplate]="t" [readonly]="true"></ngb-rating>
       <span class="rating-label">{{ item?.raiting | number: '1.1-2' }}</span>
     </div>
   </div>
   <p class="feedback mt-3">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis aliquam quia tempore beatae similique. Deleniti quisquam possimus vero
-    eos illum! Placeat reprehenderit vel harum animi quos. Nesciunt alias doloremque quae. Magni, vitae? Amet illo a voluptas adipisci
-    veniam sapiente ad, tempora est nemo! Unde animi laboriosam tempore ipsam illo, voluptas minus quod labore voluptatibus rerum laudantium
-    ea maiores eos praesentium molestiae fugit perspiciatis iste nihil doloremque? Pariatur natus blanditiis iusto nobis aliquam, sed vero
-    facere illo quasi impedit. Ipsa labore fuga ullam aperiam, neque sed minus nisi nihil voluptates non perspiciatis dolore, ea vitae iusto
-    dolor, a odit accusamus facilis.
+    {{item.message}}
   </p>
   <div class="footer">
-    <small class="text-muted">{{ date | date: 'dd.MM.yyyy HH.mm' }}</small>
+    <small class="text-muted">{{ item.date | date: 'dd.MM.yyyy HH.mm' }}</small>
   </div>
 </div>
 

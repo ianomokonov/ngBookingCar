@@ -91,7 +91,7 @@
              $options = array();
             while ($option = $query->fetch()) {
                 
-                $options[] = array(name => $option[$name]);
+                $options[] = array('name' => $option[$name]);
             }
             
             return $options;
@@ -121,6 +121,36 @@
                 $query->execute($insert[1]);
             }
             return $this->database->db->lastInsertId();
+        }
+
+        public function AddFeedback($feedback){
+            if(!isset($feedback->userName) || !$feedback->message){
+                return array("message" => "Укажите фио и отзыв", "method" => "AddFeedback", "requestData" => $feedback);
+            }
+            $insert = $this->database->genInsertQuery((array)$feedback, 'feedback');
+            $query = $this->database->db->prepare($insert[0]);
+            if($insert[1][0]!=null){
+                $query->execute($insert[1]);
+            }
+            return $this->database->db->lastInsertId()*1;
+        }
+
+        public function GetFeedbacks(){
+            $text = "SELECT * from feedback";
+            $query = $this->database->db->query($text);
+            $query->setFetchMode(PDO::FETCH_CLASS, 'Feedback');
+            $feedbacks = [];
+            while ($feedback = $query->fetch()) {
+                $feedback->car = $this->GetCarDetails($feedback->carId);
+                $feedbacks[] = $feedback;
+            }
+            return $feedbacks;
+        }
+
+        public function RemoveFeedback($id){
+            $query = $this->database->db->prepare("DELETE FROM feedback WHERE id = ?");
+            $query->execute(array($id));
+            return array('message' => 'Отзыв удален');
         }
 
         public function UpdatePlace($place){

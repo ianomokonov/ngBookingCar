@@ -7,6 +7,14 @@
         public $phone;
         public $email;
     }
+    
+    class Feedback {
+        public $id;
+        public $userName;
+        public $car;
+        public $raiting;
+        public $message;
+    }
 
     class Car {
         public $id;
