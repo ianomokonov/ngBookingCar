@@ -6,11 +6,24 @@
   .star {
     font-size: 20px;
   }
-  a{
-      color: $brand-red;
+  a {
+    color: $brand-red;
   }
 }
 
-.drop-item{
-    height: 60px;
+.drop-item {
+  img {
+    height: 100%;
+  }
+  height: 70px;
 }
+
+@media(max-width: 576px){
+  .border-right{
+    border-right: none !important;
+    padding: 0;
+    width: 100%;
+  }
+}
+
+

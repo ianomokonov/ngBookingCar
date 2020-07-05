@@ -136,7 +136,7 @@
         }
 
         public function GetFeedbacks(){
-            $text = "SELECT * from feedback";
+            $text = "SELECT * from feedback ORDER BY date DESC";
             $query = $this->database->db->query($text);
             $query->setFetchMode(PDO::FETCH_CLASS, 'Feedback');
             $feedbacks = [];

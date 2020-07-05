@@ -1,13 +1,13 @@
 <div class="item p-3">
   <div class="header d-flex align-items-center justify-content-between flex-wrap">
-    <div class="d-flex  position-relative flex-wrap">
-      <div class="pr-3 mr-3 border-right">{{item.userName}}</div>
+    <div class="d-flex position-relative flex-wrap">
+      <div class="pr-3 mr-0 mr-sm-3 border-right">{{item.userName}}</div>
       <a href="javascript:;" class="car mr-4" [ngbPopover]="popContent" >{{item.car.name}}</a>
       <ng-template #popContent>
         <div class="d-flex drop-item">
-          <img class="h-100 mr-1" [src]="item?.car?.img" alt="" />
+          <img class="h-100 mr-2" [src]="item?.car?.img" alt="" />
           <div>
-            <p class="m-0">{{ item?.car?.name }}</p>
+            <p class="m-0 pb-1">{{ item?.car?.name }}</p>
             <a [routerLink]="['/' + translate.currentLang, 'details', item?.car?.id]">{{'FEEDBACK.DETAILS' | translate}}</a>
           </div>
         </div>

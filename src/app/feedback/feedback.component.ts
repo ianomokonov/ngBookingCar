@@ -5,6 +5,7 @@ import { LoadingService } from '../services/loading.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Feedback } from '../models/feedback';
 import { forkJoin } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'bk-feedback',
@@ -16,7 +17,7 @@ export class FeedbackComponent implements OnInit {
   choosedCar: Car;
   feedbackForm: FormGroup;
   feedbacks: Feedback[];
-  constructor(private api: ApiService, private loadingService: LoadingService, private fb: FormBuilder) {
+  constructor(private api: ApiService, private loadingService: LoadingService, private fb: FormBuilder, private userService: AuthService) {
     this.feedbackForm = this.fb.group({
       userName: [null, Validators.required],
       carId: [null, Validators.required],
@@ -26,8 +27,15 @@ export class FeedbackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const subscription = forkJoin([this.api.getCars(), this.api.getFeedbacks()]).subscribe(
-      ([cars, feedbacks]) => {
+    let queries = [this.api.getCars(), this.api.getFeedbacks()];
+    if (this.userService.getToken()) {
+      queries.push(this.api.getUserInfo());
+    }
+    const subscription = forkJoin(queries).subscribe(
+      ([cars, feedbacks, user]) => {
+        if (user) {
+          this.feedbackForm.get('userName').setValue(`${user.surname} ${user.name} ${user.middlename}`, { emitEvant: false });
+        }
         this.cars = cars;
         this.feedbacks = feedbacks;
         this.loadingService.removeSubscription(subscription);

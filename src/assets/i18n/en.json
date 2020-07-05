@@ -8,6 +8,14 @@
     "ABOUT_CRETE": "About Crete",
     "FEEDBACK": "Feedback"
   },
+  "FEEDBACK": {
+    "FIO": "Your name",
+    "WHAT_CAR": "What car have you rented?",
+    "RAITING": "How can you rate a car?",
+    "MESSAGE": "Feedback",
+    "ADD_MESSAGE": "Send feedback",
+    "DETAILS":"Car details"
+  },
   "SEARCH": {
     "BTN": "Search",
     "SEARCH": "Search",
