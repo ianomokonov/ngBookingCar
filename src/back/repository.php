@@ -142,6 +142,8 @@
             $feedbacks = [];
             while ($feedback = $query->fetch()) {
                 $feedback->car = $this->GetCarDetails($feedback->carId);
+                $feedback->date = date("Y/m/d H:00:00",strtotime($feedback->date));
+                
                 $feedbacks[] = $feedback;
             }
             return $feedbacks;

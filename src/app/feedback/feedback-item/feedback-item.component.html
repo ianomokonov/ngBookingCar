@@ -19,6 +19,7 @@
       </ng-template>
       <ngb-rating class="mb-1" [rate]="item?.raiting" [starTemplate]="t" [readonly]="true"></ngb-rating>
       <span class="rating-label">{{ item?.raiting | number: '1.1-2' }}</span>
+      <button class="btn btn-link text-danger border-left ml-3 remove-btn" *ngIf="isAdmin" (click)="removeItem()">Удалить</button>
     </div>
   </div>
   <p class="feedback mt-3">

@@ -49,7 +49,7 @@
     </div>
   </div>
   <ng-container *ngIf="feedbacks?.length; else noFeedbacks;">
-    <bk-feedback-item *ngFor="let item of feedbacks" [item]="item"></bk-feedback-item>
+    <bk-feedback-item [isAdmin]="isAdmin" *ngFor="let item of feedbacks" [item]="item" (itemChanged)="updateFeedbacks()"></bk-feedback-item>
   </ng-container>
 </div>
 <ng-template #noFeedbacks>

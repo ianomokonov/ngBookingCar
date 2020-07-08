@@ -17,6 +17,7 @@ export class FeedbackComponent implements OnInit {
   choosedCar: Car;
   feedbackForm: FormGroup;
   feedbacks: Feedback[];
+  isAdmin = false;
   constructor(private api: ApiService, private loadingService: LoadingService, private fb: FormBuilder, private userService: AuthService) {
     this.feedbackForm = this.fb.group({
       userName: [null, Validators.required],
@@ -29,12 +30,13 @@ export class FeedbackComponent implements OnInit {
   ngOnInit(): void {
     let queries = [this.api.getCars(), this.api.getFeedbacks()];
     if (this.userService.getToken()) {
-      queries.push(this.api.getUserInfo());
+      queries.push(this.api.getUserInfo(), this.api.checkAccess());
     }
     const subscription = forkJoin(queries).subscribe(
-      ([cars, feedbacks, user]) => {
+      ([cars, feedbacks, user, isAdmin]) => {
         if (user) {
           this.feedbackForm.get('userName').setValue(`${user.surname} ${user.name} ${user.middlename}`, { emitEvant: false });
+          this.isAdmin = isAdmin;
         }
         this.cars = cars;
         this.feedbacks = feedbacks;
@@ -50,6 +52,19 @@ export class FeedbackComponent implements OnInit {
   selectCar(car: Car) {
     this.choosedCar = car;
     this.feedbackForm.get('carId').setValue(car.id);
+  }
+
+  updateFeedbacks() {
+    const subscription = this.api.getFeedbacks().subscribe(
+      (feedbacks) => {
+        this.feedbacks = feedbacks;
+        this.loadingService.removeSubscription(subscription);
+      },
+      (error) => {
+        this.loadingService.removeSubscription(subscription);
+      }
+    );
+    this.loadingService.addSubscription(subscription);
   }
 
   send() {

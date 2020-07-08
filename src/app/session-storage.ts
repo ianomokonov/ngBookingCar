@@ -8,14 +8,14 @@ export class SessionStorageService {
   constructor() { }
 
   getItem(key: string): string | null {
-    return localStorage.getItem(key);
+    return sessionStorage.getItem(key);
   }
 
   setItem(key: string, value: string): void {
-    localStorage.setItem(key, value);
+    sessionStorage.setItem(key, value);
   }
 
   removeItem(key: string): void {
-    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
   }
 }
