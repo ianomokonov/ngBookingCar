@@ -45,7 +45,8 @@ body {
 }
 .dropdown-menu{
   max-height: 300px;
-  overflow: auto;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
 *{
@@ -216,4 +217,21 @@ ngb-datepicker {
   .ngb-dp-month:nth-child(2) {
     display: none;
   }
+  .cars-dropdown{
+    .dropdown-menu{
+      max-width: calc(100vw - 4rem);
+
+      .drop-item{
+        display: flex;
+        align-items: center;
+        white-space: normal;
+        padding: 0.25rem;
+
+        span{
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  
 }
