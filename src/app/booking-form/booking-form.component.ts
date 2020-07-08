@@ -180,6 +180,7 @@ export class BookingFormComponent implements OnInit {
         email: user.email
       },
       carId: this.car.id,
+      car: this.car,
       placeFromId: orderFormValue.placeFrom,
       placeToId: orderFormValue.placeTo,
       dateFrom: orderFormValue.dateFrom,
@@ -189,11 +190,13 @@ export class BookingFormComponent implements OnInit {
       orderSum: this.searchService.getCarPrice(this.car),
     };
 
-    const subscription = this.api.addOrder(order).subscribe((v) => {
-      this.loadingService.removeSubscription(subscription);
-      this.router.navigate([this.translate.currentLang, 'profile']);
-    });
-    this.loadingService.addSubscription(subscription);
+    console.log(order)
+
+    // const subscription = this.api.addOrder(order, this.translate.currentLang).subscribe((v) => {
+    //   this.loadingService.removeSubscription(subscription);
+    //   this.router.navigate([this.translate.currentLang, 'profile']);
+    // });
+    // this.loadingService.addSubscription(subscription);
   }
 
   setMaxDate(fromDate: NgbDate) {

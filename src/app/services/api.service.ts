@@ -135,10 +135,10 @@ export class ApiService {
     return this.http.get<any>(`${this.baseUrl}?key=delete-place&placeId=${id}`);
   }
 
-  public addOrder(order: Order): Observable<any> {
+  public addOrder(order: Order, lang: string): Observable<any> {
     order.dateFrom = this.ngbDateToString(order.dateFrom as NgbDate);
     order.dateTo = order.dateTo ? this.ngbDateToString(order.dateTo as NgbDate) : null;
-    return this.http.post<any>(`${this.baseUrl}?key=add-order`, order);
+    return this.http.post<any>(`${this.baseUrl}?key=add-order&lang=${lang}`, order);
   }
 
   public updateOrder(order: UpdateOrder): Observable<any> {
