@@ -49,10 +49,10 @@ export class SearchService {
     if (model && !model.dateFrom && !model.timeFrom && !model.timeTo && !model.placeFrom && !model.placeTo) {
       this._model = null;
     }
-    if(!model.dateFrom){
+    if (model && !model.dateFrom) {
       model.dateFrom = this.defaultModel.dateFrom;
     }
-    if(!model.dateTo){
+    if (model && !model.dateTo) {
       model.dateTo = model.dateFrom;
     }
     this.ss.setItem('bookingSearchModel', JSON.stringify(this._model));
@@ -100,8 +100,8 @@ export class SearchService {
       return 1;
     }
     let { dateFrom, dateTo, timeFrom, timeTo } = model;
-    const timeFromArr = timeFrom.split(':').map((x) => +x);
-    const timeToArr = timeTo.split(':').map((x) => +x);
+    const timeFromArr = (timeFrom || '12:00').split(':').map((x) => +x);
+    const timeToArr = (timeTo || '12:00').split(':').map((x) => +x);
 
     if (!dateTo) {
       return 1;
@@ -114,7 +114,7 @@ export class SearchService {
   }
 
   public getCarPrice({ summerPrice, winterPrice, summerPrices, winterPrices }, periodDays = this.periodDays, getCheapest = true) {
-    if(getCheapest && (!this.model || !this.model.dateFrom)){
+    if (getCheapest && (!this.model || !this.model.dateFrom)) {
       return Math.min(winterPrice, winterPrices.oneDayPrice);
     }
     let prices = null;

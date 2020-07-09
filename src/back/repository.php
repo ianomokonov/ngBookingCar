@@ -366,9 +366,10 @@
             if($insert[1][0]!=null){
                 $query->execute($insert[1]);
             }
-            $subject = "Бронирование автомобиля"; 
+            $subject = "";
             $message = '';
             if($lang == 'ru'){
+                $subject = "Бронирование автомобиля";
                 $message = "<h2>Вы успешно забронировали автомобиль на сайте <a href='http://car4crete.com/'>www.car4crete.com</a>!</h2>
                 </br> <p>Наш менеджер свяжется с вами для подтверждения наличия автомобиля. Бронь вы можете просмотреть в личном кабинете на сайте. Там же есть возможность изменить бронь за неделю до начала аренды или отменить её за три дня до начала аренды.</p></br>
                 <p></br></br><h3>Детали бронирования:</h3></p> </br>
@@ -377,6 +378,7 @@
                 <p>Дата конца аренды: ".date("d.m.Y",strtotime($order->dateTo))." ".$order->timeTo."</p></br>
                 <p></br>Сумма заказа: ".$order->orderSum."€</p></br>";
             } else {
+                $subject = "Car reservation";
                 $message = "<h2>You have successfully booked a car on <a href='http://car4crete.com/'>www.car4crete.com</a>!</h2>
                 </br> <p>Our manager will contact you to confirm the presence of the car. You can view the reservation in your personal office on the site. There is also an opportunity to change the reservation a week before the start of the lease or to cancel it three days before the start of the lease.</p></br>
                 <p></br></br><h3>Booking details:</h3></p> </br>
@@ -457,7 +459,7 @@
             return array('message' => 'Пользователь обновлен');
         }
 
-        public function SignUp($user = null, $token = true){
+        public function SignUp($user = null, $lang = 'en'){
             if($user != null){
                 try{
                     if($this->EmailExists($user->email)){
@@ -471,14 +473,24 @@
                     if ($insert[1][0]!=null) {
                         $query->execute($insert[1]);
                     }
+                    $subject = "";
+                    $message = "";
                     
+                    if($lang == 'ru'){
+                        $subject = "Регистрация на портале";
+                        $message = "<h2>Вы зарегистрированы на сайте <a href='http://car4crete.com/'>www.car4crete.com</a>!</h2>
+                        </br> <p><b>Ваш логин: </b>".$user->email."<b></br></p><p>Ваш пароль: </b>$p</br></p></br>
+                        <p>В личном кабинете вы можете просмотреть, изменить и отменить текущие заявки на бронирование автомобилей.</p> </br>";
+                    } else {
+                        $subject = "Registration on the website";
+                        $message = "<h2>You are registered on the site <a href='http://car4crete.com/'>www.car4crete.com</a>!</h2>
+                        </br> <p><b>Your login: </b>".$user->email."<b></br></p><p>Your password: </b>$p</br></p></br>
+                        <p>In your personal account you can view, change and cancel the current application for booking cars.</p> </br>";
+                    }
                     
-                    
-                    $subject = "Регистрация на портале"; 
+                     
                 
-                    $message = "<h2>Вы зарегистрированы на сайте <a href='http://car4crete.com/'>www.car4crete.com</a>!</h2>
-                    </br> <p><b>Ваш логин: </b>".$user->email."<b></br></p><p>Ваш пароль: </b>$p</br></p></br>
-                    <p>В личном кабинете вы можете просмотреть, изменить и отменить текущие заявки на бронирование автомобилей.</p> </br>";
+                    
                     
                     $headers  = "Content-type: text/html; charset=utf-8 \r\n";
                     

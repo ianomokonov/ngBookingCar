@@ -71,8 +71,8 @@ export class BookingFormComponent implements OnInit {
         dateFrom: [null, Validators.required],
         placeTo: [null, Validators.required],
         placeFrom: [null, Validators.required],
-        timeTo: [null, Validators.required],
-        timeFrom: [null, Validators.required],
+        timeTo: ['12:00', Validators.required],
+        timeFrom: ['12:00', Validators.required],
         carId: null,
         sum: null,
       }),
@@ -190,13 +190,11 @@ export class BookingFormComponent implements OnInit {
       orderSum: this.searchService.getCarPrice(this.car),
     };
 
-    console.log(order)
-
-    // const subscription = this.api.addOrder(order, this.translate.currentLang).subscribe((v) => {
-    //   this.loadingService.removeSubscription(subscription);
-    //   this.router.navigate([this.translate.currentLang, 'profile']);
-    // });
-    // this.loadingService.addSubscription(subscription);
+    const subscription = this.api.addOrder(order, this.translate.currentLang).subscribe((v) => {
+      this.loadingService.removeSubscription(subscription);
+      this.router.navigate([this.translate.currentLang, 'profile']);
+    });
+    this.loadingService.addSubscription(subscription);
   }
 
   setMaxDate(fromDate: NgbDate) {
