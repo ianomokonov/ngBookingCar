@@ -339,6 +339,7 @@
                     $order->user = $this->getUserInfo($order->userId);
                 }
                 unset($order->userId);
+                $order->isCarFree = $order->isCarFree*1;
                 $orders[] = $order;
             }
             return $orders;

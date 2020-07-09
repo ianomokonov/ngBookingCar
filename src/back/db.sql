@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS carOrder(
     timeFrom varchar(50) NOT NULL,
     timeTo varchar(50) NOT NULL,
     status int(2) DEFAULT 1,
+    isCarFree bit(1) DEFAULT 1
     
     FOREIGN KEY (userId) REFERENCES user(id),
     FOREIGN KEY (carId) REFERENCES car(id) ON DELETE CASCADE,

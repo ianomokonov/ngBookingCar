@@ -73,6 +73,7 @@
         public $orderSum;
         public $timeFrom;
         public $timeTo;
+        public $isCarFree;
 
         public $user;
         public $car;

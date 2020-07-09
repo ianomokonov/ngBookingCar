@@ -52,7 +52,6 @@
                 <input
                   formControlName="dateFrom"
                   [minDate]="searchService.minDate"
-                  [markDisabled]="isFromDisabled"
                   ngbDatepicker
                   [autoClose]="true"
                   #dateFrom="ngbDatepicker"
@@ -92,8 +91,6 @@
                 <input
                   formControlName="dateTo"
                   [minDate]="fromDate || searchService.minDate"
-                  [maxDate]="maxDate"
-                  [markDisabled]="isDisabled"
                   ngbDatepicker
                   #dateTo="ngbDatepicker"
                   class="d-none"

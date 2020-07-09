@@ -20,6 +20,7 @@ export interface Order extends UpdateOrder {
   status?: OrderStatus;
   statusText?: string;
   statusClass?: string;
+  isCarFree?: boolean;
 
   car?: Car;
   placeFrom?: Place;

@@ -42,17 +42,18 @@ export class BookingFormComponent implements OnInit {
   }
 
   public set fromDate(date: NgbDate) {
-    this.bookingForm.get('order').get('dateFrom').setValue(date, {emitEvent: false});
+    this.bookingForm.get('order').get('dateFrom').setValue(date, { emitEvent: false });
   }
 
   public set toDate(date: NgbDate) {
-    this.bookingForm.get('order').get('dateTo').setValue(date, {emitEvent: false});
+    this.bookingForm.get('order').get('dateTo').setValue(date, { emitEvent: false });
   }
 
   constructor(
     public searchService: SearchService,
     private fb: FormBuilder,
-    private api: ApiService, private loadingService: LoadingService,
+    private api: ApiService,
+    private loadingService: LoadingService,
     private auth: AuthService,
     private route: ActivatedRoute,
     private router: Router,
@@ -79,10 +80,8 @@ export class BookingFormComponent implements OnInit {
     });
 
     this.bookingForm.get('order').valueChanges.subscribe((value) => {
-      
-      this.setMaxDate(value.dateFrom);
       const from = NgbDate.from(value.dateFrom);
-      if(from.after(this.toDate)){
+      if (from.after(this.toDate)) {
         this.toDate = from;
       }
       this.saveFilters(this.bookingForm.get('order').value);
@@ -121,9 +120,6 @@ export class BookingFormComponent implements OnInit {
         userForm.patchValue(this.user);
         userForm.disable();
       }
-      if (this.fromDate && !this.toDate) {
-        this.setMaxDate(this.fromDate);
-      }
       this.loadingService.removeSubscription(subscription);
     });
 
@@ -134,7 +130,7 @@ export class BookingFormComponent implements OnInit {
         {
           ...this.searchService.model,
           placeFrom: this.searchService.model.placeFrom ? this.searchService.model.placeFrom.id : null,
-          placeTo: this.searchService.model.placeTo ? this.searchService.model.placeTo.id : null
+          placeTo: this.searchService.model.placeTo ? this.searchService.model.placeTo.id : null,
         },
         { emitEvent: false }
       );
@@ -151,7 +147,7 @@ export class BookingFormComponent implements OnInit {
     this.submitted = true;
     const orderForm = this.bookingForm.get('order') as FormGroup;
     const userForm = this.bookingForm.get('user') as FormGroup;
-    if(this.bookingForm.invalid){
+    if (this.bookingForm.invalid) {
       if (orderForm.invalid) {
         for (const control of Object.values(orderForm.controls)) {
           if (control.invalid) {
@@ -168,16 +164,15 @@ export class BookingFormComponent implements OnInit {
       }
       return;
     }
-    
-    
-    const {order: orderFormValue, user} = this.bookingForm.getRawValue();
+
+    const { order: orderFormValue, user } = this.bookingForm.getRawValue();
     const order: Order = {
       user: {
         name: user.name,
         surname: user.surname,
         middlename: user.middlename,
         phone: user.phone,
-        email: user.email
+        email: user.email,
       },
       carId: this.car.id,
       car: this.car,
@@ -188,6 +183,7 @@ export class BookingFormComponent implements OnInit {
       timeFrom: orderFormValue.timeFrom,
       timeTo: orderFormValue.timeTo,
       orderSum: this.searchService.getCarPrice(this.car),
+      isCarFree: this.ifCarFree(NgbDate.from(orderFormValue.dateFrom), NgbDate.from(orderFormValue.dateTo)),
     };
 
     const subscription = this.api.addOrder(order, this.translate.currentLang).subscribe((v) => {
@@ -197,26 +193,7 @@ export class BookingFormComponent implements OnInit {
     this.loadingService.addSubscription(subscription);
   }
 
-  setMaxDate(fromDate: NgbDate) {
-    if (!this.carDates || !fromDate) {
-      this.maxDate = null;
-      return;
-    }
-    const maxDate = this.carDates.filter((range: DateRange) => range.dateFrom.after(fromDate))[0];
-    if (maxDate) {
-      this.maxDate = maxDate.dateFrom;
-    } else {
-      this.maxDate = null;
-    }
-  }
-
   isDisabled = (date: NgbDate) => {
-    if (date.before(this.searchService.minDate)) {
-      return true;
-    }
-    if (date.after(this.maxDate)) {
-      return true;
-    }
     if (!this.carDates) {
       return false;
     }
@@ -237,27 +214,15 @@ export class BookingFormComponent implements OnInit {
     return false;
   };
 
-  isFromDisabled = (date: NgbDate) => {
-    if (date.before(this.searchService.minDate)) {
-      return true;
-    }
-    if (!this.carDates) {
-      return false;
-    }
-
-    for (let range of this.carDates) {
-      if (date.equals(range.dateFrom) || date.equals(range.dateTo)) {
-        return true;
+  ifCarFree(dateFrom: NgbDate, dateTo: NgbDate) {
+    console.log(dateFrom)
+    let date = dateFrom;
+    do {
+      if (this.isDisabled(date)) {
+        return false;
       }
-
-      if (!range.dateTo) {
-        continue;
-      }
-
-      if (date.after(range.dateFrom) && date.before(range.dateTo)) {
-        return true;
-      }
-    }
-    return false;
-  };
+      date = this.searchService.calendar.getNext(date, 'd', 1);
+    } while (!date.equals(dateTo));
+    return true;
+  }
 }

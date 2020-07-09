@@ -1,5 +1,5 @@
-<div *ngIf="order" class="car mt-3" [title]="order?.statusText | translate">
-  <div class="car-header w-100" (click)="edit()">
+<div *ngIf="order" class="car mt-3" [title]="order?.statusText | translate" [ngClass]="{'bg-warning': !order.isCarFree && isAdmin}">
+  <div class="car-header w-100" (click)="edit()" >
     <div class="col-md-8 car-info-img row">
       <div class="car-img col-sm-4 col-lg-2">
         <img [src]="order.car.img" />

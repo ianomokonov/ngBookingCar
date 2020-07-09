@@ -4,6 +4,9 @@
 .price{
   flex-direction: column;
 }
+.bg-warning{
+  background-color: rgb(255, 240, 174) !important;
+}
 .car {
   flex-direction: column;
   .car-header {
@@ -12,7 +15,7 @@
     justify-content: space-between;
     box-shadow: none;
     margin: 0;
-    background-color: #fff;
+    background-color: transparent;
 
     .car-info-img {
       display: flex;
