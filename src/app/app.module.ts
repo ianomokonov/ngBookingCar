@@ -51,6 +51,7 @@ import { AboutCreteComponent } from './about-crete/about-crete.component';
 import { PlacesOfInterestComponent } from './profile/profile-details/places-of-interest/places-of-interest.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { FeedbackItemComponent } from './feedback/feedback-item/feedback-item.component';
+import { ScullyLibModule } from '@scullyio/ng-lib';
 
 @NgModule({
   declarations: [
@@ -106,7 +107,8 @@ import { FeedbackItemComponent } from './feedback/feedback-item/feedback-item.co
         deps: [HttpClient],
       },
     }),
-    BrowserModule.withServerTransition({ appId: 'ng-booking-car' })
+    BrowserModule.withServerTransition({ appId: 'ng-booking-car' }),
+    ScullyLibModule
   ],
   providers: [
     LoadingService,

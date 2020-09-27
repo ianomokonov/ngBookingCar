@@ -72,7 +72,7 @@ export class BookingFormComponent implements OnInit {
         dateFrom: [null, Validators.required],
         placeTo: [null, Validators.required],
         placeFrom: [null, Validators.required],
-        timeTo: ['12:00', Validators.required],
+        timeTo: ['13:00', Validators.required],
         timeFrom: ['12:00', Validators.required],
         carId: null,
         sum: null,
@@ -81,7 +81,7 @@ export class BookingFormComponent implements OnInit {
 
     this.bookingForm.get('order').valueChanges.subscribe((value) => {
       const from = NgbDate.from(value.dateFrom);
-      if (from.after(this.toDate)) {
+      if (from && from.after(this.toDate)) {
         this.toDate = from;
       }
       this.saveFilters(this.bookingForm.get('order').value);

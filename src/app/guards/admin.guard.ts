@@ -5,14 +5,13 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
-import { SessionStorageService } from '../session-storage';
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-  constructor(private router: Router, private api: ApiService, private translate: TranslateService, private ss: SessionStorageService) {}
+  constructor(private router: Router, private api: ApiService, private translate: TranslateService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-    let token = this.ss.getItem('bookingUserToken');
+    let token = sessionStorage.getItem('bookingUserToken');
     if (token) {
       return this.api.checkAccess().pipe(
         tap((isAdmin) => {

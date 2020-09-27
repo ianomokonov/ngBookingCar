@@ -1,0 +1,60 @@
+No configuration for route "[33m/booking/:id[39m" found. SkippingNo configuration for route "[33m/details/:id[39m" found. SkippingNo configuration for route "[33m/edit-car/:id[39m" found. Skipping
+
+
+No configuration for route "[33m/booking/:id[39m" found. SkippingNo configuration for route "[33m/details/:id[39m" found. Skipping
+----------------------------------
+Using stored unhandled routes!.
+   To discover new routes in the angular app use "[33mnpm run scully -- --scanRoutes[39m"
+----------------------------------No configuration for route "[33m/edit-car/:id[39m" found. Skipping
+
+
+
+
+----------------------------------
+Using stored unhandled routes!.
+   To discover new routes in the angular app use "[33mnpm run scully -- --scanRoutes[39m"
+----------------------------------No configuration for route "[33m/booking/:id[39m" found. SkippingNo configuration for route "[33m/details/:id[39m" found. Skipping
+
+
+Error during file write
+Error: ENOENT: no such file or directory, mkdir 'C:\FA\ngBookingCar\dist\static\edit-car\:id'
+No configuration for route "[33m/details/:id[39m" found. SkippingNo configuration for route "[33m/booking/:id[39m" found. Skipping
+
+Error during file write
+Error: ENOENT: no such file or directory, mkdir 'C:\FA\ngBookingCar\dist\static\edit-car\:id'
+
+----------------------------------
+Using stored unhandled routes!.
+   To discover new routes in the angular app use "[33mnpm run scully -- --scanRoutes[39m"
+----------------------------------No configuration for route "[33m/booking/:id[39m" found. SkippingNo configuration for route "[33m/details/:id[39m" found. Skipping
+
+
+Error during file write
+Error: ENOENT: no such file or directory, mkdir 'C:\FA\ngBookingCar\dist\static\edit-car\:id'
+
+----------------------------------
+Using stored unhandled routes!.
+   To discover new routes in the angular app use "[33mnpm run scully -- --scanRoutes[39m"
+----------------------------------No configuration for route "[33m/details/:id[39m" found. SkippingNo configuration for route "[33m/booking/:id[39m" found. Skipping
+
+
+Error during file write
+Error: ENOENT: no such file or directory, mkdir 'C:\FA\ngBookingCar\dist\static\edit-car\:id'
+
+----------------------------------
+Using stored unhandled routes!.
+   To discover new routes in the angular app use "[33mnpm run scully -- --scanRoutes[39m"
+----------------------------------No configuration for route "[33m/details/:id[39m" found. SkippingNo configuration for route "[33m/booking/:id[39m" found. Skipping
+
+
+Error during file write
+Error: ENOENT: no such file or directory, mkdir 'C:\FA\ngBookingCar\dist\static\edit-car\:id'
+
+----------------------------------
+Using stored unhandled routes!.
+   To discover new routes in the angular app use "[33mnpm run scully -- --scanRoutes[39m"
+----------------------------------No configuration for route "[33m/details/:id[39m" found. SkippingNo configuration for route "[33m/booking/:id[39m" found. Skipping
+
+
+Error during file write
+Error: ENOENT: no such file or directory, mkdir 'C:\FA\ngBookingCar\dist\static\edit-car\:id'
