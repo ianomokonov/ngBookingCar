@@ -58,3 +58,27 @@ Using stored unhandled routes!.
 
 Error during file write
 Error: ENOENT: no such file or directory, mkdir 'C:\FA\ngBookingCar\dist\static\edit-car\:id'
+
+----------------------------------
+Using stored unhandled routes!.
+   To discover new routes in the angular app use "[33mnpm run scully -- --scanRoutes[39m"
+----------------------------------No configuration for route "[33m/ru/details/:id[39m" found. SkippingNo configuration for route "[33m/ru/booking/:id[39m" found. SkippingNo configuration for route "[33m/ru/edit-car/:id[39m" found. SkippingNo configuration for route "[33m/en/booking/:id[39m" found. SkippingNo configuration for route "[33m/en/edit-car/:id[39m" found. SkippingNo configuration for route "[33m/en/details/:id[39m" found. Skipping
+
+
+
+
+
+
+Received Kill command
+
+----------------------------------
+Using stored unhandled routes!.
+   To discover new routes in the angular app use "[33mnpm run scully -- --scanRoutes[39m"
+----------------------------------No configuration for route "[33m/ru/details/:id[39m" found. SkippingNo configuration for route "[33m/ru/booking/:id[39m" found. SkippingNo configuration for route "[33m/ru/edit-car/:id[39m" found. SkippingNo configuration for route "[33m/en/edit-car/:id[39m" found. SkippingNo configuration for route "[33m/en/booking/:id[39m" found. SkippingNo configuration for route "[33m/en/details/:id[39m" found. Skipping
+
+
+
+
+
+
+Received Kill command

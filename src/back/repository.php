@@ -313,8 +313,8 @@
             $query = $this->database->db->query($str);
             $query->setFetchMode(PDO::FETCH_CLASS, 'PriceRange');
             $range = $query->fetch();
-            $range->min = $range->min*1;
-            $range->max = $range->max*1;
+            $range['min'] = $range['min']*1;
+            $range['max'] = $range['max']*1;
             return $range;
             
         }
@@ -390,9 +390,32 @@
             }   
             
             
-            $headers  = "Content-type: text/html; charset=utf-8 \r\n";
+            $headers  = "Content-type: text/html; charset=utf-8 \r\nFrom: info@car4crete.com\r\n";
             
             mail($user->email, $subject, $message, $headers);
+            $this->SendOrderToAdmin($car, $order, $user);
+            return $this->database->db->lastInsertId();
+            
+        }
+
+        public function SendOrderToAdmin($car, $order, $user){
+            if($order == null){
+                return array("message" => "Заказ пуст", "method" => "AddOrder", "requestData" => array("order" => $order));
+            }
+            $subject = "Новое бронирование автомобиля";
+                $message = "<p></br></br><h3>Детали бронирования:</h3></p> </br>
+                <p>Клиент: ".$user->surname." ".$user->name." ".$user->middlename."</p></br>
+                <p>Email: ".$user->email."</p></br>
+                <p>Телефон: ".($user->phone ? $user->phone : 'Не указан')."</p></br></br>
+                <p>Автомобиль: ".$car->name."</p></br>
+                <p>Дата начала аренды: ".date("d.m.Y",strtotime($order->dateFrom))." ".$order->timeFrom."</p></br>
+                <p>Дата конца аренды: ".date("d.m.Y",strtotime($order->dateTo))." ".$order->timeTo."</p></br>
+                <p></br>Сумма заказа: ".$order->orderSum."€</p></br>"; 
+            
+            
+            $headers  = "Content-type: text/html; charset=utf-8 \r\nFrom: info@car4crete.com\r\n";
+            
+            mail('info@carcrete24.com', $subject, $message, $headers);
             return $this->database->db->lastInsertId();
             
         }
