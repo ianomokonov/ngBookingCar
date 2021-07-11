@@ -367,6 +367,9 @@
             if($insert[1][0]!=null){
                 $query->execute($insert[1]);
             }
+            
+            $order->placeFrom = $this->GetPlace($order->placeFromId);
+            $order->placeTo = $this->GetPlace($order->placeToId);
             $subject = "";
             $message = '';
             if($lang == 'ru'){
@@ -375,8 +378,8 @@
                 </br> <p>Наш менеджер свяжется с вами для подтверждения наличия автомобиля. Бронь вы можете просмотреть в личном кабинете на сайте. Там же есть возможность изменить бронь за неделю до начала аренды или отменить её за три дня до начала аренды.</p></br>
                 <p></br></br><h3>Детали бронирования:</h3></p> </br>
                 <p>Автомобиль: ".$car->name."</p></br>
-                <p>Дата начала аренды: ".date("d.m.Y",strtotime($order->dateFrom))." ".$order->timeFrom."</p></br>
-                <p>Дата конца аренды: ".date("d.m.Y",strtotime($order->dateTo))." ".$order->timeTo."</p></br>
+                <p>Дата начала аренды: ".date("d.m.Y",strtotime($order->dateFrom))." ".$order->timeFrom." (".$order->placeFrom->name.")</p></br>
+                <p>Дата конца аренды: ".date("d.m.Y",strtotime($order->dateTo))." ".$order->timeTo." (".$order->placeTo->name.")</p></br>
                 <p></br>Сумма заказа: ".$order->orderSum."€</p></br>";
             } else {
                 $subject = "Car reservation";
@@ -384,8 +387,8 @@
                 </br> <p>Our manager will contact you to confirm the presence of the car. You can view the reservation in your personal office on the site. There is also an opportunity to change the reservation a week before the start of the lease or to cancel it three days before the start of the lease.</p></br>
                 <p></br></br><h3>Booking details:</h3></p> </br>
                 <p>Car: ".$car->name."</p></br>
-                <p>Lease start date: ".date("d.m.Y",strtotime($order->dateFrom))." ".$order->timeFrom."</p></br>
-                <p>Lease end date: ".date("d.m.Y",strtotime($order->dateTo))." ".$order->timeTo."</p></br>
+                <p>Lease start date: ".date("d.m.Y",strtotime($order->dateFrom))." ".$order->timeFrom." (".$order->placeFrom->name_eng.")</p></br>
+                <p>Lease end date: ".date("d.m.Y",strtotime($order->dateTo))." ".$order->timeTo." (".$order->placeTo->name_eng.")</p></br>
                 <p></br>Order value: ".$order->orderSum."€</p></br>";
             }   
             
@@ -408,8 +411,8 @@
                 <p>Email: ".$user->email."</p></br>
                 <p>Телефон: ".($user->phone ? $user->phone : 'Не указан')."</p></br></br>
                 <p>Автомобиль: ".$car->name."</p></br>
-                <p>Дата начала аренды: ".date("d.m.Y",strtotime($order->dateFrom))." ".$order->timeFrom."</p></br>
-                <p>Дата конца аренды: ".date("d.m.Y",strtotime($order->dateTo))." ".$order->timeTo."</p></br>
+                <p>Дата начала аренды: ".date("d.m.Y",strtotime($order->dateFrom))." ".$order->timeFrom." (".$order->placeFrom->name.")</p></br>
+                <p>Дата конца аренды: ".date("d.m.Y",strtotime($order->dateTo))." ".$order->timeTo." (".$order->placeTo->name.")</p></br>
                 <p></br>Сумма заказа: ".$order->orderSum."€</p></br>"; 
             
             
@@ -670,4 +673,3 @@
         }
 
     }
-?>
