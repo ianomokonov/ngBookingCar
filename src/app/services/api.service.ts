@@ -48,12 +48,12 @@ export class ApiService {
     const url = new URL(this.baseUrl);
     url.searchParams.set('key', 'get-cars');
     if (model) {
-      if (model.dateFrom) {
-        url.searchParams.set('dateFrom', this.ngbDateToString(model.dateFrom));
-      }
-      if (model.dateTo) {
-        url.searchParams.set('dateTo', this.ngbDateToString(model.dateTo));
-      }
+      // if (model.dateFrom) {
+      //   url.searchParams.set('dateFrom', this.ngbDateToString(model.dateFrom));
+      // }
+      // if (model.dateTo) {
+      //   url.searchParams.set('dateTo', this.ngbDateToString(model.dateTo));
+      // }
       if (model.filters) {
         model.filters.forEach((f) => {
           const options = f.options.map((o) => o.name).join(',');
