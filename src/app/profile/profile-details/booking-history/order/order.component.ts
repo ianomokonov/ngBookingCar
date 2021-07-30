@@ -77,11 +77,11 @@ export class OrderComponent implements OnInit {
   }
 
   public set fromDate(date: NgbDate) {
-    this.orderForm.get('dateFrom').setValue(date, {emitEvent: false});
+    this.orderForm.get('dateFrom').setValue(date, { emitEvent: false });
   }
 
   public set toDate(date: NgbDate) {
-    this.orderForm.get('dateTo').setValue(date, {emitEvent: false});
+    this.orderForm.get('dateTo').setValue(date, { emitEvent: false });
   }
 
   private rxAlive: boolean = true;
@@ -105,7 +105,7 @@ export class OrderComponent implements OnInit {
     this.orderForm.valueChanges.pipe(takeWhile(() => this.rxAlive)).subscribe((v) => {
       this.setMaxDate(v.dateFrom);
       const from = NgbDate.from(v.dateFrom);
-      if(from.after(this.toDate)){
+      if (from.after(this.toDate)) {
         this.toDate = from;
       }
       this.setOrderSum(this.orderForm.value);
@@ -183,7 +183,7 @@ export class OrderComponent implements OnInit {
   private setOrderSum(model: SearchModel) {
     const periodDays = SearchService.setPeriodDays(model);
 
-    this.order.orderSum = this.searchService.getCarPrice(this.order.car, periodDays, false);
+    this.order.orderSum = this.searchService.getCarPrice(this.order.car, periodDays);
   }
 
   ngOnInit(): void {}
