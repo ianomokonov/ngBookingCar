@@ -48,6 +48,7 @@
     class Place {
         public $id;
         public $name;
+        public $name_eng;
     }
     
     class PlaceOfInterest {
