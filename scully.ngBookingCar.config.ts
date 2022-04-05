@@ -1,4 +1,16 @@
 import { ScullyConfig } from '@scullyio/scully';
+const getRoutes = () => {
+  const res = [];
+
+  for (let i = 4; i < 40; i++) {
+    res.push(`/en/booking/${i + 1}`);
+    res.push(`/en/details/${i + 1}`);
+    res.push(`/ru/booking/${i + 1}`);
+    res.push(`/ru/details/${i + 1}`);
+  }
+
+  return res;
+};
 export const config: ScullyConfig = {
   projectRoot: './src',
   projectName: 'ngBookingCar',
@@ -21,5 +33,6 @@ export const config: ScullyConfig = {
     '/ru/policy',
     '/ru/about-crete',
     '/ru/feedback',
+    ...getRoutes(),
   ],
 };

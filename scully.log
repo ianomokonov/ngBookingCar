@@ -82,3 +82,46 @@ Using stored unhandled routes!.
 
 
 Received Kill command
+No configuration for route "[33m/ru/edit-car/:id[39m" found. SkippingNo configuration for route "[33m/en/edit-car/:id[39m" found. Skipping
+
+Error during file write
+Error: ENOENT: no such file or directory, mkdir 'C:\Progoff\ngBookingCar\dist\static\ru\details\:id'
+Error during file write
+Error: ENOENT: no such file or directory, mkdir 'C:\Progoff\ngBookingCar\dist\static\ru\booking\:id'
+Error during file write
+Error: ENOENT: no such file or directory, mkdir 'C:\Progoff\ngBookingCar\dist\static\en\details\:id'
+Error during file write
+Error: ENOENT: no such file or directory, mkdir 'C:\Progoff\ngBookingCar\dist\static\en\booking\:id'
+
+----------------------------------
+Using stored unhandled routes!.
+   To discover new routes in the angular app use "[33mnpm run scully -- --scanRoutes[39m"
+----------------------------------No configuration for route "[33m/ru/details/:id[39m" found. SkippingNo configuration for route "[33m/ru/booking/:id[39m" found. SkippingNo configuration for route "[33m/en/booking/:id[39m" found. SkippingNo configuration for route "[33m/ru/edit-car/:id[39m" found. SkippingNo configuration for route "[33m/en/details/:id[39m" found. SkippingNo configuration for route "[33m/en/edit-car/:id[39m" found. Skipping
+
+
+
+
+
+
+
+----------------------------------
+Using stored unhandled routes!.
+   To discover new routes in the angular app use "[33mnpm run scully -- --scanRoutes[39m"
+----------------------------------No configuration for route "[33m/ru/details/:id[39m" found. SkippingNo configuration for route "[33m/ru/edit-car/:id[39m" found. SkippingNo configuration for route "[33m/ru/booking/:id[39m" found. SkippingNo configuration for route "[33m/en/edit-car/:id[39m" found. SkippingNo configuration for route "[33m/en/details/:id[39m" found. SkippingNo configuration for route "[33m/en/booking/:id[39m" found. Skipping
+
+
+
+
+
+
+
+----------------------------------
+Using stored unhandled routes!.
+   To discover new routes in the angular app use "[33mnpm run scully -- --scanRoutes[39m"
+----------------------------------No configuration for route "[33m/ru/details/:id[39m" found. SkippingNo configuration for route "[33m/ru/booking/:id[39m" found. SkippingNo configuration for route "[33m/ru/edit-car/:id[39m" found. SkippingNo configuration for route "[33m/en/details/:id[39m" found. SkippingNo configuration for route "[33m/en/booking/:id[39m" found. SkippingNo configuration for route "[33m/en/edit-car/:id[39m" found. Skipping
+
+
+
+
+
+
