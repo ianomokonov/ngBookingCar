@@ -2,14 +2,15 @@
   <div class="container d-flex">
     <div class="logo py-2">
       <h2 class="mb-0" [routerLink]="['search']">car<span>4</span>crete</h2>
-      <div class="d-flex d-lg-none"> 
+      <div class="d-flex d-lg-none">
         <a class="nav-link mr-2" [routerLink]="['profile']" routerLinkActive="active"
           ><span class="d-none d-md-inline">{{ user ? user.name + ' ' + user.surname : ('MENU.PROFILE' | translate) }}</span>
           <i class="fas fa-user d-md-none"></i>
         </a>
         <span class="d-inline-flex align-items-center langs">
-          <img class="mr-1" src="../../assets/images/flag-en.gif" (click)="changeLang('en')" alt="en" />
-          <img src="../../assets/images/flag-ru.gif" (click)="changeLang('ru')" alt="ru" />
+          <img class="ml-1" src="../../assets/images/flag-en.gif" (click)="changeLang('en')" alt="en" />
+          <img class="ml-1" src="../../assets/images/flag-ru.gif" (click)="changeLang('ru')" alt="ru" />
+          <img class="ml-1" height="18px" src="../../assets/images/flag-de.gif" (click)="changeLang('de')" alt="ru" />
         </span>
       </div>
     </div>
@@ -22,14 +23,15 @@
         <a class="nav-link" [routerLink]="['contacts']" routerLinkActive="active">{{ 'MENU.CONTACTS' | translate }}</a>
         <a class="nav-link" [routerLink]="['about-crete']" routerLinkActive="active">{{ 'MENU.ABOUT_CRETE' | translate }}</a>
       </div>
-      <div class="d-none d-lg-flex"> 
+      <div class="d-none d-lg-flex">
         <a class="nav-link mr-2" [routerLink]="['profile']" routerLinkActive="active"
           ><span class="d-none d-md-inline">{{ user ? user.name + ' ' + user.surname : ('MENU.PROFILE' | translate) }}</span>
           <i class="fas fa-user d-md-none"></i>
         </a>
         <span class="d-inline-flex align-items-center langs">
-          <img class="mr-1" src="../../assets/images/flag-en.gif" (click)="changeLang('en')" alt="en" />
-          <img src="../../assets/images/flag-ru.gif" (click)="changeLang('ru')" alt="ru" />
+          <img class="ml-1" src="../../assets/images/flag-en.gif" (click)="changeLang('en')" alt="en" />
+          <img class="ml-1" src="../../assets/images/flag-ru.gif" (click)="changeLang('ru')" alt="ru" />
+          <img class="ml-1" height="18px" src="../../assets/images/flag-de.gif" (click)="changeLang('de')" alt="ru" />
         </span>
       </div>
     </nav>

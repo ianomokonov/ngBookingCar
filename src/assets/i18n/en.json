@@ -25,7 +25,7 @@
     "SELECT_DROP_OFF_DATE": "Select drop off date",
     "SELECT_DROP_OFF_PLACE": "Select drop off place",
     "SELECT_DROP_OFF_TIME": "Select drop off time",
-    "MANUAL_TEXT": "One of the most popular cars is cars with manual transmission. They have the lowest price in our market, as they are the most running and maintainable",
+    "MANUAL_TEXT": "Drive hybrid! Renting a hybrid car in Crete is a step into the future. Air emissions are reduced by up to 30%. Save CO2 and money - the motto of your holiday!",
     "AUTOMATIC_TEXT": "Cars with an automatic transmission are distinguished by their utmost ease of use, high build quality and, as a rule, high comfort",
     "CABRIO_TEXT": "Cabriolet - the best choice for trips around the island of Crete. At the wheel of such a car, you can easily enjoy the fresh sea air, bask in the sun and just ride with the wind",
     "MINIVAN_TEXT": "Minivan - ideal for large companies, whether it is a large family, or just friends who decide to have a good rest",
@@ -38,11 +38,11 @@
     "BSC": "Book specific car, not category",
     "BSC_TEXT": "What car you choose - you will take on arrival.",
     "FINAL_PRICE": "Final price & NO Extra payment",
-    "FINAL_PRICE_TEXT": "You see the FINAL car rental price with our company. No hidden taxes and extra insuranses. Our rates include 24% VAT, Full Insurance, unlimited Mileage, 24 hours road. Assistance all over Crete.",
+    "FINAL_PRICE_TEXT": "You see the FINAL car rental price with our company. No hidden taxes and extra insuranses. Our rates include 24% VAT, Insurance, unlimited Mileage, 24 hours road assistance all over Crete.",
     "INSURANCE": "Full Insurance without EXCESS",
-    "INSURANCE_TEXT": "Full coverage insurance (FCDW)<br>Personal accident insurance (PAI)<br>Theft & Fire insurance<br>Liability Insurance (LI)<br>",
+    "INSURANCE_TEXT": "Collision damage waiver (CDW)<br>Personal accident insurance (PAI)<br>Theft & Fire insurance<br>Liability Insurance (LI)<br>",
     "ATTENTION": "Pick up/Drop of at the Airport",
-    "ATTENTION_TEXT": "We have office in Heraklion Airport. You can collect and return car directly at Airport.",
+    "ATTENTION_TEXT": "We have office in Heraklion (Chania) Airport. You can collect and return car directly at Airport.",
     "RENT_CONDITIONS": "RENT CONDITIONS",
     "ACCURATY": "Accuracy",
     "ACCURATY_TEXT": "Communicate to us the desired location and time of car renting on Crete",
@@ -60,7 +60,7 @@
     "DAY": "day"
   },
   "CARS": {
-    "TEXT": "<p>Hire a car in Crete</p><p> A car will become your best ally when exploring Crete. We keep our car fleet in impeccable condition, so your vehicle will be very clean, and will have passed a strict technical inspection. Our website allows you Hire a cars of different brands, horsepower and configuration to adapt to your needs whether you are travelling in Crete as a couple, family or a group of friends. The one thing they will all have in common is their reliability and comfort. Additionally, you will have access to continuous information and technical support during your journey.</p><p>To rent a car with us you can book it on this page <a href='http://car4crete.com'>www.car4crete.com</a> or right us on chat/whats up directly. We are online 24/7.</p>",
+    "TEXT": "<p>Hire a car in Crete</p><p> A car will become your best ally when exploring Crete. We keep our car fleet in impeccable condition, so your vehicle will be very clean, and will have passed a strict technical inspection. Our website allows you Hire a cars of different brands, horsepower and configuration to adapt to your needs whether you are travelling in Crete. Automatic, manual, hybrid and electric cars we suggest for rent in Crete. Additionally, you will have access to continuous information and technical support during your journey.</p><p>To rent a car with us you can book it on this page <a href='http://car4crete.com'>www.car4crete.com</a> or right us on chat/whats up directly. We are online 24/7.</p>",
     "CHANGE": "edit",
     "CLEAR_FILTERS": "clear filters",
     "DATE": "Date",
@@ -155,16 +155,16 @@
     "USER_EXISTS": "User already exists"
   },
   "CONDITIONS": {
+    "BOOK": "New Car",
     "QUICK": "Quick pick-up / return directly at the Airport",
     "FINAL": "Final price and No Extra payment",
-    "NO_CREDIT": "No credit card deposit",
-    "COVERAGE": "Coverage without Excess",
-    "WUG": "WUG insurance",
-    "THEFT": "Theft and Fire insurance",
-    "BOOK": "Book specific car, not category"
+    "NO_CREDIT": "24-hours road assistance",
+    "COVERAGE": "Unlimited mileage",
+    "WUG": "Free child seat",
+    "THEFT": "Free cancellation"
   },
   "CONTACTS": {
-    "TEXT": "<p>Car Hire <strong>CAR4CRETE</strong> is here to welcome you! If you are going to visit Crete, you will definitely need a reliable rent a car company. Our goal is to help you feel at home on the island. Just get in a rented car and start exploring the sights of Crete with comfort, at your own pace and according to your own schedule.<p>Hire a car to be delivered <strong>to the airport of Heraklion, Port</strong> and our manager will be waiting for you at the arrivals exit of the airport/port with a welcome sign. If you wish to start your journey from a <strong>hotel</strong>, we will ensure your vehicle is there at the right time.<p>Booking a car in Crete with CAR4CRETE is very easy. Write to online chat, call on telephone or Whats up, mail us. We are in touch 24/7 - before you come and when you are in Crete."
+    "TEXT": "<p>Car Hire <strong>CAR4CRETE</strong> is here to welcome you! If you are going to visit Crete, you will definitely need a reliable rent a car company. Our goal is to help you feel at home on the island. Just get in a rented car and start exploring the sights of Crete with comfort, at your own pace and according to your own schedule.<p>Hire a car to be delivered <strong>to the airport of Heraklion, Port</strong> and our manager will be waiting for you at the arrivals exit of the airport/port with a welcome sign. If you wish to start your journey from a <strong>hotel</strong>, we will ensure your vehicle is there at the right time. Would you like car rental on amoudara - here is our mane office. <p>Booking a car in Crete with CAR4CRETE is very easy. Write to online chat, call on telephone or Whats up, mail us. We are in touch 24/7 - before you come and when you are in Crete."
   },
   "POLICY": {
     "HEADER": "<h4>To rent a car with CAR4CRETE, you should:</h4>",

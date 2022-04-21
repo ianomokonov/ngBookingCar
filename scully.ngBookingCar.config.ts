@@ -7,6 +7,8 @@ const getRoutes = () => {
     res.push(`/en/details/${i + 1}`);
     res.push(`/ru/booking/${i + 1}`);
     res.push(`/ru/details/${i + 1}`);
+    res.push(`/de/booking/${i + 1}`);
+    res.push(`/de/details/${i + 1}`);
   }
 
   return res;
@@ -33,6 +35,12 @@ export const config: ScullyConfig = {
     '/ru/policy',
     '/ru/about-crete',
     '/ru/feedback',
+    '/de/search',
+    '/de/catalog',
+    '/de/contacts',
+    '/de/policy',
+    '/de/about-crete',
+    '/de/feedback',
     ...getRoutes(),
   ],
 };

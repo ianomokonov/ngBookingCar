@@ -11,7 +11,7 @@ export class LangGuard implements CanActivate {
   constructor(private router: Router, private translate: TranslateService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-    const lang = state.url.indexOf('/en/') > -1 ? 'en' : 'ru';
+    const lang = state.url.slice(0, 3).replace('/', '');
     if (this.translate.currentLang != lang) {
       this.translate.use(lang);
     }

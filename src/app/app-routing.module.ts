@@ -286,6 +286,94 @@ import { FeedbackComponent } from './feedback/feedback.component';
           ],
           canActivate: [LangGuard],
         },
+        {
+          path: 'de',
+          component: LangsComponent,
+          children: [
+            { path: '', pathMatch: 'full', redirectTo: 'search' },
+            {
+              path: 'search',
+              component: SearchComponent,
+              data: {
+                title: 'Cheap Rent a car Crete / Car Hire in Crete with CAR4CRETE / Heraklion / Rethymnon / Chania ',
+                description:
+                  'Rent a car in Crete /Full insurance against all risks 100% no excess/ Free delivery at airport Heraklion and oll ower Crete',
+                keywords:
+                  'rent a car crete, rent a car heraklion, rent a car Rethymnon, rent a car Chania, crete car hire, rent a car heraklion crete, rent a car heraklion airport crete, rent a car heraklion port, rent a car heraklion greece, car rental in Crete Heraklion Airport ',
+              },
+            },
+            {
+              path: 'catalog',
+              component: CatalogComponent,
+              data: {
+                title: 'Car Hire in Heraklion airport Crete / Сhoose your car model with CAR4CRETE',
+                description:
+                  'Crete: Rent cars of different brands, horsepower and configuration to adapt to your needs whether you are travelling as a couple, family or a group of friends',
+                keywords:
+                  'Hire car heraklion airport, Hire cars crete - heraklion airport, Best car hire heraklion airport, Cheap car hire crete heraklion airport, Hire a car in Crete, Car hire in crete greece, Car hire in crete hersonissos, Car hire in crete airport',
+              },
+            },
+            {
+              path: 'contacts',
+              component: ContactsComponent,
+              data: {
+                title: 'Car rental company in Crete - CAR4CRETE',
+                description:
+                  'Booking a car in Crete with CAR4CRETE is very easy. Write online chat, call on telephone or Whats up, mail us. Rent a car Heraklion airport Crete, rent a car Heraklion port Crete. We are in touch 24/7.+30 69 4936 7278 info@carcrete24.com ',
+                keywords:
+                  'Rent a car heraklion crete, rent a car heraklion airport crete, rent a car heraklion port, rent a car heraklion greece, car rental in Crete Heraklion Airport / rent a car deals with CAR4CRETE',
+              },
+            },
+            {
+              path: 'policy',
+              component: PolicyComponent,
+              data: {
+                title: 'Car rental company in Crete - CAR4CRETE',
+                description:
+                  'Booking a car in Crete with CAR4CRETE is very easy. Write online chat, call on telephone or Whats up, mail us. Rent a car Heraklion airport Crete, rent a car Heraklion port Crete. We are in touch 24/7.+30 69 4936 7278 info@carcrete24.com ',
+                keywords:
+                  'Rent a car heraklion crete, rent a car heraklion airport crete, rent a car heraklion port, rent a car heraklion greece, car rental in Crete Heraklion Airport / rent a car deals with CAR4CRETE',
+              },
+            },
+            {
+              path: 'about-crete',
+              component: AboutCreteComponent,
+              data: {
+                title: 'What to see in Crete',
+                description: 'Holiday in Crete with car',
+                keywords: 'Crete car rental, Crete car hire',
+              },
+            },
+            {
+              path: 'feedback',
+              component: FeedbackComponent,
+              data: {
+                title: 'What to see in Crete',
+                description: 'Holiday in Crete with car',
+                keywords: 'Crete car rental, Crete car hire',
+              },
+            },
+            { path: 'details/:id', component: DetailsComponent },
+            { path: 'booking/:id', component: BookingFormComponent },
+            { path: 'edit-car/:id', component: EditCarComponent, canActivate: [AdminGuard] },
+            { path: 'add-car', component: EditCarComponent, canActivate: [AdminGuard] },
+            { path: 'enter', component: EnterComponent },
+            { path: 'sign-up', component: SignUpComponent },
+            {
+              path: 'profile',
+              component: ProfileComponent,
+              canActivate: [ProfileGuard],
+              children: [
+                { path: '', pathMatch: 'full', redirectTo: 'history' },
+                { path: 'history', component: BookingHistoryComponent },
+                { path: 'cars', component: CarsComponent, canActivate: [AdminGuard] },
+                { path: 'places', component: PlacesComponent, canActivate: [AdminGuard] },
+                { path: 'places-of-interest', component: PlacesOfInterestComponent, canActivate: [AdminGuard] },
+              ],
+            },
+          ],
+          canActivate: [LangGuard],
+        },
       ],
       {
         initialNavigation: 'enabled',
