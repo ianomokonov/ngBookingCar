@@ -1,7 +1,14 @@
 <div class="container">
   <div class="bk-card my-3">
-    <p [innerHTML]="'POLICY.HEADER' | translate"></p>
-    <p [innerHTML]="'POLICY.TEXT' | translate"></p>
+    <b class="d-block mb-3" [innerHTML]="'SEARCH.RENT_CONDITIONS' | translate"></b>
+    <ol>
+      <li><span>{{ 'SEARCH.ACCURATY_TEXT' | translate }}</span></li>
+      <li><span>{{ 'SEARCH.AGE_TEXT' | translate }}</span></li>
+      <li><span>{{ 'SEARCH.LICENSE_TEXT' | translate }}</span></li>
+      <li><span>{{ 'SEARCH.SOBRITY_TEXT' | translate }}</span></li>
+      <li><span>{{ 'SEARCH.SR_TEXT' | translate }}</span></li>
+      <li><span>{{ 'SEARCH.CARE_TEXT' | translate }}</span></li>
+    </ol>
   </div>
   <div class="conditions pt-5">
     <div class="item row m-0 pb-3 mb-3" *ngFor="let item of items">
