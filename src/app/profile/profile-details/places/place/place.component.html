@@ -1,11 +1,14 @@
 <div [formGroup]="placeForm" class="row">
-  <div class="col-md-5 pb-1 pb-md-0" >
+  <div class="col-md pb-1 pb-md-0" >
     <input formControlName="name" type="text" class="form-control" placeholder="Русское название"/>
   </div>
-  <div class="col-md-5" >
+  <div class="col-md" >
     <input formControlName="name_eng" type="text" class="form-control" placeholder="Английское название"/>
   </div>
-  <div class="col-md btns py-1 py-md-0 text-right text-md-left pl-0">
+  <div class="col-md" >
+    <input formControlName="name_de" type="text" class="form-control" placeholder="Немецкое название"/>
+  </div>
+  <div class="col-md-1 btns py-1 py-md-0 text-right text-md-left pl-0 text-nowrap">
     <button class="btn btn-outline-success" *ngIf="!placeInstanse?.id" (click)="addPlace()" title="Добавить">
       <i class="fas fa-plus"></i>
     </button>

@@ -24,7 +24,8 @@ export class PlaceComponent implements OnInit {
   constructor(private api: ApiService, private loadingService: LoadingService, private fb: FormBuilder) {
     this.placeForm = fb.group({
       name: [null, Validators.required],
-      name_eng: [null, Validators.required]
+      name_eng: [null, Validators.required],
+      name_de: [null, Validators.required]
     })
   }
 

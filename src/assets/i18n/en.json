@@ -151,6 +151,7 @@
     "ENTER_PROFILE": "Enter your profile",
     "SHOULD_ENTER_PROFILE": "You should sign in or sign up",
     "PLACES_OF_INTEREST": "Places of interest",
+    "MAIN_SLIDER": "Main slider",
     "INVALID_LOGIN": "Invalid login or password",
     "USER_EXISTS": "User already exists"
   },

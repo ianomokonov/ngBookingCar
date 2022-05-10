@@ -12,6 +12,7 @@ import { SliderRange } from '../utils/double-slider/double-slider.component';
 import { Filter } from '../search/search-cars/search-cars.component';
 import { PlaceOfInterest } from '../models/place-of-interest';
 import { Feedback } from '../models/feedback';
+import { Slide } from '../models/slide';
 // import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -111,8 +112,16 @@ export class ApiService {
     return this.http.get<PlaceOfInterest[]>(`${this.baseUrl}?key=get-places-of-interest`);
   }
 
+  public getSlides(): Observable<Slide[]> {
+    return this.http.get<Slide[]>(`${this.baseUrl}?key=get-slides`);
+  }
+
   public uploadPlaceImg(data): Observable<string> {
     return this.http.post<string>(`${this.baseUrl}?key=upload-place-img`, data);
+  }
+
+  public uploadSlideImg(data): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}?key=upload-slide-img`, data);
   }
 
   public getPlaces(): Observable<Place[]> {

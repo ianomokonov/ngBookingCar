@@ -19,10 +19,13 @@ export class PlacesOfInterestComponent implements OnInit {
       img: [null, Validators.required],
       name: [null, Validators.required],
       name_eng: [null, Validators.required],
+      name_de: [null, Validators.required],
       description: [null, Validators.required],
       description_eng: [null, Validators.required],
+      description_de: [null, Validators.required],
       road: [null, Validators.required],
       road_eng: [null, Validators.required],
+      road_de: [null, Validators.required],
       rating: null
     })
    }

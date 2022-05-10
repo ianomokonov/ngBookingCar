@@ -1,0 +1,63 @@
+<span #scroll></span>
+<div class="row" [formGroup]="sliderForm">
+  <div class="col-12">
+    <div class="form-group">
+      <label>Фотография</label>
+      <div>
+        <div *ngIf="!isUploadFileShown()" class="position-relative d-flex align-items-start">
+          <img class="w-75" [src]="sliderForm.get('img').value" />
+          <span class="remove-img ml-1" (click)="removeImg()">&times;</span>
+        </div>
+        <bk-file-uploader *ngIf="isUploadFileShown()" formControlName="img"></bk-file-uploader>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label>Заголовок (рус)</label>
+      <input class="form-control" formControlName="title" type="text" />
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label>Заголовок (англ)</label>
+      <input class="form-control" formControlName="title_eng" type="text" />
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label>Заголовок (нем)</label>
+      <input class="form-control" formControlName="title_de" type="text" />
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="form-group">
+      <label>Описание (рус)</label>
+      <textarea class="form-control" formControlName="description" rows="3"></textarea>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="form-group">
+      <label>Описание (англ)</label>
+      <textarea class="form-control" formControlName="description_eng" rows="3"></textarea>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="form-group">
+      <label>Описание (нем)</label>
+      <textarea class="form-control" formControlName="description_de" rows="3"></textarea>
+    </div>
+  </div>
+  <div class="col-12 text-right">
+    <button class="btn btn-primary" (click)="saveSlide()">Сохранить</button>
+  </div>
+</div>
+
+<div class="places row mx-0 mt-3">
+  <div class="mb-3 px-0 pr-sm-3 col-sm-6 col-md-4" *ngFor="let slide of slides" (click)="update(slide, scroll)">
+    <div class="place">
+      <img [src]="slide.img" />
+      <h3 class="my-3 ml-2">{{ slide.name | bkTranslate }}</h3>
+    </div>
+  </div>
+</div>

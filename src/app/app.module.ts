@@ -52,6 +52,7 @@ import { PlacesOfInterestComponent } from './profile/profile-details/places-of-i
 import { FeedbackComponent } from './feedback/feedback.component';
 import { FeedbackItemComponent } from './feedback/feedback-item/feedback-item.component';
 import { ScullyLibModule } from '@scullyio/ng-lib';
+import { MainSliderComponent } from './profile/profile-details/main-slider/main-slider.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { ScullyLibModule } from '@scullyio/ng-lib';
     PlacesOfInterestComponent,
     FeedbackComponent,
     FeedbackItemComponent,
+    MainSliderComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

@@ -152,7 +152,8 @@
     "ENTER_PROFILE": "Anmelden",
     "INVALID_LOGIN": "Falsches Login oder Passwort",
     "USER_EXISTS": "Dieser Benutzer existiert bereits",
-    "PLACES_OF_INTEREST": "Sehenswürdigkeiten"
+    "PLACES_OF_INTEREST": "Sehenswürdigkeiten",
+    "MAIN_SLIDER": "Main slider"
   },
   "CONDITIONS": {
     "BOOK": "Neue Autos",

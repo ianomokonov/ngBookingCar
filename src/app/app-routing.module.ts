@@ -20,6 +20,7 @@ import { PolicyComponent } from './policy/policy.component';
 import { AboutCreteComponent } from './about-crete/about-crete.component';
 import { PlacesOfInterestComponent } from './profile/profile-details/places-of-interest/places-of-interest.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { MainSliderComponent } from './profile/profile-details/main-slider/main-slider.component';
 
 // const routes: Routes = [
 //   { path: '', pathMatch: 'full', redirectTo: 'search' },
@@ -193,6 +194,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
                 { path: 'cars', component: CarsComponent, canActivate: [AdminGuard] },
                 { path: 'places', component: PlacesComponent, canActivate: [AdminGuard] },
                 { path: 'places-of-interest', component: PlacesOfInterestComponent, canActivate: [AdminGuard] },
+                { path: 'main-slider', component: MainSliderComponent, canActivate: [AdminGuard] },
               ],
             },
           ],
@@ -210,8 +212,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
                 title: 'Rent a Car Crete 2022 / Hire a Car Crete 2022 / Car4Crete.com',
                 description:
                   'Rent a car in Crete with Car4Crete. Hire a new car at Heraklion airport - no waiting in the line. Rent a vehicle in Heraklion port or hotel in Crete with best price. Family company, we are always in touch!',
-                keywords:
-                  'rent a car heraklion, car rental heraklion airport, car hire heraklion airport',
+                keywords: 'rent a car heraklion, car rental heraklion airport, car hire heraklion airport',
               },
             },
             {
@@ -221,8 +222,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
                 title: 'Car models for rent in Crete 2022/ Find the Best Price / Car4Crete.com',
                 description:
                   'The best car rental company in Crete will provide you with brand new Volkswagen, Fiat, Suzuki and Hyundai cars. Automatic, manual, hybrid and electric cars for rent in Crete. R ent a car Heraklion with Best Rates.',
-                keywords:
-                  'best car hire crete, rent a car crete prices, rent a car heraklion price, rent a car heraklion airport price',
+                keywords: 'best car hire crete, rent a car crete prices, rent a car heraklion price, rent a car heraklion airport price',
               },
             },
             {
@@ -243,8 +243,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
                 title: 'Hire Car in Crete 2022 / Insurance policy / Car4Crete.com',
                 description:
                   'Conditions for car hire Crete Heraklion Rethimno Hersonissos. Premium car rental insurance for car hire Heraklion airport in Crete including 24 hour roadside assistance. Car rental company Car4Crete is an honest and reliable partner!',
-                keywords:
-                  'car hire crete heraklion, car rental heraklion port, crete car hire heraklion airport',
+                keywords: 'car hire crete heraklion, car rental heraklion port, crete car hire heraklion airport',
               },
             },
             {
@@ -281,6 +280,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
                 { path: 'cars', component: CarsComponent, canActivate: [AdminGuard] },
                 { path: 'places', component: PlacesComponent, canActivate: [AdminGuard] },
                 { path: 'places-of-interest', component: PlacesOfInterestComponent, canActivate: [AdminGuard] },
+                { path: 'main-slider', component: MainSliderComponent, canActivate: [AdminGuard] },
               ],
             },
           ],
@@ -329,10 +329,8 @@ import { FeedbackComponent } from './feedback/feedback.component';
               component: PolicyComponent,
               data: {
                 title: 'Mietbedingung zum Auto auf Kreta mieten 2022 / Car4Crete.com',
-                description:
-                  'Premium-Mietwagenversicherung auf Kreta – Sie entspannen sich, wir kümmern uns um Sie!',
-                keywords:
-                  'auto auf kreta mieten, kreta autovermietung',
+                description: 'Premium-Mietwagenversicherung auf Kreta – Sie entspannen sich, wir kümmern uns um Sie!',
+                keywords: 'auto auf kreta mieten, kreta autovermietung',
               },
             },
             {
@@ -349,8 +347,10 @@ import { FeedbackComponent } from './feedback/feedback.component';
               component: FeedbackComponent,
               data: {
                 title: 'Autovermietung auf Kreta - Mietstationen /  Car4Crete.com',
-                description: 'Sie können überall auf Kreta ein Auto mieten - direkt am Flughafen Heraklion oder zu Hotels mit Lieferung in Heraklion, Rethymno, Hersonissos, Malia, Anissaras, Bali. Wenn Sie auf Kreta ein Auto mieten, können Sie die Insel besser kennenlernen!',
-                keywords: 'autovermietung rethymno, autovermietung chersonissos, mietwagen kreta rethymno, autovermietung stalis kreta, autovermietung malia kreta, mietwagen agios nikolaos, mietwagen agia pelagia',
+                description:
+                  'Sie können überall auf Kreta ein Auto mieten - direkt am Flughafen Heraklion oder zu Hotels mit Lieferung in Heraklion, Rethymno, Hersonissos, Malia, Anissaras, Bali. Wenn Sie auf Kreta ein Auto mieten, können Sie die Insel besser kennenlernen!',
+                keywords:
+                  'autovermietung rethymno, autovermietung chersonissos, mietwagen kreta rethymno, autovermietung stalis kreta, autovermietung malia kreta, mietwagen agios nikolaos, mietwagen agia pelagia',
               },
             },
             { path: 'details/:id', component: DetailsComponent },
@@ -369,6 +369,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
                 { path: 'cars', component: CarsComponent, canActivate: [AdminGuard] },
                 { path: 'places', component: PlacesComponent, canActivate: [AdminGuard] },
                 { path: 'places-of-interest', component: PlacesOfInterestComponent, canActivate: [AdminGuard] },
+                { path: 'main-slider', component: MainSliderComponent, canActivate: [AdminGuard] },
               ],
             },
           ],

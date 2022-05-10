@@ -23,7 +23,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.links.push(
             { title: 'MENU.CARS', fragment: 'cars', class: 'fas fa-car' },
             { title: 'USER.PLACES', fragment: 'places', class: 'fas fa-map-marker-alt' },
-            { title: 'USER.PLACES_OF_INTEREST', fragment: 'places-of-interest', class: 'fas fa-map-marked-alt' }
+            { title: 'USER.PLACES_OF_INTEREST', fragment: 'places-of-interest', class: 'fas fa-map-marked-alt' },
+            { title: 'USER.MAIN_SLIDER', fragment: 'main-slider', class: 'fas fa-book-open' }
           );
         }
       });

@@ -27,6 +27,7 @@ export class EditCarComponent {
       name: [null, Validators.required],
       description: [null, Validators.required],
       description_eng: [null, Validators.required],
+      description_de: [null, Validators.required],
       summerPrice: [null, Validators.required],
       winterPrice: [null, Validators.required],
       fuelType: [null, Validators.required],

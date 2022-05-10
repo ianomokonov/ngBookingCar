@@ -9,9 +9,6 @@ export class BkTranslatePipe implements PipeTransform {
     if (!value) {
       return '';
     }
-    if (this.translateService.currentLang === 'ru') {
-      return value.ru;
-    }
-    return value.en;
+    return value[this.translateService.currentLang] || value['en'];
   }
 }
