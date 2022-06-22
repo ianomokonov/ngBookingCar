@@ -57,7 +57,7 @@
   <div class="mb-3 px-0 pr-sm-3 col-sm-6 col-md-4" *ngFor="let slide of slides" (click)="update(slide, scroll)">
     <div class="place">
       <img [src]="slide.img" />
-      <h3 class="my-3 ml-2">{{ slide.name | bkTranslate }}</h3>
+      <h3 class="my-3 ml-2">{{ slide.title | bkTranslate }}</h3>
     </div>
   </div>
 </div>

@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS car(
     name varchar(255) NOT NULL,
     description text NOT NULL,
     description_eng text NOT NULL,
+    description_de text NULL,
     fuelType varchar(100) NOT NULL,
     bodyType varchar(100) NOT NULL,
     engineVolume float,
@@ -41,7 +42,8 @@ CREATE TABLE IF NOT EXISTS car(
 CREATE TABLE IF NOT EXISTS place(
     id int PRIMARY KEY AUTO_INCREMENT,
     name varchar(255) NOT NULL,
-    name_eng varchar(255) NOT NULL
+    name_eng varchar(255) NOT NULL,
+    name_de varchar(255) NULL
 );
 
 CREATE TABLE IF NOT EXISTS feedback(
@@ -60,11 +62,25 @@ CREATE TABLE IF NOT EXISTS placeOfInterest(
     img varchar(255) NOT NULL,
     name varchar(255) NOT NULL,
     name_eng varchar(255) NOT NULL,
+    name_de varchar(255) NULL,
     description text NOT NULL,
     description_eng text NOT NULL,
+    description_de text NULL,
     road text NOT NULL,
     road_eng text NOT NULL,
+    road_de text NULL,
     rating int(10) DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS MainSlide(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    img varchar(255) NOT NULL,
+    title varchar(255) NOT NULL,
+    title_eng varchar(255) NOT NULL,
+    title_de varchar(255) NULL,
+    description text NOT NULL,
+    description_eng text NOT NULL,
+    description_de text NULL
 );
 
 CREATE TABLE IF NOT EXISTS carOrder(

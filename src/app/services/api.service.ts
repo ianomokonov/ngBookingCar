@@ -116,6 +116,18 @@ export class ApiService {
     return this.http.get<Slide[]>(`${this.baseUrl}?key=get-slides`);
   }
 
+  public addSlide(data): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}?key=add-slide`, data);
+  }
+
+  public updateSlide(data): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}?key=update-slide`, data);
+  }
+
+  public deleteSLide(id, img): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}?key=delete-slide&placeId=${id}`, { img });
+  }
+
   public uploadPlaceImg(data): Observable<string> {
     return this.http.post<string>(`${this.baseUrl}?key=upload-place-img`, data);
   }

@@ -62,13 +62,13 @@ export class MainSliderComponent implements OnInit {
       if (this.slide) {
         newPlace.id = this.slide.id;
         newPlace.oldImg = this.slide.img;
-        const subscription = this.api.updatePlaceOfInterest(newPlace).subscribe(() => {
+        const subscription = this.api.updateSlide(newPlace).subscribe(() => {
           this.ngOnInit();
           this.loadingService.removeSubscription(subscription);
         });
         this.loadingService.addSubscription(subscription);
       } else {
-        const subscription = this.api.addPlaceOfInterest(newPlace).subscribe((placeId) => {
+        const subscription = this.api.addSlide(newPlace).subscribe((placeId) => {
           this.ngOnInit();
           this.loadingService.removeSubscription(subscription);
         });

@@ -67,6 +67,27 @@ if (isset($_GET['key'])) {
                 echo json_encode($repository->DeletePlaceOfInterest($_GET['placeId'], $data->img));
             }
             return;
+        case 'get-slides':
+            echo json_encode($repository->GetSlides());
+            return;
+        case 'add-slide':
+            if ($decodeToken = checkToken($token, true)) {
+                $data = json_decode(file_get_contents("php://input"));
+                echo json_encode($repository->AddSlide($data));
+            }
+            return;
+        case 'update-slide':
+            if ($decodeToken = checkToken($token, true)) {
+                $data = json_decode(file_get_contents("php://input"));
+                echo json_encode($repository->UpdateSlide($data));
+            }
+            return;
+        case 'delete-slide':
+            if ($decodeToken = checkToken($token, true)) {
+                $data = json_decode(file_get_contents("php://input"));
+                echo json_encode($repository->DeleteSlide($_GET['slideId'], $data->img));
+            }
+            return;
         case 'get-car':
             echo json_encode($repository->GetCarDetails($_GET['carId']));
             return;
@@ -160,6 +181,13 @@ if (isset($_GET['key'])) {
         case 'upload-place-img':
             if ($decodeToken = checkToken($token, true)) {
                 echo json_encode($repository->UploadPlaceOfInterestImg($_FILES['PlaceImage']));
+            } else {
+                echo json_encode(array("message" => "В доступе отказано"));
+            }
+            return;
+        case 'upload-slide-img':
+            if ($decodeToken = checkToken($token, true)) {
+                echo json_encode($repository->UploadSlideImg($_FILES['SlideImage']));
             } else {
                 echo json_encode(array("message" => "В доступе отказано"));
             }

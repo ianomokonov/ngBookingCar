@@ -61,7 +61,7 @@
             $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
             $cars = array();
             while ($car = $query->fetch()) {
-                $car->description = array('en' => $car->description_eng, 'ru' => $car->description);
+                $car->description = array('en' => $car->description_eng, 'ru' => $car->description, 'de' => $car->description_de);
                 $car->ac = $car->ac == '1';
                 $car->abs = $car->abs == '1';
                 $car->airBags = $car->airBags == '1';
@@ -103,7 +103,7 @@
             $query->setFetchMode(PDO::FETCH_CLASS, 'Place');
             $places = array();
             while ($place = $query->fetch()) {
-                $place->name = array('en' => $place->name_eng, 'ru' => $place->name);
+                $place->name = array('en' => $place->name_eng, 'ru' => $place->name, 'de' => $place->name_de);
                 
                 $places[] = $place;
             }
@@ -187,9 +187,9 @@
             $query->setFetchMode(PDO::FETCH_CLASS, 'PlaceOfInterest');
             $places = array();
             while ($place = $query->fetch()) {
-                $place->name = array('en' => $place->name_eng, 'ru' => $place->name);
-                $place->description = array('en' => $place->description_eng, 'ru' => $place->description);
-                $place->road = array('en' => $place->road_eng, 'ru' => $place->road);
+                $place->name = array('en' => $place->name_eng, 'ru' => $place->name, 'de' => $place->name_de);
+                $place->description = array('en' => $place->description_eng, 'ru' => $place->description, 'de' => $place->description_de);
+                $place->road = array('en' => $place->road_eng, 'ru' => $place->road, 'de' => $place->road_de);
                 
                 $places[] = $place;
             }
@@ -241,6 +241,64 @@
             return $this->baseUrl.'/PlaceImages'.'/'.$newFileName;
         }
 
+        public function GetSlides(){
+            $query = $this->database->db->query("SELECT * FROM MainSlide");
+            $query->setFetchMode(PDO::FETCH_ASSOC);
+            $places = array();
+            while ($place = $query->fetch()) {
+                $place['title'] = array('en' => $place['title_eng'], 'ru' => $place['title'], 'de' => $place['title_de']);
+                $place['description'] = array('en' => $place['description_eng'], 'ru' => $place['description'], 'de' => $place['description_de']);
+                
+                $places[] = $place;
+            }
+            return $places;
+            
+        }
+
+        public function AddSlide($slide){
+            if(!isset($slide->title) || !$slide->title){
+                return array("message" => "Укажите заголовок слайда", "method" => "AddSlide", "requestData" => $slide);
+            }
+            $insert = $this->database->genInsertQuery((array)$slide, 'MainSlide');
+            $query = $this->database->db->prepare($insert[0]);
+            if($insert[1][0]!=null){
+                $query->execute($insert[1]);
+            }
+            return $this->database->db->lastInsertId();
+        }
+
+        public function UpdateSlide($slide){
+            if(!isset($slide->id) || !$slide->id){
+                return array("message" => "Укажите id слайда", "method" => "UpdateSlide", "requestData" => $slide);
+            }
+            if(!isset($slide->title) || !$slide->title){
+                return array("message" => "Укажите заголовок слайда", "method" => "UpdateSlide", "requestData" => $slide);
+            }
+
+            $slideId = $slide->id;
+            unset($slide->id);
+            if($slide->oldImg && $slide->img != $slide->oldImg){
+                $this->removeFile($slide->oldImg);
+            }
+            unset($slide->oldImg);
+            $a = $this->database->genUpdateQuery(array_keys((array)$slide), array_values((array)$slide), "MainSlide", $slideId);
+            $query = $this->database->db->prepare($a[0]);
+            $query->execute($a[1]);
+            return array('message' => 'Слайд изменен');
+        }
+
+        public function DeleteSlide($slideId, $img){
+            $query = $this->database->db->prepare("DELETE FROM MainSlide WHERE id = ?");
+            $this->removeFile($img);
+            $query->execute(array($slideId));
+            return array('message' => 'Слайд удален');
+        }
+
+        public function UploadSlideImg($file){
+            $newFileName = $this->filesUpload->upload($file, 'SlideImages', uniqid());
+            return $this->baseUrl.'/SlideImages'.'/'.$newFileName;
+        }
+
         public function GetCarDetails($carId){
             if($carId == null){
                 return array("message" => "Введите id автомобиля", "method" => "GetCarDetails", "requestData" => $carId);
@@ -250,7 +308,7 @@
             $query->execute(array($carId));
             $query->setFetchMode(PDO::FETCH_CLASS, 'Car');
             $car = $query->fetch();
-            $car->description = array('en' => $car->description_eng, 'ru' => $car->description);
+            $car->description = array('en' => $car->description_eng, 'ru' => $car->description, 'de' => $car->description_de);
             $car->ac = $car->ac == '1';
             $car->abs = $car->abs == '1';
             $car->airBags = $car->airBags == '1';
