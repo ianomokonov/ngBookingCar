@@ -29,12 +29,16 @@
         <h2 class="bk-header mt-5" *ngIf="header && cars?.length">{{ header | translate }}</h2>
         <div class="cars">
           <div class="row car mx-0 p-0 p-sm-3" *ngFor="let car of cars">
-            <div class="col-lg-9 p-0 pr-lg-3 car-info-img row m-0">
-              <div class="car-img mb-3 mb-sm-0 col-sm-4 px-0 pr-sm-3">
+            <div class="p-0 car-info-img row m-0 w-100">
+              <div class="car-img mb-3 mb-sm-0 col-sm-5 px-0 pr-sm-3">
                 <img [src]="car.img" />
               </div>
-              <div class="car-info px-3 col-sm-8">
-                <h2 class="car-title">{{ car.name }}</h2>
+              <div class="car-info px-3 col-sm-7">
+                <h2 class="car-title mb-0">{{ car.name }}</h2>
+                <span class="text-muted pb-3 d-block"
+                  >{{ searchService.getCarPrice(car) }} € {{ 'FOR' | translate }} {{ searchService.periodDays }}
+                  {{ searchService.periodDays % 10 === 1 ? ('DAY' | translate) : ('DAYS' | translate) }}</span
+                >
                 <div class="car-details">
                   <span class="car-places"
                     ><i class="fas fa-user"></i><b>{{ car.places }} {{ car.places | carPlaces | translate }}</b></span
@@ -56,15 +60,6 @@
                     <li><span>{{'CONDITIONS.BOOK' | translate}}</span></li>
                   </ul>
                 </div>
-              </div>
-            </div>
-
-            <div class="car-actions p-3 p-sm-0 pl-lg-3 pr-0 col-lg-3 text-right border-left">
-              <div class="btns d-flex flex-column align-items-end justify-content-between h-100">
-                <!-- <span class="text-muted mb-1"
-                  >{{ searchService.getCarPrice(car) }} € {{ 'FOR' | translate }} {{ searchService.periodDays }}
-                  {{ searchService.periodDays % 10 === 1 ? ('DAY' | translate) : ('DAYS' | translate) }}</span
-                > -->
                 <div>
                   <a class="btn btn-outline-primary mb-1" [routerLink]="['/' + translate.currentLang, 'details', car.id]">{{ 'CARS.DETAILS' | translate }}</a>
                   <a class="btn btn-primary mb-1 ml-1" [routerLink]="['/' + translate.currentLang, 'booking', car.id]">{{ 'CARS.BOOK' | translate }}</a>

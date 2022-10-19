@@ -8,38 +8,47 @@ import { Component, OnInit } from '@angular/core';
 export class PolicyComponent implements OnInit {
   items = [
     {
-      name: { ru: 'Платите за конкретный автомобиль, а не за случайный из категории', en: 'Book specific car, not category' },
+      name: {
+        ru: 'Платите за конкретный автомобиль, а не за случайный из категории',
+        en: 'Book specific car, not category',
+        de: 'Buchen Sie ein bestimmtes Auto, keine Kategorie.',
+      },
       description: {
         ru: 'Какую машину Вы забронировали - такую мы Вам и выдадим по прибытии',
         en: 'What car model you choose - you will take on arrival',
+        de: 'Welches Auto Sie auf dem Foto sehen - das erhalten Sie bei der Ankunft auf Kreta.',
       },
     },
     {
-      name: { ru: 'Никаких предоплат', en: 'No Prepayment on site' },
+      name: { ru: 'Никаких предоплат', en: 'No Prepayment on site', de: 'Keine Vorauszahlung auf der Website' },
       description: {
         ru: 'Бронирование бесплатно и предоплата на сайте не требуется. Оплата осуществляется после подписания договора. Мы принимаем к оплате как наличные, так и кредитные карты Visa / Master Card',
         en: 'Reservation is free and no prepayment on the website is necessary. The payment is carried out after the contract is signed. We accept payments with cash, Visa/Master credit cards',
+        de: 'Die Reservierung ist kostenlos und es ist keine Vorauszahlung auf der Website erforderlich. Die Zahlung erfolgt nach Vertragsabschluss. Wir akzeptieren Zahlungen mit Bargeld, Visa/Master-Kreditkarten.',
       },
     },
     {
-      name: { ru: 'Бесплатная отмена бронирования', en: 'Free Cancellation' },
+      name: { ru: 'Бесплатная отмена бронирования', en: 'Free Cancellation', de: 'Kostenfreie Stornierung' },
       description: {
         ru: 'Поскольку мы не берем предоплату за бронирование автомобиля, пожалуйста, сообщите нам об отмене бронирования за 5 дней до даты Вашего прибытия. Средства за неиспользованные дни аренды возврату не подлежат',
         en: 'Because we do not take any deposit for booking car, be responsible to tell us for cancellation 5 days before arrival date. Funds for unused rental days are non-refundable',
+        de: 'Da wir keine Anzahlung für die Buchung eines Autos verlangen, müssen Sie uns 5 Tage vor dem Ankunftsdatum über die Stornierung informieren. Guthaben für ungenutzte Miettage sind nicht erstattungsfähig',
       },
     },
     {
-      name: { ru: 'Единая стоимость без доплат', en: 'Final price & NO Extra payment' },
+      name: { ru: 'Единая стоимость без доплат', en: 'Final price & NO Extra payment', de: 'Alle Preise sind Endpreise' },
       description: {
         ru: 'Вы видите окончательную цену проката автомобиля нашей компании. Никаких скрытых налогов и дополнительных страховок. Наши цены включают 24% НДС, полную страховку, неограниченный пробег, круглосуточную помощь на дороге по всему Криту',
         en: 'You see the FINAL car rental price with our company. No hidden taxes and extra insuranses. Our rates include 24% VAT, Full Insurance, unlimited Mileage, 24 hours road Assistance all over Crete',
+        de: 'Mietwagen auf Kreta mit Car4Crete - Preisgarantie. Inklusive 24 % MwSt., Versicherung, unbegrenzte Kilometer, 24-Stunden Pannenhilfe',
       },
     },
     {
-      name: { ru: 'Полная страховка без излишеств', en: 'Full Insurance without EXCESS' },
+      name: { ru: 'Полная страховка без излишеств', en: 'Included insurances', de: 'Inklusive Versicherungen' },
       description: {
         ru: 'КАСКО с полным покрытием (FCDW)<br>Страхование от несчастных случаев (PAI)<br>Страховка на случай кражи или пожара<br>Полис ОСАГО (LI)',
-        en: 'Full coverage insurance (FCDW)<br>Personal accident insurance (PAI)<br>Theft & Fire insurance<br>Liability Insurance (LI)',
+        en: 'Collision Damage Waiver (CDW)<br>Personal accident insurance (PAI)<br>Theft & Fire insurance<br>Liability Insurance (LI)',
+        de: 'Haftungsbeschränkung für Schäden am Mietfahrzeug (CDW)<br>Insassen-Unfallversicherung (PAI)<br>Diebstahlversicherung (TP)<br>Haftpflichtdeckung (LI)',
       },
     },
   ];

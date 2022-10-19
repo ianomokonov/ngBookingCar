@@ -29,6 +29,10 @@
     transform: rotate(3deg);
   }
 }
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(100%);
+}
 .advantage {
   display: flex;
   flex-direction: column;
