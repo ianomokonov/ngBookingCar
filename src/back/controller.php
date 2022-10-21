@@ -112,10 +112,10 @@ if (isset($_GET['key'])) {
         case 'add-order':
             if ($decodeToken = checkToken($token)) {
                 $data = json_decode(file_get_contents("php://input"));
-                echo json_encode($repository->AddOrder($decodeToken->id, $data));
+                echo json_encode($repository->AddOrder($decodeToken->id, $data, $_GET['lang']));
             } else {
                 $data = json_decode(file_get_contents("php://input"));
-                echo json_encode($repository->AddOrder(false, $data));
+                echo json_encode($repository->AddOrder(false, $data, $_GET['lang']));
             }
             return;
         case 'sign-in':

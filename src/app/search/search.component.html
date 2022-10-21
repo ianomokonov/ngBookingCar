@@ -37,50 +37,14 @@
 
   <div id="carouselExampleControls" class="carousel slide py-5" data-ride="carousel">
     <div class="carousel-inner">
-      <div class="carousel-item active">
+      <div class="carousel-item" [ngClass]="{'active': !index}" *ngFor="let slide of slides; let index = index">
         <div class="row">
-          <div class="col-md img-side" style="background-image: url(../../assets/images/manual.jpg)"></div>
+          <div class="col-md img-side" [ngStyle]="{'background-image': 'url(' + slide.img + ')'}"></div>
           <div class="col-md">
-            <h3 class="p-3 p-md-0">{{ 'SEARCH.MANUAL' | translate }}</h3>
+            <h3 class="p-3 p-md-0">{{ slide.title | bkTranslate }}</h3>
             <p class="p-3 p-md-0">
               <!-- <b>{{ 'SEARCH.FROM' | translate }} 25€ / {{ 'SEARCH.DAY' | translate }}</b> -->
-              {{ 'SEARCH.MANUAL_TEXT' | translate }}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="row">
-          <div class="col-md img-side" style="background-image: url(../../assets/images/automatic.jpg)"></div>
-          <div class="col-md">
-            <h3 class="p-3 p-md-0">{{ 'SEARCH.AUTOMATIC' | translate }}</h3>
-            <p class="p-3 p-md-0">
-              <!-- <b>{{ 'SEARCH.FROM' | translate }} 28€ / {{ 'SEARCH.DAY' | translate }}</b> -->
-              {{ 'SEARCH.AUTOMATIC_TEXT' | translate }}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="row">
-          <div class="col-md img-side" style="background-image: url(../../assets/images/golf_7_1.jpg)"></div>
-          <div class="col-md">
-            <h3 class="p-3 p-md-0">{{ 'SEARCH.HATCHBACK' | translate }}</h3>
-            <p class="p-3 p-md-0">
-              <!-- <b>{{ 'SEARCH.FROM' | translate }} 25€ / {{ 'SEARCH.DAY' | translate }}</b> -->
-              {{ 'SEARCH.MINIVAN_TEXT' | translate }}
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <div class="row">
-          <div class="col-md img-side" style="background-image: url(../../assets/images/minivan.jpg)"></div>
-          <div class="col-md">
-            <h3 class="p-3 p-md-0">{{ 'SEARCH.MINIVAN' | translate }}</h3>
-            <p class="p-3 p-md-0">
-              <!-- <b>{{ 'SEARCH.FROM' | translate }} 63€ / {{ 'SEARCH.DAY' | translate }}</b> -->
-              {{ 'SEARCH.HATCHBACK_TEXT' | translate }}
+              {{ slide.description | bkTranslate }}
             </p>
           </div>
         </div>
