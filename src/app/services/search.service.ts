@@ -71,7 +71,7 @@ export class SearchService {
   constructor(public calendar: NgbCalendar) {
     this.genTimes();
     this._model = this.model;
-    this.minDate = this.calendar.getNext(this.calendar.getToday(), 'd', 5);
+    this.minDate = this.calendar.getNext(this.calendar.getToday(), 'd', 1);
     this.defaultModel = {
       dateFrom: this.minDate,
       dateTo: this.calendar.getNext(this.minDate, 'd', 10),
