@@ -49,10 +49,9 @@ import { ContactsComponent } from './contacts/contacts.component';
 import { PolicyComponent } from './policy/policy.component';
 import { AboutCreteComponent } from './about-crete/about-crete.component';
 import { PlacesOfInterestComponent } from './profile/profile-details/places-of-interest/places-of-interest.component';
-import { FeedbackComponent } from './feedback/feedback.component';
-import { FeedbackItemComponent } from './feedback/feedback-item/feedback-item.component';
 import { ScullyLibModule } from '@scullyio/ng-lib';
 import { MainSliderComponent } from './profile/profile-details/main-slider/main-slider.component';
+import { RentalLocationsComponent } from './rental-locations/rental-locations.component';
 
 @NgModule({
   declarations: [
@@ -88,9 +87,8 @@ import { MainSliderComponent } from './profile/profile-details/main-slider/main-
     PolicyComponent,
     AboutCreteComponent,
     PlacesOfInterestComponent,
-    FeedbackComponent,
-    FeedbackItemComponent,
     MainSliderComponent,
+    RentalLocationsComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

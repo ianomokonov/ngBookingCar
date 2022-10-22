@@ -6,6 +6,7 @@ import { takeWhile } from 'rxjs/internal/operators';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { locations } from '../utils/constants';
 
 @Component({
   selector: 'bk-menu',
@@ -15,14 +16,14 @@ import { Router } from '@angular/router';
 export class MenuComponent implements OnInit, OnDestroy {
   public user: User;
   private rxAlive: boolean = true;
+  public locations = locations;
   constructor(
     private api: ApiService,
     private loadingService: LoadingService,
     private auth: AuthService,
     private router: Router,
     public translate: TranslateService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getUser();
