@@ -24,11 +24,11 @@ export const locations = [
     },
   },
   {
-    path: 'gouves',
+    path: 'heraclion',
     name: {
-      en: 'GOUVES',
-      ru: 'Гувес',
-      de: 'GOUVES',
+      en: 'HERAKLION',
+      ru: 'Ираклион',
+      de: 'HERAKLION',
     },
   },
   {
