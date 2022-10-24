@@ -1,7 +1,7 @@
 <form class="search-form" [formGroup]="filterForm" (submit)="onSearchClick()">
   <div class="row p-0 m-0">
     <div class="col-md p-0 d-flex">
-      <div class="step" (click)="!dateFrom.isOpen() ? dateFrom.open() : dateFrom.close()">
+      <div class="step" (click)="!dateFrom.isOpen() && dateFrom.open()">
         <i class="fas fa-calendar-alt header-icon"></i>
         <h2 class="header">{{ 'SEARCH.SELECT_PICK_UP_DATE' | translate }}</h2>
         <span class="week-day">{{ dates.fromDate.weekDay | translate }}</span>
