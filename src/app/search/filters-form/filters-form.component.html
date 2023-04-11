@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="mt-4 mt-lg-0 col-md p-0 d-flex">
-      <div class="step" (click)="!dateTo.isOpen() ? dateTo.open() : dateTo.close()">
+      <div class="step" (click)="!dateTo.isOpen() && dateTo.open()">
         <i class="fas fa-calendar-alt header-icon"></i>
         <h2 class="header">{{ 'SEARCH.SELECT_DROP_OFF_DATE' | translate }}</h2>
         <span class="week-day">{{ dates.toDate.weekDay | translate }}</span>

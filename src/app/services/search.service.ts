@@ -55,15 +55,21 @@ export class SearchService {
       model.dateTo = model.dateFrom;
     }
     sessionStorage.setItem('bookingSearchModel', JSON.stringify(this._model));
-    let month = new Date().getMonth();
+    let month = new Date().getMonth() + 1;
+    let day = new Date().getDate();
     if (model) {
       month = this.model.dateFrom.month;
+      day = this.model.dateFrom.day;
     }
 
-    if (month > 2 && month < 9) {
+    if (month > 7 && month < 9) {
       this.isSummer = true;
     } else {
-      this.isSummer = false;
+      if ((month === 7 && day > 14) || (month === 9 && day < 16)) {
+        this.isSummer = true;
+      } else {
+        this.isSummer = false;
+      }
     }
     this.periodDays = SearchService.setPeriodDays(model);
   }
