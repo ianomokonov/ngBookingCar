@@ -1,5 +1,12 @@
-<div class="container pt-3">
-  <h2>
-    {{ activeLocation?.name | bkTranslate }}
-  </h2>
+<div class="container pt-3 pb-5">
+  <section *ngFor="let section of activeLocation?.sections; let index = index">
+    <h1 class="h2 my-3" *ngIf="!index">
+      {{ section.name | bkTranslate }}
+    </h1>
+    <h2 class="mt-5 mb-3" *ngIf="index">
+      {{ section.name | bkTranslate }}
+    </h2>
+    <p>{{ section.description | bkTranslate }}</p>
+    <img *ngIf="section.img" class="w-100" [src]="section.img" alt="" />
+  </section>
 </div>

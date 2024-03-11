@@ -6,7 +6,8 @@ import { takeWhile } from 'rxjs/internal/operators';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { locations } from '../utils/constants';
+import { locations } from '../utils/locations';
+import { LocationShort } from '../models/location';
 
 @Component({
   selector: 'bk-menu',
@@ -16,7 +17,7 @@ import { locations } from '../utils/constants';
 export class MenuComponent implements OnInit, OnDestroy {
   public user: User;
   private rxAlive: boolean = true;
-  public locations = locations;
+  public locations: LocationShort[] = [];
   constructor(
     private api: ApiService,
     private loadingService: LoadingService,
@@ -27,6 +28,7 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getUser();
+    this.getLocations();
 
     this.auth.$userUpdate.pipe(takeWhile(() => this.rxAlive)).subscribe(() => {
       this.getUser();
@@ -46,6 +48,14 @@ export class MenuComponent implements OnInit, OnDestroy {
       });
       this.loadingService.addSubscription(subscription);
     }
+  }
+
+  getLocations() {
+    const subscription = this.api.getLocations().subscribe((locations) => {
+      this.locations = locations;
+      this.loadingService.removeSubscription(subscription);
+    });
+    this.loadingService.addSubscription(subscription);
   }
 
   changeLang(lang: string) {

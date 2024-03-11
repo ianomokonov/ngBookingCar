@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { locations } from '../utils/constants';
+import { locations } from '../utils/locations';
+import { ApiService } from '../services/api.service';
+import { Location } from '../models/location';
 
 @Component({
   selector: 'bk-rental-locations',
@@ -8,13 +10,15 @@ import { locations } from '../utils/constants';
   styleUrls: ['./rental-locations.component.scss'],
 })
 export class RentalLocationsComponent implements OnInit {
-  public activeLocation;
+  public activeLocation: Location;
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute, private api: ApiService) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(({ location }) => {
-      this.activeLocation = locations.find((l) => l.path === location);
+      this.api.getLocation(location).subscribe((l) => {
+        this.activeLocation = l;
+      });
     });
   }
 }

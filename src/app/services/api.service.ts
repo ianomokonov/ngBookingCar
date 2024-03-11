@@ -13,6 +13,7 @@ import { Filter } from '../search/search-cars/search-cars.component';
 import { PlaceOfInterest } from '../models/place-of-interest';
 import { Feedback } from '../models/feedback';
 import { Slide } from '../models/slide';
+import { Location, LocationShort } from '../models/location';
 // import { environment } from 'src/environments/environment';
 
 @Injectable()
@@ -200,6 +201,14 @@ export class ApiService {
         });
       })
     );
+  }
+
+  public getLocation(path: string): Observable<Location> {
+    return this.http.get<Location>(`${this.baseUrl}?key=get-location&path=${path}`);
+  }
+
+  public getLocations(): Observable<LocationShort[]> {
+    return this.http.get<LocationShort[]>(`${this.baseUrl}?key=get-locations`);
   }
 
   private ngbDateToString(date: NgbDate): string {

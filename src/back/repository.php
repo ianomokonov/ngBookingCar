@@ -84,6 +84,41 @@
             return $filters;
             
         }
+
+        public function GetLocations(){
+            $query = $this->database->db->query("SELECT * FROM RentLocation");
+            $query->setFetchMode(PDO::FETCH_ASSOC);
+            $locations = array();
+            while ($location = $query->fetch()) {
+                $location['name'] = array('en' => $location['title_eng'], 'ru' => $location['title'], 'de' => $location['title_de']);
+                
+                $locations[] = $location;
+            }
+            return $locations;
+        }
+
+        public function GetLocation($path){
+            $query = $this->database->db->prepare("SELECT * FROM RentLocation WHERE `path` = ?");
+            $query->setFetchMode(PDO::FETCH_ASSOC);
+            $query->execute(array($path));
+            $location = $query->fetch();
+            $location['name'] = array('en' => $location['title_eng'], 'ru' => $location['title'], 'de' => $location['title_de']);
+
+            $location['sections'] = array();
+
+            $locationId = $location['id'];
+
+            $query = $this->database->db->query("SELECT * FROM RentLocationSection where locationId=$locationId");
+            $query->setFetchMode(PDO::FETCH_ASSOC);
+            while ($section = $query->fetch()) {
+                $section['name'] = array('en' => $section['title_eng'], 'ru' => $section['title'], 'de' => $section['title_de']);
+                $section['description'] = array('en' => $section['description_eng'], 'ru' => $section['description'], 'de' => $section['description_de']);
+                
+                $location['sections'][] = $section;
+            }
+
+            return $location;
+        }
         
         public function GetFilterOptions($name){
             $query = $this->database->db->query("SELECT DISTINCT $name FROM car");

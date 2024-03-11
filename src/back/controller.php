@@ -166,6 +166,12 @@ if (isset($_GET['key'])) {
                 echo json_encode($repository->UpdateOrder($data));
             }
             return;
+        case 'get-locations':
+            echo json_encode($repository->GetLocations());
+            return;
+        case 'get-location':
+            echo json_encode($repository->GetLocation($_GET['path']));
+            return;
         case 'cancel-order':
             if ($decodeToken = checkToken($token)) {
                 echo json_encode($repository->CancelOrder($_GET['orderId']));

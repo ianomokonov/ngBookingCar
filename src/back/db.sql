@@ -102,3 +102,25 @@ CREATE TABLE IF NOT EXISTS carOrder(
     FOREIGN KEY (placeFromId) REFERENCES place(id) ON DELETE CASCADE,
     FOREIGN KEY (placeToId) REFERENCES place(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS RentLocation(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    path varchar(255) NOT NULL,
+    title varchar(255) NOT NULL,
+    title_eng varchar(255) NOT NULL,
+    title_de varchar(255) NULL
+);
+
+CREATE TABLE IF NOT EXISTS RentLocationSection(
+    id int PRIMARY KEY AUTO_INCREMENT,
+    locationId int(10) NOT NULL,
+    title varchar(255) NULL,
+    title_eng varchar(255) NOT NULL,
+    title_de varchar(255) NULL,
+    description text NULL,
+    description_eng text NOT NULL,
+    description_de text NULL,
+    img varchar(255) NULL,
+
+    FOREIGN KEY (locationId) REFERENCES RentLocation(id) ON DELETE CASCADE
+);
