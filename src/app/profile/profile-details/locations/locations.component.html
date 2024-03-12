@@ -1,0 +1,10 @@
+<span #scroll></span>
+
+<div class="places row mx-0 mt-3">
+  <div class="mb-3 px-0 pr-sm-3 col-sm-6 col-md-4" *ngFor="let place of places">
+    <div class="place px-2" [routerLink]="['/' + translate.currentLang, 'edit-location', place.path]">
+      <h6 class="my-3">{{ place.name | bkTranslate }}</h6>
+      <small class="text-primary">изменить <i class="fas fa-arrow-right ml-1"></i></small>
+    </div>
+  </div>
+</div>

@@ -27,7 +27,6 @@ import { OrderComponent } from './profile/profile-details/booking-history/order/
 import { CarsComponent } from './profile/profile-details/cars/cars.component';
 import { EditUserFormComponent } from './profile/profile-details/user-info/edit-user-form/edit-user-form.component';
 import { EditCarComponent } from './profile/profile-details/cars/edit-car/edit-car.component';
-import { DoubleSliderComponent } from './utils/double-slider/double-slider.component';
 import { FileUploaderComponent } from './utils/file-uploader/file-uploader.component';
 import { SignUpComponent } from './profile/sign-up/sign-up.component';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
@@ -52,6 +51,8 @@ import { PlacesOfInterestComponent } from './profile/profile-details/places-of-i
 import { ScullyLibModule } from '@scullyio/ng-lib';
 import { MainSliderComponent } from './profile/profile-details/main-slider/main-slider.component';
 import { RentalLocationsComponent } from './rental-locations/rental-locations.component';
+import { LocationsComponent } from './profile/profile-details/locations/locations.component';
+import { EditLocationComponent } from './profile/profile-details/locations/edit-location/edit-location.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,8 @@ import { RentalLocationsComponent } from './rental-locations/rental-locations.co
     PlacesOfInterestComponent,
     MainSliderComponent,
     RentalLocationsComponent,
+    LocationsComponent,
+    EditLocationComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -108,7 +111,7 @@ import { RentalLocationsComponent } from './rental-locations/rental-locations.co
       },
     }),
     BrowserModule.withServerTransition({ appId: 'ng-booking-car' }),
-    ScullyLibModule
+    ScullyLibModule,
   ],
   providers: [
     LoadingService,

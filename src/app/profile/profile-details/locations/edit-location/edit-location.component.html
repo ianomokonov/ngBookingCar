@@ -1,0 +1,88 @@
+<div class="container py-3">
+  <h2 class="bk-header mt-3">Изменение локации</h2>
+  <form [formGroup]="locationForm">
+    <div class="row">
+      <div class="col-4">
+        <div class="form-group">
+          <label>Название</label>
+          <input formControlName="name" type="text" class="form-control" placeholder="На русском" />
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <label> </label>
+          <input formControlName="name_eng" type="text" class="form-control" placeholder="На английском" />
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <label></label>
+          <input formControlName="name_de" type="text" class="form-control" placeholder="На немецком" />
+        </div>
+      </div>
+    </div>
+
+    <hr />
+    <div class="sections">
+      <h5>Разделы</h5>
+      <div
+        class="section row border-bottom mb-3 pb-3"
+        *ngFor="let sectionForm of sectionForms; let index = index"
+        [formGroup]="sectionForm"
+      >
+        <div class="col-4">
+          <div class="form-group">
+            <label>Название</label>
+            <input formControlName="name" type="text" class="form-control" placeholder="На русском" />
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label> </label>
+            <input formControlName="name_eng" type="text" class="form-control" placeholder="На английском" />
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label></label>
+            <input formControlName="name_de" type="text" class="form-control" placeholder="На немецком" />
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label>Описание</label>
+            <textarea formControlName="description" class="form-control" placeholder="На русском"></textarea>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label></label>
+            <textarea formControlName="description_eng" class="form-control" placeholder="На английском"></textarea>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="form-group">
+            <label></label>
+            <textarea formControlName="description_de" class="form-control" placeholder="На немецком"></textarea>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label>Картинка</label>
+            <div>
+              <div *ngIf="!isUploadFileShown(sectionForm)" class="position-relative d-inline-block">
+                <img class="w-100" [src]="sectionForm.get('img').value" />
+                <span class="remove-img" (click)="removeImg(sectionForm)">&times;</span>
+              </div>
+              <bk-file-uploader *ngIf="isUploadFileShown(sectionForm)" [fullSize]="true" formControlName="img"></bk-file-uploader>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-danger" (click)="removeSection(index)">Удалить раздел</button>
+        </div>
+      </div>
+      <button class="btn btn-primary" (click)="addSection()">Добавить раздел</button>
+    </div>
+  </form>
+</div>

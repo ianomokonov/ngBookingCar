@@ -1,0 +1,22 @@
+.remove-img {
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+}
+.places {
+  .place {
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:hover {
+      box-shadow: 0px 4px 18px rgba(0, 0, 0, 0.212);
+    }
+    img {
+      width: 100%;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, forwardRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, forwardRef, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 @Component({
@@ -17,9 +17,10 @@ export class FileUploaderComponent implements OnInit, ControlValueAccessor {
   @ViewChild('inputFileContainer') private inputFileContainer: ElementRef<HTMLDivElement>;
   @ViewChild('image') private image: ElementRef<HTMLImageElement>;
 
+  @Input() fullSize: boolean = false;
+
   public value: File;
   public disabled: boolean;
-
 
   private onChange = (value: any) => {};
   private onTouched = () => {};

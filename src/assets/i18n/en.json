@@ -14,7 +14,7 @@
     "RAITING": "How can you rate a car?",
     "MESSAGE": "Feedback",
     "ADD_MESSAGE": "Send feedback",
-    "DETAILS":"Car details"
+    "DETAILS": "Car details"
   },
   "SEARCH": {
     "BTN": "Search",
@@ -154,7 +154,8 @@
     "PLACES_OF_INTEREST": "Places of interest",
     "MAIN_SLIDER": "Main slider",
     "INVALID_LOGIN": "Invalid login or password",
-    "USER_EXISTS": "User already exists"
+    "USER_EXISTS": "User already exists",
+    "LOCATIONS": "Rental locations (page)"
   },
   "CONDITIONS": {
     "BOOK": "New Car",

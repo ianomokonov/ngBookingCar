@@ -17,6 +17,8 @@ import { AboutCreteComponent } from '../about-crete/about-crete.component';
 import { PlacesOfInterestComponent } from '../profile/profile-details/places-of-interest/places-of-interest.component';
 import { MainSliderComponent } from '../profile/profile-details/main-slider/main-slider.component';
 import { RentalLocationsComponent } from '../rental-locations/rental-locations.component';
+import { LocationsComponent } from '../profile/profile-details/locations/locations.component';
+import { EditLocationComponent } from '../profile/profile-details/locations/edit-location/edit-location.component';
 
 export const pages = [
   { path: '', pathMatch: 'full', redirectTo: 'search' },
@@ -85,6 +87,7 @@ export const pages = [
   { path: 'details/:id', component: DetailsComponent },
   { path: 'booking/:id', component: BookingFormComponent },
   { path: 'edit-car/:id', component: EditCarComponent, canActivate: [AdminGuard] },
+  { path: 'edit-location/:location', component: EditLocationComponent, canActivate: [AdminGuard] },
   { path: 'add-car', component: EditCarComponent, canActivate: [AdminGuard] },
   { path: 'enter', component: EnterComponent },
   { path: 'sign-up', component: SignUpComponent },
@@ -99,6 +102,7 @@ export const pages = [
       { path: 'places', component: PlacesComponent, canActivate: [AdminGuard] },
       { path: 'places-of-interest', component: PlacesOfInterestComponent, canActivate: [AdminGuard] },
       { path: 'main-slider', component: MainSliderComponent, canActivate: [AdminGuard] },
+      { path: 'locations', component: LocationsComponent, canActivate: [AdminGuard] },
     ],
   },
 ];
