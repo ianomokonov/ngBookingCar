@@ -211,6 +211,18 @@ export class ApiService {
     return this.http.get<LocationShort[]>(`${this.baseUrl}?key=get-locations`);
   }
 
+  public uploadLocationImg(sectionId, data): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}?key=upload-location-img&sectionId=${sectionId}`, data);
+  }
+
+  public updateLocation(id, data): Observable<Location> {
+    return this.http.post<Location>(`${this.baseUrl}?key=update-location&id=${id}`, data);
+  }
+
+  public updateSectionImg(sectionId, data): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}?key=update-section-img&sectionId=${sectionId}`, data);
+  }
+
   private ngbDateToString(date: NgbDate): string {
     if (!date) {
       return null;

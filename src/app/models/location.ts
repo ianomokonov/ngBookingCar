@@ -6,12 +6,14 @@ export interface LocationShort {
 }
 
 export interface Location {
+  id: number;
   path: string;
   name: Translate;
   sections: LocationSection[];
 }
 
 export interface LocationSection {
+  id: number;
   name: Translate;
   description: Translate;
   img?: string;

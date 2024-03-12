@@ -5,6 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Location } from 'src/app/models/location';
 import { ActivatedRoute } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { markInvalidFields } from 'src/app/utils/mark-invalid-fileds';
+import { Observable, forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'bk-edit-location',
@@ -96,5 +98,49 @@ export class EditLocationComponent implements OnInit {
     const value = section.get('img').value;
 
     return !value || value instanceof File;
+  }
+
+  save() {
+    if (this.locationForm.invalid) {
+      markInvalidFields(this.locationForm);
+      alert('Заполните обязательные поля');
+      return;
+    }
+    const dto = this.locationForm.getRawValue();
+    const subscription = this.api.updateLocation(this.location.id, dto).subscribe(
+      (savedLocation) => {
+        forkJoin(
+          dto.sections.map((s, index) => {
+            if (!savedLocation.sections[index]?.id) {
+              return of(null);
+            }
+            return this.uploadImg(s.img, savedLocation.sections[index]?.id);
+          })
+        ).subscribe(
+          () => {
+            this.loadingService.removeSubscription(subscription);
+          },
+          () => {
+            this.loadingService.removeSubscription(subscription);
+          }
+        );
+      },
+      () => {
+        this.loadingService.removeSubscription(subscription);
+      }
+    );
+    this.loadingService.addSubscription(subscription);
+  }
+
+  uploadImg(img, sectionId): Observable<string> {
+    if (img instanceof File) {
+      const formData = new FormData();
+      formData.append('Image', img, img.name.replace(' ', '_'));
+      return this.api.uploadLocationImg(sectionId, formData);
+    } else if (!img) {
+      return this.api.updateSectionImg(sectionId, img);
+    }
+
+    return of(img);
   }
 }

@@ -1,20 +1,24 @@
 <div class="container py-3">
-  <h2 class="bk-header mt-3">Изменение локации</h2>
+  <div class="d-flex justify-content-between align-items-center">
+    <h2 class="bk-header mt-3">Изменение локации</h2>
+    <button class="btn btn-primary" (click)="save()">Сохранить</button>
+  </div>
+
   <form [formGroup]="locationForm">
     <div class="row">
-      <div class="col-4">
+      <div class="col-md-4">
         <div class="form-group">
           <label>Название</label>
           <input formControlName="name" type="text" class="form-control" placeholder="На русском" />
         </div>
       </div>
-      <div class="col-4">
+      <div class="col-md-4">
         <div class="form-group">
-          <label> </label>
+          <label></label>
           <input formControlName="name_eng" type="text" class="form-control" placeholder="На английском" />
         </div>
       </div>
-      <div class="col-4">
+      <div class="col-md-4">
         <div class="form-group">
           <label></label>
           <input formControlName="name_de" type="text" class="form-control" placeholder="На немецком" />
@@ -30,40 +34,38 @@
         *ngFor="let sectionForm of sectionForms; let index = index"
         [formGroup]="sectionForm"
       >
-        <div class="col-4">
+        <div class="col-md-4">
           <div class="form-group">
             <label>Название</label>
             <input formControlName="name" type="text" class="form-control" placeholder="На русском" />
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
           <div class="form-group">
             <label> </label>
             <input formControlName="name_eng" type="text" class="form-control" placeholder="На английском" />
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
           <div class="form-group">
             <label></label>
             <input formControlName="name_de" type="text" class="form-control" placeholder="На немецком" />
           </div>
         </div>
-        <div class="col-4">
-          <div class="form-group">
+        <div class="col-12">
+          <div class="form-group mb-1">
             <label>Описание</label>
-            <textarea formControlName="description" class="form-control" placeholder="На русском"></textarea>
+            <textarea rows="4" formControlName="description" class="form-control" placeholder="На русском"></textarea>
           </div>
         </div>
-        <div class="col-4">
-          <div class="form-group">
-            <label></label>
-            <textarea formControlName="description_eng" class="form-control" placeholder="На английском"></textarea>
+        <div class="col-12">
+          <div class="form-group mb-1">
+            <textarea rows="4" formControlName="description_eng" class="form-control" placeholder="На английском"></textarea>
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-12">
           <div class="form-group">
-            <label></label>
-            <textarea formControlName="description_de" class="form-control" placeholder="На немецком"></textarea>
+            <textarea rows="4" formControlName="description_de" class="form-control" placeholder="На немецком"></textarea>
           </div>
         </div>
         <div class="col-12">
