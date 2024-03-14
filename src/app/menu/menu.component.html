@@ -25,7 +25,7 @@
         <a class="nav-link" [routerLink]="['policy']" routerLinkActive="active">{{ 'MENU.POLICY' | translate }}</a>
         <a class="nav-link" [routerLink]="['contacts']" routerLinkActive="active">{{ 'MENU.CONTACTS' | translate }}</a>
         <a class="nav-link" [routerLink]="['about-crete']" routerLinkActive="active">{{ 'MENU.ABOUT_CRETE' | translate }}</a>
-        <div class="link-with-children">
+        <div class="link-with-children" *ngIf="isAdmin">
           <a class="nav-link" href="javascript:;">{{ 'USER.PLACES' | translate }}</a>
           <div class="link-children">
             <a
@@ -37,13 +37,15 @@
             >
           </div>
         </div>
-        <div class="break d-block d-md-none"></div>
-        <a
-          *ngFor="let location of locations"
-          [routerLink]="['rental-locations', location.path]"
-          routerLinkActive="active"
-          class="nav-link link-child"
-          >{{ location.name | bkTranslate }}</a
+        <ng-container *ngIf="isAdmin"
+          ><div class="break d-block d-md-none"></div>
+          <a
+            *ngFor="let location of locations"
+            [routerLink]="['rental-locations', location.path]"
+            routerLinkActive="active"
+            class="nav-link link-child"
+            >{{ location.name | bkTranslate }}</a
+          ></ng-container
         >
       </div>
       <div class="d-none d-xl-flex">

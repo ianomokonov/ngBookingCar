@@ -16,6 +16,7 @@ import { LocationShort } from '../models/location';
 })
 export class MenuComponent implements OnInit, OnDestroy {
   public user: User;
+  public isAdmin = false;
   private rxAlive: boolean = true;
   public locations: LocationShort[] = [];
   constructor(
@@ -42,6 +43,9 @@ export class MenuComponent implements OnInit, OnDestroy {
   getUser() {
     this.user = null;
     if (this.auth.getToken()) {
+      this.api.checkAccess().subscribe((r) => {
+        this.isAdmin = r;
+      });
       const subscription = this.api.getUserInfo().subscribe((user) => {
         this.user = user;
         this.loadingService.removeSubscription(subscription);
