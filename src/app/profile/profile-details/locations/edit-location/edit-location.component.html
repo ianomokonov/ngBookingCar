@@ -9,19 +9,19 @@
       <div class="col-md-4">
         <div class="form-group">
           <label>Название</label>
-          <input formControlName="name" type="text" class="form-control" placeholder="На русском" />
+          <input formControlName="title" type="text" class="form-control" placeholder="На русском" />
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
           <label></label>
-          <input formControlName="name_eng" type="text" class="form-control" placeholder="На английском" />
+          <input formControlName="title_eng" type="text" class="form-control" placeholder="На английском" />
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-group">
           <label></label>
-          <input formControlName="name_de" type="text" class="form-control" placeholder="На немецком" />
+          <input formControlName="title_de" type="text" class="form-control" placeholder="На немецком" />
         </div>
       </div>
     </div>
@@ -37,19 +37,19 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>Название</label>
-            <input formControlName="name" type="text" class="form-control" placeholder="На русском" />
+            <input formControlName="title" type="text" class="form-control" placeholder="На русском" />
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label> </label>
-            <input formControlName="name_eng" type="text" class="form-control" placeholder="На английском" />
+            <input formControlName="title_eng" type="text" class="form-control" placeholder="На английском" />
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label></label>
-            <input formControlName="name_de" type="text" class="form-control" placeholder="На немецком" />
+            <input formControlName="title_de" type="text" class="form-control" placeholder="На немецком" />
           </div>
         </div>
         <div class="col-12">
@@ -73,8 +73,8 @@
             <label>Картинка</label>
             <div>
               <div *ngIf="!isUploadFileShown(sectionForm)" class="position-relative d-inline-block">
-                <img class="w-100" [src]="sectionForm.get('img').value" />
-                <span class="remove-img" (click)="removeImg(sectionForm)">&times;</span>
+                <img class="w-100 mb-2" [src]="sectionForm.get('img').value" />
+                <span class="remove-img btn btn-outline-danger" (click)="removeImg(sectionForm)">Удалить картинку</span>
               </div>
               <bk-file-uploader *ngIf="isUploadFileShown(sectionForm)" [fullSize]="true" formControlName="img"></bk-file-uploader>
             </div>

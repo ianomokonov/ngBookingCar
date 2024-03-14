@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { markInvalidFields } from 'src/app/utils/mark-invalid-fileds';
 import { Observable, forkJoin, of } from 'rxjs';
+import { tap } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'bk-edit-location',
@@ -28,9 +29,9 @@ export class EditLocationComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.locationForm = fb.group({
-      name: [null],
-      name_eng: [null, Validators.required],
-      name_de: [null],
+      title: [null],
+      title_eng: [null, Validators.required],
+      title_de: [null],
       sections: this.fb.array([]),
     });
   }
@@ -45,22 +46,23 @@ export class EditLocationComponent implements OnInit {
     const subscription = this.api.getLocation(location).subscribe((l) => {
       this.location = l;
       this.locationForm.patchValue({
-        name: l.name.ru,
-        name_eng: l.name.en,
-        name_de: l.name.de,
+        title: l.name.ru,
+        title_eng: l.name.en,
+        title_de: l.name.de,
       });
       this.locationForm.setControl(
         'sections',
         this.fb.array(
           this.location.sections.map((s) =>
             this.fb.group({
-              name: [s.name.ru],
-              name_eng: [s.name.en, Validators.required],
-              name_de: [s.name.de],
+              title: [s.name.ru],
+              title_eng: [s.name.en, Validators.required],
+              title_de: [s.name.de],
               description: [s.description.ru],
               description_eng: [s.description.en, Validators.required],
               description_de: [s.description.de],
               img: [s.img],
+              oldImg: [s.img],
             })
           )
         )
@@ -74,9 +76,9 @@ export class EditLocationComponent implements OnInit {
     const sections = this.locationForm.get('sections') as FormArray;
     sections.push(
       this.fb.group({
-        name: [null],
-        name_eng: [null, Validators.required],
-        name_de: [null],
+        title: [null],
+        title_eng: [null, Validators.required],
+        title_de: [null],
         description: [null],
         description_eng: [null, Validators.required],
         description_de: [null],
@@ -107,38 +109,33 @@ export class EditLocationComponent implements OnInit {
       return;
     }
     const dto = this.locationForm.getRawValue();
-    const subscription = this.api.updateLocation(this.location.id, dto).subscribe(
-      (savedLocation) => {
-        forkJoin(
-          dto.sections.map((s, index) => {
-            if (!savedLocation.sections[index]?.id) {
-              return of(null);
-            }
-            return this.uploadImg(s.img, savedLocation.sections[index]?.id);
+
+    const subscription = forkJoin(
+      dto.sections.map((s) => {
+        return this.uploadImg(s.img).pipe(
+          tap((img) => {
+            s.img = img;
           })
-        ).subscribe(
-          () => {
-            this.loadingService.removeSubscription(subscription);
-          },
-          () => {
-            this.loadingService.removeSubscription(subscription);
-          }
         );
-      },
-      () => {
-        this.loadingService.removeSubscription(subscription);
-      }
-    );
+      })
+    ).subscribe(() => {
+      this.api.updateLocation(this.location.id, dto).subscribe(
+        () => {
+          this.loadingService.removeSubscription(subscription);
+        },
+        () => {
+          this.loadingService.removeSubscription(subscription);
+        }
+      );
+    });
     this.loadingService.addSubscription(subscription);
   }
 
-  uploadImg(img, sectionId): Observable<string> {
+  uploadImg(img): Observable<string> {
     if (img instanceof File) {
       const formData = new FormData();
       formData.append('Image', img, img.name.replace(' ', '_'));
-      return this.api.uploadLocationImg(sectionId, formData);
-    } else if (!img) {
-      return this.api.updateSectionImg(sectionId, img);
+      return this.api.uploadLocationImg(formData);
     }
 
     return of(img);

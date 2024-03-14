@@ -119,6 +119,29 @@
 
             return $location;
         }
+
+        public function GetLocationById($id){
+            $query = $this->database->db->prepare("SELECT * FROM RentLocation WHERE `id` = ?");
+            $query->setFetchMode(PDO::FETCH_ASSOC);
+            $query->execute(array($id));
+            $location = $query->fetch();
+            $location['name'] = array('en' => $location['title_eng'], 'ru' => $location['title'], 'de' => $location['title_de']);
+
+            $location['sections'] = array();
+
+            $locationId = $location['id'];
+
+            $query = $this->database->db->query("SELECT * FROM RentLocationSection where locationId=$locationId");
+            $query->setFetchMode(PDO::FETCH_ASSOC);
+            while ($section = $query->fetch()) {
+                $section['name'] = array('en' => $section['title_eng'], 'ru' => $section['title'], 'de' => $section['title_de']);
+                $section['description'] = array('en' => $section['description_eng'], 'ru' => $section['description'], 'de' => $section['description_de']);
+                
+                $location['sections'][] = $section;
+            }
+
+            return $location;
+        }
         
         public function GetFilterOptions($name){
             $query = $this->database->db->query("SELECT DISTINCT $name FROM car");
@@ -215,6 +238,44 @@
         public function UploadCarImg($file){
             $newFileName = $this->filesUpload->upload($file, 'Files', uniqid());
             return $this->baseUrl.'/Files'.'/'.$newFileName;
+        }
+
+        public function UpdateLocation($locationId, $data){
+            if($locationId == null){
+                return array("message" => "Укажите id локации", "method" => "UpdateLocation", "requestData" => $data);
+            }
+            $sections = $data->sections;
+            unset($data->sections);
+            $a = $this->database->genUpdateQuery(array_keys((array)$data), array_values((array)$data), "RentLocation", $locationId);
+            
+            $query = $this->database->db->prepare($a[0]);
+            $query->execute($a[1]);
+               
+            $this->UpdateSections($locationId, $sections);
+            return $this->GetLocationById($locationId);
+        }
+
+        public function UpdateSections($locationId, $sections){
+            $query = $this->database->db->prepare("DELETE FROM RentLocationSection WHERE locationId = ?");
+            $query->execute(array($locationId));
+
+            foreach ($sections as $section) {
+                if($section->oldImg && $section->img != $section->oldImg){
+                    $this->removeFile($section->oldImg);
+                }
+                unset($section->oldImg);
+                $section->locationId = $locationId;
+                $insert = $this->database->genInsertQuery((array)$section, 'RentLocationSection');
+                $query = $this->database->db->prepare($insert[0]);
+                if($insert[1][1]!=null){
+                    $query->execute($insert[1]);
+                }
+            }
+        }
+
+        public function UploadSectionImg($file){
+            $newFileName = $this->filesUpload->upload($file, 'LocationSection', uniqid());
+            return $this->baseUrl.'/LocationSection'.'/'.$newFileName;
         }
         
         public function GetPlacesOfInterest(){

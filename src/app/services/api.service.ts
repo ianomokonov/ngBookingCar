@@ -211,8 +211,8 @@ export class ApiService {
     return this.http.get<LocationShort[]>(`${this.baseUrl}?key=get-locations`);
   }
 
-  public uploadLocationImg(sectionId, data): Observable<string> {
-    return this.http.post<string>(`${this.baseUrl}?key=upload-location-img&sectionId=${sectionId}`, data);
+  public uploadLocationImg(data): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}?key=upload-section-img`, data);
   }
 
   public updateLocation(id, data): Observable<Location> {

@@ -172,6 +172,21 @@ if (isset($_GET['key'])) {
         case 'get-location':
             echo json_encode($repository->GetLocation($_GET['path']));
             return;
+        case 'update-location':
+            if ($decodeToken = checkToken($token, true)) {
+                $data = json_decode(file_get_contents("php://input"));
+                echo json_encode($repository->UpdateLocation($_GET['id'], $data));
+            } else {
+                echo json_encode(array("message" => "В доступе отказано"));
+            }
+            return;
+        case 'upload-section-img':
+            if ($decodeToken = checkToken($token, true)) {
+                echo json_encode($repository->UploadSectionImg($_FILES['Image']));
+            } else {
+                echo json_encode(array("message" => "В доступе отказано"));
+            }
+            return;
         case 'cancel-order':
             if ($decodeToken = checkToken($token)) {
                 echo json_encode($repository->CancelOrder($_GET['orderId']));
