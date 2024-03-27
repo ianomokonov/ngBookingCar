@@ -110,15 +110,16 @@ export class EditLocationComponent implements OnInit {
     }
     const dto = this.locationForm.getRawValue();
 
-    const subscription = forkJoin(
-      dto.sections.map((s) => {
+    const subscription = forkJoin([
+      ...dto.sections.map((s) => {
         return this.uploadImg(s.img).pipe(
           tap((img) => {
             s.img = img;
           })
         );
-      })
-    ).subscribe(() => {
+      }),
+      of(null),
+    ]).subscribe(() => {
       this.api.updateLocation(this.location.id, dto).subscribe(
         () => {
           this.loadingService.removeSubscription(subscription);
