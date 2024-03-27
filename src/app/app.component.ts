@@ -4,6 +4,8 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/internal/operators';
 import { Title, Meta } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject, forkJoin, of } from 'rxjs';
+import { keywords } from './utils/constants';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -38,10 +40,15 @@ export class AppComponent implements OnInit {
         // так же мы выбираем только первичные аутлеты (тоже опционально)
         filter((route: ActivatedRoute) => route.outlet === 'primary'),
         // выбираем title
-        mergeMap((route) => route.data)
+        mergeMap((route) => {
+          return of([(route.data as BehaviorSubject<any>).value, (route.params as BehaviorSubject<any>).value]);
+        })
       )
       // задаем
-      .subscribe((data) => {
+      .subscribe(([data, params]) => {
+        if (params.location) {
+          data = (keywords[this.translation.currentLang] || keywords['en'])?.[params.location];
+        }
         this.titleService.setTitle(data.title ? data.title : 'CARS4CRETE');
         if (this.meta.getTag('name=description')) {
           this.meta.updateTag({

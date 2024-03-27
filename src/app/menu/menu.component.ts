@@ -6,7 +6,6 @@ import { takeWhile } from 'rxjs/internal/operators';
 import { LoadingService } from '../services/loading.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
-import { locations } from '../utils/locations';
 import { LocationShort } from '../models/location';
 
 @Component({

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { locations } from '../utils/locations';
 import { ApiService } from '../services/api.service';
 import { Location } from '../models/location';
 

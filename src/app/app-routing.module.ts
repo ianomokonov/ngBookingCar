@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { LangGuard } from './guards/lang.guard';
 import { LangsComponent } from './langs/langs.component';
-import { pages } from './utils/constants';
+import { getPages } from './utils/constants';
 
 @NgModule({
   imports: [
@@ -12,19 +12,19 @@ import { pages } from './utils/constants';
         {
           path: 'ru',
           component: LangsComponent,
-          children: pages,
+          children: getPages('en'),
           canActivate: [LangGuard],
         },
         {
           path: 'en',
           component: LangsComponent,
-          children: pages,
+          children: getPages('en'),
           canActivate: [LangGuard],
         },
         {
           path: 'de',
           component: LangsComponent,
-          children: pages,
+          children: getPages('de'),
           canActivate: [LangGuard],
         },
       ],
