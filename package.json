@@ -12,7 +12,7 @@
     "serve:ssr": "node dist/ngBookingCar/server/main.js",
     "build:ssr": "ng build --prod && ng run ngBookingCar:server:production",
     "prerender": "ng run ngBookingCar:prerender",
-    "scully": "ng build --prod && scully",
+    "scully": "ng build --prod && scully --scanRoutes --pluginsError=false --logSeverity=normal",
     "scully:serve": "scully serve"
   },
   "private": true,
