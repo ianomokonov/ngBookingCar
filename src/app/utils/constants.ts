@@ -159,7 +159,7 @@ export const getPages = (lang: keyof typeof keywords) => [
     path: 'search',
     component: SearchComponent,
     data: {
-      ...keywords[lang].catalog,
+      ...keywords[lang].search,
     },
   },
   {

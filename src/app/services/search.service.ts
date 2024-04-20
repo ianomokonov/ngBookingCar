@@ -111,9 +111,10 @@ export class SearchService {
     if (!dateTo) {
       return 1;
     }
-    return Math.ceil(
-      (new Date(dateTo.year, dateTo.month, dateTo.day, timeToArr[0], timeToArr[1]).getTime() -
-        new Date(dateFrom.year, dateFrom.month, dateFrom.day, timeFromArr[0], timeFromArr[1]).getTime()) /
+
+    return Math.floor(
+      (new Date(dateTo.year, dateTo.month, dateTo.day - 1).getTime() -
+        new Date(dateFrom.year, dateFrom.month, dateFrom.day).getTime()) /
         (24 * 3600000)
     );
   }
