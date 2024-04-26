@@ -112,11 +112,10 @@ export class SearchService {
       return 1;
     }
 
-    return Math.floor(
-      (new Date(dateTo.year, dateTo.month, dateTo.day - 1).getTime() -
-        new Date(dateFrom.year, dateFrom.month, dateFrom.day).getTime()) /
-        (24 * 3600000)
-    );
+    const toDateTime = new Date(dateTo.year, dateTo.month - 1, dateTo.day, timeToArr[0], timeToArr[1]);
+    const fromDateTime = new Date(dateFrom.year, dateFrom.month - 1, dateFrom.day, timeFromArr[0] + 1, timeFromArr[1]);
+
+    return Math.ceil((toDateTime.getTime() - fromDateTime.getTime()) / (24 * 3600000));
   }
 
   public getCarPrice({ summerPrice, winterPrice, summerPrices, winterPrices }, periodDays = this.periodDays) {
