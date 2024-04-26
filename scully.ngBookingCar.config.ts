@@ -20,6 +20,9 @@ export const config: ScullyConfig = {
     '/edit-car/:id': {
       type: 'json',
     },
+    '/details/:id': {
+      type: 'json',
+    },
     '/rental-locations/:location': {
       type: 'json',
     },
