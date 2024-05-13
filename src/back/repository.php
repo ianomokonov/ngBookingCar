@@ -547,7 +547,7 @@
             }   
             
             
-            $headers  = "Content-type: text/html; charset=utf-8 \r\nFrom: carcrete24@gmail.com\r\n";
+            $headers = "Content-type: text/html; charset=utf-8 \r\nFrom: info@car4crete.com\r\n";
             
             mail($user->email, $subject, $message, $headers);
             $this->SendOrderToAdmin($car, $order, $user);
@@ -570,9 +570,9 @@
                 <p></br>Сумма заказа: ".$order->orderSum."€</p></br>"; 
             
             
-            $headers  = "Content-type: text/html; charset=utf-8 \r\nFrom: carcrete24@gmail.com\r\n";
+            $headers  = "Content-type: text/html; charset=utf-8 \r\nFrom: info@car4crete.com\r\n";
             
-            mail('carcrete24@gmail.com', $subject, $message, $headers);
+            mail('info@carcrete24.com', $subject, $message, $headers);
             return $this->database->db->lastInsertId();
             
         }
@@ -673,7 +673,7 @@
                 
                     
                     
-                    $headers  = "Content-type: text/html; charset=utf-8 \r\n";
+                    $headers  = "Content-type: text/html; charset=utf-8 \r\nFrom: info@car4crete.com\r\n";
                     
                     mail($e, $subject, $message, $headers);
                     
