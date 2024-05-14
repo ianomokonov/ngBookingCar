@@ -547,9 +547,9 @@
             }   
             
             
-            $headers = "Content-type: text/html; charset=utf-8 \r\nFrom: info@car4crete.com\r\n";
+            $headers = "Content-type: text/html; charset=utf-8 \r\nFrom: <info@car4crete.com>". "\r\n"."Reply-To: <info@carcrete24.com>";
             
-            mail($user->email, $subject, $message, $headers);
+            mail("<".$user->email.">", $subject, $message, $headers);
             $this->SendOrderToAdmin($car, $order, $user);
             return $this->database->db->lastInsertId();
             
@@ -570,9 +570,9 @@
                 <p></br>Сумма заказа: ".$order->orderSum."€</p></br>"; 
             
             
-            $headers  = "Content-type: text/html; charset=utf-8 \r\nFrom: info@car4crete.com\r\n";
+            $headers  = "Content-type: text/html; charset=utf-8 \r\nFrom: <info@car4crete.com>". "\r\n"."Reply-To: <info@carcrete24.com>";
             
-            mail('info@carcrete24.com', $subject, $message, $headers);
+            mail('<info@carcrete24.com>', $subject, $message, $headers);
             return $this->database->db->lastInsertId();
             
         }
@@ -673,9 +673,9 @@
                 
                     
                     
-                    $headers  = "Content-type: text/html; charset=utf-8 \r\nFrom: info@car4crete.com\r\n";
+                    $headers  = "Content-type: text/html; charset=utf-8 \r\nFrom: <info@car4crete.com>". "\r\n"."Reply-To: <info@carcrete24.com>";
                     
-                    mail($e, $subject, $message, $headers);
+                    mail("<".$e.">", $subject, $message, $headers);
                     
                     return $this->token->encode(array("id" => $this->database->db->lastInsertId()));
                 } catch(Exception $e) {
